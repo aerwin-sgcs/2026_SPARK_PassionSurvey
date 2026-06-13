@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Spark — Passion Discovery Survey</title>
+<style>
+:root{
+  --purple:#534AB7;--purple-l:#EEEDFE;--purple-m:#AFA9EC;--purple-d:#3C3489;
+  --teal:#0F6E56;--teal-l:#E1F5EE;--teal-m:#5DCAA5;
+  --amber:#BA7517;--amber-l:#FAEEDA;--amber-m:#EF9F27;
+  --coral:#993C1D;--coral-l:#FAECE7;--coral-m:#F0997B;
+  --blue:#185FA5;--blue-l:#E6F1FB;--blue-m:#85B7EB;
+  --green:#3B6D11;--green-l:#EAF3DE;--green-m:#97C459;
+  --pink:#72243E;--pink-l:#FBEAF0;--pink-m:#ED93B1;
+  --gold:#9A6F00;--gold-l:#FFF8DC;--gold-bg:#FFD700;
+  --ink:#1C1A2E;--muted:#6B6880;--faint:#F4F3F8;
+  --card:#fff;--surf:#F7F6FB;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --serif:-apple-system-ui-serif,ui-serif,Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:100vh;overflow-x:hidden;}
+
+/* HERO */
+.hero{background:var(--ink);padding:48px 22px 56px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 60%,rgba(83,74,183,.35) 0%,transparent 60%),
+             radial-gradient(ellipse at 75% 20%,rgba(15,110,86,.25) 0%,transparent 50%);
+  pointer-events:none;}
+.hero-lbl{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--purple-m);
+  background:rgba(83,74,183,.18);border:1px solid rgba(175,169,236,.3);
+  padding:5px 14px;border-radius:20px;margin-bottom:16px;}
+.hero h1{font-family:var(--serif);font-size:clamp(30px,8vw,52px);
+  color:#fff;line-height:1.1;margin-bottom:11px;position:relative;}
+.hero h1 em{font-style:italic;color:var(--purple-m);}
+.hero p{font-size:14px;color:rgba(255,255,255,.6);max-width:460px;
+  margin:0 auto 22px;line-height:1.65;}
+.syms{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;position:relative;margin-bottom:12px;}
+.sym{display:inline-flex;align-items:center;gap:6px;padding:6px 13px;
+  border-radius:30px;font-size:12px;font-weight:500;border:1px solid;}
+.sym-x{background:rgba(153,60,29,.15);border-color:rgba(240,153,123,.35);color:#F0997B;}
+.sym-m{background:rgba(186,117,23,.15);border-color:rgba(239,159,39,.35);color:#EF9F27;}
+.sym-s{background:rgba(83,74,183,.2);border-color:rgba(175,169,236,.4);color:var(--purple-m);}
+.sym-ss{background:rgba(154,111,0,.2);border-color:rgba(255,215,0,.35);color:#FFD060;}
+.hero-note{font-size:12px;color:rgba(255,255,255,.4);position:relative;}
+
+/* SLOT TRACKER */
+.slotbar{background:#16142A;border-bottom:1px solid rgba(255,255,255,.06);
+  padding:10px 18px;display:flex;gap:14px;justify-content:center;
+  align-items:center;flex-wrap:wrap;}
+.slotgrp{display:flex;align-items:center;gap:7px;}
+.slotlbl{font-size:11px;font-weight:600;color:rgba(255,255,255,.45);
+  text-transform:uppercase;letter-spacing:.06em;}
+.slots{display:flex;gap:5px;}
+.slot{width:28px;height:28px;border-radius:6px;border:1.5px solid;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;transition:all .2s;}
+.slot-ss{border-color:rgba(154,111,0,.4);color:rgba(154,111,0,.4);background:transparent;}
+.slot-ss.on{border-color:var(--gold-bg);background:var(--gold-bg);color:#fff;}
+.slot-s{border-color:rgba(83,74,183,.4);color:rgba(83,74,183,.4);background:transparent;}
+.slot-s.on{border-color:var(--purple);background:var(--purple);color:#fff;}
+.fullmsg{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;display:none;}
+.fullmsg-ss{background:rgba(154,111,0,.2);color:#FFD060;}
+.fullmsg-s{background:rgba(83,74,183,.2);color:var(--purple-m);}
+
+/* PROGRESS */
+.progbar{position:sticky;top:0;z-index:100;background:var(--card);
+  border-bottom:1px solid rgba(0,0,0,.07);padding:9px 16px;
+  display:flex;align-items:center;gap:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.pbtrack{flex:1;height:4px;background:#E8E7F3;border-radius:3px;overflow:hidden;}
+.pbfill{height:100%;background:var(--purple);border-radius:3px;transition:width .3s;width:0%;}
+.pbtext{font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap;}
+.pbcounts{display:flex;gap:5px;}
+.pbc{font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;}
+.pbc-x{background:var(--coral-l);color:var(--coral);}
+.pbc-m{background:var(--amber-l);color:var(--amber);}
+.pbc-s{background:var(--purple-l);color:var(--purple);}
+.pbc-ss{background:var(--gold-l);color:var(--gold);}
+
+/* MAIN */
+.main{max-width:740px;margin:0 auto;padding:22px 13px 110px;}
+
+/* FINISH */
+.finbanner{background:var(--teal-l);border:1.5px solid var(--teal-m);
+  border-radius:12px;padding:12px 15px;display:none;
+  align-items:center;gap:10px;margin-bottom:16px;}
+.finbanner.on{display:flex;}
+
+/* RESULTS */
+.results{display:none;opacity:0;transition:opacity .35s;
+  background:var(--ink);border-radius:18px;padding:26px 22px;
+  margin-bottom:22px;color:#fff;position:relative;overflow:hidden;}
+.results.show{display:block;}
+.results.vis{opacity:1;}
+.results::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 20% 50%,rgba(83,74,183,.4) 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 20%,rgba(15,110,86,.3) 0%,transparent 50%);
+  pointer-events:none;}
+.ri{position:relative;}
+.rlbl{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--purple-m);margin-bottom:9px;}
+.rtitle{font-family:var(--serif);font-size:22px;color:#fff;margin-bottom:18px;line-height:1.25;}
+.rgrp{margin-bottom:14px;}
+.rgrplbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;}
+.rgrpsub{font-size:11px;color:rgba(255,255,255,.5);margin-bottom:9px;line-height:1.4;}
+.rtags{display:flex;flex-wrap:wrap;gap:6px;}
+.rtag{padding:5px 12px;border-radius:28px;font-size:13px;font-weight:500;}
+.rtag-ss{background:rgba(154,111,0,.3);color:#FFE46A;border:1px solid rgba(255,215,0,.2);}
+.rtag-s{background:rgba(83,74,183,.35);color:#D0CDFB;border:1px solid rgba(175,169,236,.25);}
+.rtag-m{background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.1);}
+.rnext{background:rgba(255,255,255,.08);border-radius:8px;
+  padding:12px 14px;margin-top:13px;font-size:13px;line-height:1.65;color:rgba(255,255,255,.8);}
+.rruled{font-size:12px;opacity:.4;margin-top:7px;}
+
+/* EXPORT */
+.exprow{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
+.expbtn{display:flex;align-items:center;gap:6px;padding:10px 17px;border-radius:28px;
+  font-size:13px;font-weight:600;cursor:pointer;border:none;
+  font-family:var(--sans);transition:all .15s;}
+.expbtn:active{transform:scale(.96);}
+.btn-clip{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);}
+.btn-clip:hover{background:rgba(255,255,255,.2);}
+.btn-pdf{background:var(--purple);color:#fff;}
+.btn-pdf:hover{background:var(--purple-d);}
+.copymsg{font-size:12px;color:var(--teal-m);margin-top:6px;display:none;}
+.copymsg.on{display:block;}
+
+/* CAT */
+.cat-block{margin-bottom:18px;}
+.cat-hd{display:flex;align-items:center;gap:8px;padding:9px 13px;
+  border-radius:12px 12px 0 0;}
+.cat-purple{background:var(--purple-l);}
+.cat-teal{background:var(--teal-l);}
+.cat-amber{background:var(--amber-l);}
+.cat-coral{background:var(--coral-l);}
+.cat-blue{background:var(--blue-l);}
+.cat-green{background:var(--green-l);}
+.cat-pink{background:var(--pink-l);}
+.cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.cat-nm{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;}
+.dlist{background:var(--card);border-radius:0 0 12px 12px;
+  border:1px solid rgba(0,0,0,.07);border-top:none;overflow:hidden;
+  box-shadow:0 2px 10px rgba(83,74,183,.07);}
+
+/* DOMAIN ROW */
+.drow{display:flex;align-items:center;
+  border-bottom:1px solid rgba(0,0,0,.05);transition:background .1s;}
+.drow:last-child{border-bottom:none;}
+.drow.v-x{background:var(--coral-l);}
+.drow.v-m{background:var(--amber-l);}
+.drow.v-s{background:var(--purple-l);}
+.drow.v-ss{background:var(--gold-l);}
+.dnum{width:30px;text-align:center;flex-shrink:0;
+  font-size:10px;font-weight:600;color:#C0BDD5;padding:13px 0;}
+.dinfo{flex:1;padding:11px 4px 11px 0;min-width:0;}
+.dname{font-size:13.5px;font-weight:500;color:var(--ink);line-height:1.2;margin-bottom:2px;}
+.dex{font-size:11px;color:var(--muted);line-height:1.3;}
+.dbtns{display:flex;gap:4px;padding:0 10px;flex-shrink:0;}
+
+/* BUTTONS — use classList throughout, no regex */
+.rb{width:40px;height:40px;border-radius:9px;
+  border:1.5px solid rgba(0,0,0,.1);background:var(--faint);
+  font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .1s,background .1s,border-color .1s,opacity .15s;
+  color:var(--muted);font-family:var(--sans);
+  -webkit-appearance:none;appearance:none;}
+.rbd{font-size:11px;font-weight:700;}
+.rb:active{transform:scale(.88);}
+.rb.sel-x{background:var(--coral) !important;border-color:var(--coral) !important;color:#fff !important;}
+.rb.sel-m{background:var(--amber) !important;border-color:var(--amber) !important;color:#fff !important;}
+.rb.sel-s{background:var(--purple) !important;border-color:var(--purple) !important;color:#fff !important;
+  box-shadow:0 0 0 3px rgba(83,74,183,.2);}
+.rb.sel-ss{background:var(--gold-bg) !important;border-color:var(--gold-bg) !important;color:#fff !important;
+  box-shadow:0 0 0 3px rgba(255,215,0,.2);}
+.rb.locked{opacity:.22;pointer-events:none;cursor:not-allowed;}
+
+/* BOTTOM */
+.ctarow{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+.btnprimary{padding:12px 24px;border-radius:28px;background:var(--purple);color:#fff;
+  border:none;font-size:14px;font-weight:600;cursor:pointer;
+  font-family:var(--sans);transition:background .15s,transform .1s;}
+.btnprimary:hover{background:var(--purple-d);}
+.btnprimary:active{transform:scale(.97);}
+.btnghost{padding:12px 18px;border-radius:28px;background:transparent;color:var(--muted);
+  border:1.5px solid rgba(0,0,0,.12);font-size:13px;font-weight:500;cursor:pointer;
+  font-family:var(--sans);transition:all .15s;}
+.btnghost:hover{background:var(--faint);}
+
+/* SHORTLIST BAR */
+.slbar{position:fixed;bottom:0;left:0;right:0;z-index:50;
+  background:var(--card);border-top:1px solid rgba(0,0,0,.08);
+  padding:9px 13px env(safe-area-inset-bottom,10px);
+  display:flex;align-items:center;gap:8px;
+  box-shadow:0 -4px 14px rgba(0,0,0,.07);
+  transform:translateY(100%);transition:transform .3s;}
+.slbar.on{transform:translateY(0);}
+.sllbl{font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap;}
+.sltags{flex:1;display:flex;flex-wrap:wrap;gap:4px;overflow:hidden;max-height:48px;}
+.sltag-ss{font-size:11px;font-weight:600;padding:3px 9px;border-radius:18px;
+  background:var(--gold-l);color:var(--gold);white-space:nowrap;
+  border:1px solid rgba(154,111,0,.15);}
+.sltag-s{font-size:11px;font-weight:500;padding:3px 9px;border-radius:18px;
+  background:var(--purple-l);color:var(--purple-d);white-space:nowrap;}
+.slbtn{padding:7px 14px;border-radius:18px;background:var(--purple);color:#fff;
+  border:none;font-size:12px;font-weight:600;cursor:pointer;
+  font-family:var(--sans);flex-shrink:0;}
+
+/* PHASE 4 BUTTON */
+.btnignite{padding:12px 20px;border-radius:28px;
+  background:linear-gradient(135deg,#B8860B,#E6A817);color:#fff;
+  border:none;font-size:14px;font-weight:600;cursor:pointer;
+  font-family:var(--sans);transition:all .15s;
+  box-shadow:0 2px 12px rgba(184,134,11,.3);}
+.btnignite:hover{background:linear-gradient(135deg,#9A6F00,#C8920A);transform:translateY(-1px);}
+.btnignite:active{transform:scale(.97);}
+
+/* PHASE 4 OVERLAY */
+#p4overlay{
+  position:fixed;inset:0;z-index:200;
+  background:var(--surf);overflow-y:auto;
+  transform:translateX(100%);
+  pointer-events:none;
+  transition:transform 0.3s ease;
+  will-change:transform;
+}
+#p4overlay.p4open{
+  transform:translateX(0%);
+  pointer-events:auto;
+}
+.p4wrap{max-width:680px;margin:0 auto;padding:20px 16px 80px;}
+.p4inner{padding-bottom:20px;}
+.p4close{display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:20px;border:1.5px solid rgba(0,0,0,.12);
+  background:var(--card);font-size:13px;font-weight:500;cursor:pointer;
+  color:var(--muted);font-family:var(--sans);margin-bottom:24px;
+  transition:all .15s;}
+.p4close:hover{background:var(--faint);}
+
+.p4hero{background:var(--ink);border-radius:18px;padding:28px 24px 24px;
+  margin-bottom:20px;position:relative;overflow:hidden;}
+.p4hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 20% 60%,rgba(184,134,11,.35) 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 20%,rgba(83,74,183,.3) 0%,transparent 50%);
+  pointer-events:none;}
+.p4badge{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:#FFD060;
+  background:rgba(184,134,11,.2);border:1px solid rgba(255,208,96,.25);
+  padding:4px 12px;border-radius:20px;margin-bottom:12px;position:relative;}
+.p4title{font-family:var(--serif);font-size:clamp(28px,6vw,42px);
+  color:#fff;line-height:1.1;margin-bottom:8px;position:relative;}
+.p4subtitle{font-size:14px;color:rgba(255,255,255,.6);line-height:1.6;position:relative;}
+
+.p4why{background:var(--purple-l);border:1px solid var(--purple-m);
+  border-radius:12px;padding:14px 16px;margin-bottom:20px;}
+.p4why-label{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--purple);margin-bottom:6px;}
+.p4why-text{font-size:13px;color:#3C3489;line-height:1.65;}
+
+.p4steps{display:flex;flex-direction:column;gap:14px;margin-bottom:20px;}
+.p4step{background:var(--card);border:1px solid rgba(0,0,0,.07);
+  border-radius:14px;padding:16px;display:flex;gap:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.p4step-num{width:30px;height:30px;border-radius:50%;
+  background:var(--ink);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;flex-shrink:0;margin-top:2px;}
+.p4step-body{flex:1;min-width:0;}
+.p4step-title{font-size:15px;font-weight:600;color:var(--ink);
+  margin-bottom:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.p4time{font-size:11px;font-weight:500;padding:2px 9px;border-radius:20px;
+  background:var(--gold-l);color:var(--gold);}
+.p4step-desc{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:10px;}
+.p4script{background:var(--faint);border-left:3px solid var(--purple-m);
+  border-radius:0 8px 8px 0;padding:10px 13px;
+  font-size:13px;color:var(--ink);line-height:1.65;
+  font-style:italic;margin-bottom:10px;}
+.p4warn{background:var(--amber-l);border-radius:8px;padding:9px 12px;
+  font-size:12px;color:#633806;line-height:1.55;}
+
+.p4example-block{margin-bottom:10px;}
+.p4example-label{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--muted);margin-bottom:4px;}
+.p4example{font-size:12.5px;padding:8px 11px;border-radius:8px;
+  line-height:1.5;font-style:italic;}
+.p4example.good{background:var(--teal-l);color:var(--teal);border:1px solid var(--teal-m);}
+.p4example.vague{background:var(--coral-l);color:var(--coral);border:1px solid var(--coral-m);}
+
+.p4textarea{width:100%;margin-top:10px;padding:10px 12px;
+  border:1.5px solid rgba(0,0,0,.12);border-radius:10px;
+  font-size:14px;font-family:var(--sans);color:var(--ink);
+  background:var(--faint);resize:vertical;line-height:1.6;
+  transition:border-color .15s;}
+.p4textarea:focus{outline:none;border-color:var(--purple);
+  background:#fff;box-shadow:0 0 0 3px rgba(83,74,183,.12);}
+
+.p4actions{display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.p4act{display:flex;align-items:center;gap:12px;padding:12px 14px;
+  border-radius:12px;border:1.5px solid rgba(0,0,0,.1);
+  background:var(--faint);cursor:pointer;text-align:left;
+  font-family:var(--sans);transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.p4act:active{transform:scale(.98);}
+.p4act.chosen{background:var(--purple-l);border-color:var(--purple);
+  box-shadow:0 0 0 3px rgba(83,74,183,.12);}
+.p4act-icon{width:34px;height:34px;border-radius:8px;
+  background:var(--card);display:flex;align-items:center;justify-content:center;
+  font-size:15px;flex-shrink:0;border:1px solid rgba(0,0,0,.08);}
+.p4act.chosen .p4act-icon{background:var(--purple);color:#fff;border-color:var(--purple);}
+.p4act-name{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.p4act.chosen .p4act-name{color:var(--purple-d);}
+.p4act-desc{font-size:12px;color:var(--muted);line-height:1.4;}
+.p4act.chosen .p4act-desc{color:#534AB7;}
+.p4selected{margin-top:8px;font-size:13px;color:var(--teal);
+  background:var(--teal-l);padding:7px 12px;border-radius:8px;
+  border:1px solid var(--teal-m);}
+.p4selected-label{font-weight:600;margin-right:4px;}
+
+.p4generate-row{text-align:center;margin-top:20px;}
+
+.p4commit{background:var(--ink);border-radius:16px;padding:22px 20px;
+  margin-top:16px;color:#fff;position:relative;overflow:hidden;}
+.p4commit::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 60%,rgba(184,134,11,.3) 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 20%,rgba(83,74,183,.3) 0%,transparent 50%);
+  pointer-events:none;}
+.p4commit-label{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;color:#FFD060;margin-bottom:10px;position:relative;}
+.p4commit-text{font-size:15px;line-height:1.7;color:#fff;
+  position:relative;margin-bottom:16px;}
+.p4commit-actions{display:flex;gap:8px;flex-wrap:wrap;position:relative;}
+
+@media(max-width:480px){
+  .dbtns{padding:0 6px;gap:3px;}
+  .rb{width:42px;height:42px;}
+  .rbd{font-size:10px;}
+  .pbcounts{display:none;}
+  .slotbar{gap:10px;}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-lbl">Passion discovery · 50 domains</div>
+  <h1>Find your <em>spark</em></h1>
+  <p>Rate each area honestly. Move fast — your first instinct is usually the most accurate. There are no right answers.</p>
+  <div class="syms">
+    <span class="sym sym-x">✗ No thanks</span>
+    <span class="sym sym-m">~ Maybe</span>
+    <span class="sym sym-s">★ Interested</span>
+    <span class="sym sym-ss">★★ Most interested</span>
+  </div>
+  <div class="hero-note">Choose up to 3 starred (★) and 3 double-starred (★★) domains</div>
+</header>
+
+<div class="slotbar">
+  <div class="slotgrp">
+    <span class="slotlbl">★★ Most interested</span>
+    <div class="slots">
+      <div class="slot slot-ss" id="sss0">★★</div>
+      <div class="slot slot-ss" id="sss1">★★</div>
+      <div class="slot slot-ss" id="sss2">★★</div>
+    </div>
+    <span class="fullmsg fullmsg-ss" id="msg-ss">Full — tap one to swap</span>
+  </div>
+  <div class="slotgrp">
+    <span class="slotlbl">★ Interested</span>
+    <div class="slots">
+      <div class="slot slot-s" id="ss0">★</div>
+      <div class="slot slot-s" id="ss1">★</div>
+      <div class="slot slot-s" id="ss2">★</div>
+    </div>
+    <span class="fullmsg fullmsg-s" id="msg-s">Full — tap one to swap</span>
+  </div>
+</div>
+
+<div class="progbar">
+  <div class="pbtrack"><div class="pbfill" id="pbf"></div></div>
+  <span class="pbtext" id="pbt">0 / 55</span>
+  <div class="pbcounts">
+    <span class="pbc pbc-x" id="cx">✗ 0</span>
+    <span class="pbc pbc-m" id="cm">~ 0</span>
+    <span class="pbc pbc-s" id="cs">★ 0</span>
+    <span class="pbc pbc-ss" id="css">★★ 0</span>
+  </div>
+</div>
+
+<main class="main">
+  <div class="finbanner" id="fin">
+    <span>✓</span>
+    <span style="font-size:13px;color:var(--teal);font-weight:500">All 55 rated! Tap "See my spark profile" below.</span>
+  </div>
+
+  <div class="results" id="res">
+    <div class="ri">
+      <div class="rlbl">Your spark profile</div>
+      <div class="rtitle" id="rtitle">Here's what stood out</div>
+      <div class="rgrp" id="grp-ss" style="display:none">
+        <div class="rgrplbl" style="color:#FFD060">★★ Your most interested areas</div>
+        <div class="rgrpsub">These are the domains that lit you up the most — your strongest sparks to pursue first.</div>
+        <div class="rtags" id="tags-ss"></div>
+      </div>
+      <div class="rgrp" id="grp-s" style="display:none">
+        <div class="rgrplbl" style="color:var(--purple-m)">★ Your next interests</div>
+        <div class="rgrpsub">Worth exploring once you've started on your top areas.</div>
+        <div class="rtags" id="tags-s"></div>
+      </div>
+      <div class="rgrp" id="grp-m" style="display:none">
+        <div class="rgrplbl" style="color:rgba(255,255,255,.5)">~ Still on the table</div>
+        <div class="rtags" id="tags-m"></div>
+      </div>
+      <div class="rnext" id="rnext"></div>
+      <div class="rruled" id="rruled"></div>
+      <div class="exprow">
+        <button type="button" class="expbtn btn-clip" onclick="doCopy()">⎘ Copy to clipboard</button>
+        <button type="button" class="expbtn btn-pdf" onclick="doPDF()">↓ Download as PDF</button>
+      </div>
+      <div class="copymsg" id="copymsg">✓ Copied — paste into Notes or email it to yourself</div>
+    </div>
+  </div>
+
+  <div id="survey">
+<div class="cat-block"><div class="cat-hd cat-purple"><div class="cat-dot" style="background:var(--purple)"></div><span class="cat-nm" style="color:var(--purple)">Mathematics & computing</span></div><div class="dlist"><div class="drow" id="drow0">
+  <span class="dnum">1</span>
+  <div class="dinfo"><div class="dname">Mathematics & logic</div><div class="dex">proofs, puzzles, number theory</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b0x" onclick="rate(0,'x')">✗</button>
+    <button type="button" class="rb" id="b0m" onclick="rate(0,'m')">~</button>
+    <button type="button" class="rb" id="b0s" onclick="rate(0,'s')">★</button>
+    <button type="button" class="rb rbd" id="b0ss" onclick="rate(0,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow1">
+  <span class="dnum">2</span>
+  <div class="dinfo"><div class="dname">Coding & programming</div><div class="dex">building apps, scripts, and games</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b1x" onclick="rate(1,'x')">✗</button>
+    <button type="button" class="rb" id="b1m" onclick="rate(1,'m')">~</button>
+    <button type="button" class="rb" id="b1s" onclick="rate(1,'s')">★</button>
+    <button type="button" class="rb rbd" id="b1ss" onclick="rate(1,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow2">
+  <span class="dnum">3</span>
+  <div class="dinfo"><div class="dname">Artificial intelligence</div><div class="dex">how machines learn and think</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b2x" onclick="rate(2,'x')">✗</button>
+    <button type="button" class="rb" id="b2m" onclick="rate(2,'m')">~</button>
+    <button type="button" class="rb" id="b2s" onclick="rate(2,'s')">★</button>
+    <button type="button" class="rb rbd" id="b2ss" onclick="rate(2,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow3">
+  <span class="dnum">4</span>
+  <div class="dinfo"><div class="dname">Robotics & electronics</div><div class="dex">things that move or sense the world</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b3x" onclick="rate(3,'x')">✗</button>
+    <button type="button" class="rb" id="b3m" onclick="rate(3,'m')">~</button>
+    <button type="button" class="rb" id="b3s" onclick="rate(3,'s')">★</button>
+    <button type="button" class="rb rbd" id="b3ss" onclick="rate(3,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow4">
+  <span class="dnum">5</span>
+  <div class="dinfo"><div class="dname">Data & statistics</div><div class="dex">finding patterns in numbers</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b4x" onclick="rate(4,'x')">✗</button>
+    <button type="button" class="rb" id="b4m" onclick="rate(4,'m')">~</button>
+    <button type="button" class="rb" id="b4s" onclick="rate(4,'s')">★</button>
+    <button type="button" class="rb rbd" id="b4ss" onclick="rate(4,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow5">
+  <span class="dnum">6</span>
+  <div class="dinfo"><div class="dname">Cybersecurity & cryptography</div><div class="dex">codes, hacking, digital privacy</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b5x" onclick="rate(5,'x')">✗</button>
+    <button type="button" class="rb" id="b5m" onclick="rate(5,'m')">~</button>
+    <button type="button" class="rb" id="b5s" onclick="rate(5,'s')">★</button>
+    <button type="button" class="rb rbd" id="b5ss" onclick="rate(5,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow6">
+  <span class="dnum">7</span>
+  <div class="dinfo"><div class="dname">Game design & simulation</div><div class="dex">building interactive worlds and systems</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b6x" onclick="rate(6,'x')">✗</button>
+    <button type="button" class="rb" id="b6m" onclick="rate(6,'m')">~</button>
+    <button type="button" class="rb" id="b6s" onclick="rate(6,'s')">★</button>
+    <button type="button" class="rb rbd" id="b6ss" onclick="rate(6,'ss')">★★</button>
+  </div>
+</div></div></div><div class="cat-block"><div class="cat-hd cat-teal"><div class="cat-dot" style="background:var(--teal)"></div><span class="cat-nm" style="color:var(--teal)">Natural sciences</span></div><div class="dlist"><div class="drow" id="drow7">
+  <span class="dnum">8</span>
+  <div class="dinfo"><div class="dname">Physics & forces</div><div class="dex">motion, energy, the universe</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b7x" onclick="rate(7,'x')">✗</button>
+    <button type="button" class="rb" id="b7m" onclick="rate(7,'m')">~</button>
+    <button type="button" class="rb" id="b7s" onclick="rate(7,'s')">★</button>
+    <button type="button" class="rb rbd" id="b7ss" onclick="rate(7,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow8">
+  <span class="dnum">9</span>
+  <div class="dinfo"><div class="dname">Chemistry & materials</div><div class="dex">reactions, elements, what things are made of</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b8x" onclick="rate(8,'x')">✗</button>
+    <button type="button" class="rb" id="b8m" onclick="rate(8,'m')">~</button>
+    <button type="button" class="rb" id="b8s" onclick="rate(8,'s')">★</button>
+    <button type="button" class="rb rbd" id="b8ss" onclick="rate(8,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow9">
+  <span class="dnum">10</span>
+  <div class="dinfo"><div class="dname">Biology & living things</div><div class="dex">cells, organisms, how life works</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b9x" onclick="rate(9,'x')">✗</button>
+    <button type="button" class="rb" id="b9m" onclick="rate(9,'m')">~</button>
+    <button type="button" class="rb" id="b9s" onclick="rate(9,'s')">★</button>
+    <button type="button" class="rb rbd" id="b9ss" onclick="rate(9,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow10">
+  <span class="dnum">11</span>
+  <div class="dinfo"><div class="dname">Genetics & evolution</div><div class="dex">how life changes over time</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b10x" onclick="rate(10,'x')">✗</button>
+    <button type="button" class="rb" id="b10m" onclick="rate(10,'m')">~</button>
+    <button type="button" class="rb" id="b10s" onclick="rate(10,'s')">★</button>
+    <button type="button" class="rb rbd" id="b10ss" onclick="rate(10,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow11">
+  <span class="dnum">12</span>
+  <div class="dinfo"><div class="dname">Neuroscience & the brain</div><div class="dex">how the mind works</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b11x" onclick="rate(11,'x')">✗</button>
+    <button type="button" class="rb" id="b11m" onclick="rate(11,'m')">~</button>
+    <button type="button" class="rb" id="b11s" onclick="rate(11,'s')">★</button>
+    <button type="button" class="rb rbd" id="b11ss" onclick="rate(11,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow12">
+  <span class="dnum">13</span>
+  <div class="dinfo"><div class="dname">Astronomy & space</div><div class="dex">planets, stars, cosmology</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b12x" onclick="rate(12,'x')">✗</button>
+    <button type="button" class="rb" id="b12m" onclick="rate(12,'m')">~</button>
+    <button type="button" class="rb" id="b12s" onclick="rate(12,'s')">★</button>
+    <button type="button" class="rb rbd" id="b12ss" onclick="rate(12,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow13">
+  <span class="dnum">14</span>
+  <div class="dinfo"><div class="dname">Ecology & environment</div><div class="dex">how species and habitats connect</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b13x" onclick="rate(13,'x')">✗</button>
+    <button type="button" class="rb" id="b13m" onclick="rate(13,'m')">~</button>
+    <button type="button" class="rb" id="b13s" onclick="rate(13,'s')">★</button>
+    <button type="button" class="rb rbd" id="b13ss" onclick="rate(13,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow14">
+  <span class="dnum">15</span>
+  <div class="dinfo"><div class="dname">Geology & earth science</div><div class="dex">rocks, earthquakes, deep time</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b14x" onclick="rate(14,'x')">✗</button>
+    <button type="button" class="rb" id="b14m" onclick="rate(14,'m')">~</button>
+    <button type="button" class="rb" id="b14s" onclick="rate(14,'s')">★</button>
+    <button type="button" class="rb rbd" id="b14ss" onclick="rate(14,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow15">
+  <span class="dnum">16</span>
+  <div class="dinfo"><div class="dname">Climate & weather systems</div><div class="dex">how Earth's systems interact</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b15x" onclick="rate(15,'x')">✗</button>
+    <button type="button" class="rb" id="b15m" onclick="rate(15,'m')">~</button>
+    <button type="button" class="rb" id="b15s" onclick="rate(15,'s')">★</button>
+    <button type="button" class="rb rbd" id="b15ss" onclick="rate(15,'ss')">★★</button>
+  </div>
+</div></div></div><div class="cat-block"><div class="cat-hd cat-amber"><div class="cat-dot" style="background:var(--amber)"></div><span class="cat-nm" style="color:var(--amber)">Engineering & making</span></div><div class="dlist"><div class="drow" id="drow16">
+  <span class="dnum">17</span>
+  <div class="dinfo"><div class="dname">Mechanical engineering</div><div class="dex">machines, structures, how things work</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b16x" onclick="rate(16,'x')">✗</button>
+    <button type="button" class="rb" id="b16m" onclick="rate(16,'m')">~</button>
+    <button type="button" class="rb" id="b16s" onclick="rate(16,'s')">★</button>
+    <button type="button" class="rb rbd" id="b16ss" onclick="rate(16,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow17">
+  <span class="dnum">18</span>
+  <div class="dinfo"><div class="dname">Electrical engineering</div><div class="dex">circuits, power, signal processing</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b17x" onclick="rate(17,'x')">✗</button>
+    <button type="button" class="rb" id="b17m" onclick="rate(17,'m')">~</button>
+    <button type="button" class="rb" id="b17s" onclick="rate(17,'s')">★</button>
+    <button type="button" class="rb rbd" id="b17ss" onclick="rate(17,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow18">
+  <span class="dnum">19</span>
+  <div class="dinfo"><div class="dname">Architecture & design</div><div class="dex">buildings, spaces, environments</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b18x" onclick="rate(18,'x')">✗</button>
+    <button type="button" class="rb" id="b18m" onclick="rate(18,'m')">~</button>
+    <button type="button" class="rb" id="b18s" onclick="rate(18,'s')">★</button>
+    <button type="button" class="rb rbd" id="b18ss" onclick="rate(18,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow19">
+  <span class="dnum">20</span>
+  <div class="dinfo"><div class="dname">3D printing & fabrication</div><div class="dex">making physical objects from scratch</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b19x" onclick="rate(19,'x')">✗</button>
+    <button type="button" class="rb" id="b19m" onclick="rate(19,'m')">~</button>
+    <button type="button" class="rb" id="b19s" onclick="rate(19,'s')">★</button>
+    <button type="button" class="rb rbd" id="b19ss" onclick="rate(19,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow20">
+  <span class="dnum">21</span>
+  <div class="dinfo"><div class="dname">Aviation & transport</div><div class="dex">how vehicles move people and things</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b20x" onclick="rate(20,'x')">✗</button>
+    <button type="button" class="rb" id="b20m" onclick="rate(20,'m')">~</button>
+    <button type="button" class="rb" id="b20s" onclick="rate(20,'s')">★</button>
+    <button type="button" class="rb rbd" id="b20ss" onclick="rate(20,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow21">
+  <span class="dnum">22</span>
+  <div class="dinfo"><div class="dname">Sustainable technology</div><div class="dex">clean energy, circular design</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b21x" onclick="rate(21,'x')">✗</button>
+    <button type="button" class="rb" id="b21m" onclick="rate(21,'m')">~</button>
+    <button type="button" class="rb" id="b21s" onclick="rate(21,'s')">★</button>
+    <button type="button" class="rb rbd" id="b21ss" onclick="rate(21,'ss')">★★</button>
+  </div>
+</div></div></div><div class="cat-block"><div class="cat-hd cat-coral"><div class="cat-dot" style="background:var(--coral)"></div><span class="cat-nm" style="color:var(--coral)">Humanities & society</span></div><div class="dlist"><div class="drow" id="drow22">
+  <span class="dnum">23</span>
+  <div class="dinfo"><div class="dname">History & civilisations</div><div class="dex">how the past shaped the present</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b22x" onclick="rate(22,'x')">✗</button>
+    <button type="button" class="rb" id="b22m" onclick="rate(22,'m')">~</button>
+    <button type="button" class="rb" id="b22s" onclick="rate(22,'s')">★</button>
+    <button type="button" class="rb rbd" id="b22ss" onclick="rate(22,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow23">
+  <span class="dnum">24</span>
+  <div class="dinfo"><div class="dname">Archaeology</div><div class="dex">reading physical evidence of the past</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b23x" onclick="rate(23,'x')">✗</button>
+    <button type="button" class="rb" id="b23m" onclick="rate(23,'m')">~</button>
+    <button type="button" class="rb" id="b23s" onclick="rate(23,'s')">★</button>
+    <button type="button" class="rb rbd" id="b23ss" onclick="rate(23,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow24">
+  <span class="dnum">25</span>
+  <div class="dinfo"><div class="dname">Philosophy & ethics</div><div class="dex">big questions about existence and right and wrong</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b24x" onclick="rate(24,'x')">✗</button>
+    <button type="button" class="rb" id="b24m" onclick="rate(24,'m')">~</button>
+    <button type="button" class="rb" id="b24s" onclick="rate(24,'s')">★</button>
+    <button type="button" class="rb rbd" id="b24ss" onclick="rate(24,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow25">
+  <span class="dnum">26</span>
+  <div class="dinfo"><div class="dname">Psychology & behaviour</div><div class="dex">why people think and act as they do</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b25x" onclick="rate(25,'x')">✗</button>
+    <button type="button" class="rb" id="b25m" onclick="rate(25,'m')">~</button>
+    <button type="button" class="rb" id="b25s" onclick="rate(25,'s')">★</button>
+    <button type="button" class="rb rbd" id="b25ss" onclick="rate(25,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow26">
+  <span class="dnum">27</span>
+  <div class="dinfo"><div class="dname">Sociology & culture</div><div class="dex">how groups of people organise themselves</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b26x" onclick="rate(26,'x')">✗</button>
+    <button type="button" class="rb" id="b26m" onclick="rate(26,'m')">~</button>
+    <button type="button" class="rb" id="b26s" onclick="rate(26,'s')">★</button>
+    <button type="button" class="rb rbd" id="b26ss" onclick="rate(26,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow27">
+  <span class="dnum">28</span>
+  <div class="dinfo"><div class="dname">Politics & governance</div><div class="dex">power, democracy, policy</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b27x" onclick="rate(27,'x')">✗</button>
+    <button type="button" class="rb" id="b27m" onclick="rate(27,'m')">~</button>
+    <button type="button" class="rb" id="b27s" onclick="rate(27,'s')">★</button>
+    <button type="button" class="rb rbd" id="b27ss" onclick="rate(27,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow28">
+  <span class="dnum">29</span>
+  <div class="dinfo"><div class="dname">Law & justice</div><div class="dex">rules, rights, courts, fairness</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b28x" onclick="rate(28,'x')">✗</button>
+    <button type="button" class="rb" id="b28m" onclick="rate(28,'m')">~</button>
+    <button type="button" class="rb" id="b28s" onclick="rate(28,'s')">★</button>
+    <button type="button" class="rb rbd" id="b28ss" onclick="rate(28,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow29">
+  <span class="dnum">30</span>
+  <div class="dinfo"><div class="dname">Economics & finance</div><div class="dex">how resources are produced and distributed</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b29x" onclick="rate(29,'x')">✗</button>
+    <button type="button" class="rb" id="b29m" onclick="rate(29,'m')">~</button>
+    <button type="button" class="rb" id="b29s" onclick="rate(29,'s')">★</button>
+    <button type="button" class="rb rbd" id="b29ss" onclick="rate(29,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow30">
+  <span class="dnum">31</span>
+  <div class="dinfo"><div class="dname">Geography & places</div><div class="dex">why places are the way they are</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b30x" onclick="rate(30,'x')">✗</button>
+    <button type="button" class="rb" id="b30m" onclick="rate(30,'m')">~</button>
+    <button type="button" class="rb" id="b30s" onclick="rate(30,'s')">★</button>
+    <button type="button" class="rb rbd" id="b30ss" onclick="rate(30,'ss')">★★</button>
+  </div>
+</div></div></div><div class="cat-block"><div class="cat-hd cat-pink"><div class="cat-dot" style="background:var(--pink)"></div><span class="cat-nm" style="color:var(--pink)">Language & communication</span></div><div class="dlist"><div class="drow" id="drow31">
+  <span class="dnum">32</span>
+  <div class="dinfo"><div class="dname">Creative writing & fiction</div><div class="dex">stories, novels, screenplays</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b31x" onclick="rate(31,'x')">✗</button>
+    <button type="button" class="rb" id="b31m" onclick="rate(31,'m')">~</button>
+    <button type="button" class="rb" id="b31s" onclick="rate(31,'s')">★</button>
+    <button type="button" class="rb rbd" id="b31ss" onclick="rate(31,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow32">
+  <span class="dnum">33</span>
+  <div class="dinfo"><div class="dname">Poetry & spoken word</div><div class="dex">language as art and rhythm</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b32x" onclick="rate(32,'x')">✗</button>
+    <button type="button" class="rb" id="b32m" onclick="rate(32,'m')">~</button>
+    <button type="button" class="rb" id="b32s" onclick="rate(32,'s')">★</button>
+    <button type="button" class="rb rbd" id="b32ss" onclick="rate(32,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow33">
+  <span class="dnum">34</span>
+  <div class="dinfo"><div class="dname">Journalism & non-fiction</div><div class="dex">reporting, essays, true stories</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b33x" onclick="rate(33,'x')">✗</button>
+    <button type="button" class="rb" id="b33m" onclick="rate(33,'m')">~</button>
+    <button type="button" class="rb" id="b33s" onclick="rate(33,'s')">★</button>
+    <button type="button" class="rb rbd" id="b33ss" onclick="rate(33,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow34">
+  <span class="dnum">35</span>
+  <div class="dinfo"><div class="dname">Linguistics & language</div><div class="dex">how languages work and differ</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b34x" onclick="rate(34,'x')">✗</button>
+    <button type="button" class="rb" id="b34m" onclick="rate(34,'m')">~</button>
+    <button type="button" class="rb" id="b34s" onclick="rate(34,'s')">★</button>
+    <button type="button" class="rb rbd" id="b34ss" onclick="rate(34,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow35">
+  <span class="dnum">36</span>
+  <div class="dinfo"><div class="dname">Debate & public speaking</div><div class="dex">arguing clearly and persuasively</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b35x" onclick="rate(35,'x')">✗</button>
+    <button type="button" class="rb" id="b35m" onclick="rate(35,'m')">~</button>
+    <button type="button" class="rb" id="b35s" onclick="rate(35,'s')">★</button>
+    <button type="button" class="rb rbd" id="b35ss" onclick="rate(35,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow36">
+  <span class="dnum">37</span>
+  <div class="dinfo"><div class="dname">Translation & interpretation</div><div class="dex">moving meaning between languages</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b36x" onclick="rate(36,'x')">✗</button>
+    <button type="button" class="rb" id="b36m" onclick="rate(36,'m')">~</button>
+    <button type="button" class="rb" id="b36s" onclick="rate(36,'s')">★</button>
+    <button type="button" class="rb rbd" id="b36ss" onclick="rate(36,'ss')">★★</button>
+  </div>
+</div></div></div><div class="cat-block"><div class="cat-hd cat-coral"><div class="cat-dot" style="background:var(--coral)"></div><span class="cat-nm" style="color:var(--coral)">Arts & creative practice</span></div><div class="dlist"><div class="drow" id="drow37">
+  <span class="dnum">38</span>
+  <div class="dinfo"><div class="dname">Visual art & illustration</div><div class="dex">painting, drawing, printmaking</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b37x" onclick="rate(37,'x')">✗</button>
+    <button type="button" class="rb" id="b37m" onclick="rate(37,'m')">~</button>
+    <button type="button" class="rb" id="b37s" onclick="rate(37,'s')">★</button>
+    <button type="button" class="rb rbd" id="b37ss" onclick="rate(37,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow38">
+  <span class="dnum">39</span>
+  <div class="dinfo"><div class="dname">Photography & film</div><div class="dex">capturing and constructing visual stories</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b38x" onclick="rate(38,'x')">✗</button>
+    <button type="button" class="rb" id="b38m" onclick="rate(38,'m')">~</button>
+    <button type="button" class="rb" id="b38s" onclick="rate(38,'s')">★</button>
+    <button type="button" class="rb rbd" id="b38ss" onclick="rate(38,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow39">
+  <span class="dnum">40</span>
+  <div class="dinfo"><div class="dname">Animation & motion design</div><div class="dex">making images come alive</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b39x" onclick="rate(39,'x')">✗</button>
+    <button type="button" class="rb" id="b39m" onclick="rate(39,'m')">~</button>
+    <button type="button" class="rb" id="b39s" onclick="rate(39,'s')">★</button>
+    <button type="button" class="rb rbd" id="b39ss" onclick="rate(39,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow40">
+  <span class="dnum">41</span>
+  <div class="dinfo"><div class="dname">Graphic design & typography</div><div class="dex">visual communication and layout</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b40x" onclick="rate(40,'x')">✗</button>
+    <button type="button" class="rb" id="b40m" onclick="rate(40,'m')">~</button>
+    <button type="button" class="rb" id="b40s" onclick="rate(40,'s')">★</button>
+    <button type="button" class="rb rbd" id="b40ss" onclick="rate(40,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow41">
+  <span class="dnum">42</span>
+  <div class="dinfo"><div class="dname">Music composition</div><div class="dex">creating sound and structure</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b41x" onclick="rate(41,'x')">✗</button>
+    <button type="button" class="rb" id="b41m" onclick="rate(41,'m')">~</button>
+    <button type="button" class="rb" id="b41s" onclick="rate(41,'s')">★</button>
+    <button type="button" class="rb rbd" id="b41ss" onclick="rate(41,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow42">
+  <span class="dnum">43</span>
+  <div class="dinfo"><div class="dname">Music performance</div><div class="dex">playing an instrument or singing</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b42x" onclick="rate(42,'x')">✗</button>
+    <button type="button" class="rb" id="b42m" onclick="rate(42,'m')">~</button>
+    <button type="button" class="rb" id="b42s" onclick="rate(42,'s')">★</button>
+    <button type="button" class="rb rbd" id="b42ss" onclick="rate(42,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow43">
+  <span class="dnum">44</span>
+  <div class="dinfo"><div class="dname">Theatre & performance</div><div class="dex">acting, directing, stagecraft</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b43x" onclick="rate(43,'x')">✗</button>
+    <button type="button" class="rb" id="b43m" onclick="rate(43,'m')">~</button>
+    <button type="button" class="rb" id="b43s" onclick="rate(43,'s')">★</button>
+    <button type="button" class="rb rbd" id="b43ss" onclick="rate(43,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow44">
+  <span class="dnum">45</span>
+  <div class="dinfo"><div class="dname">Dance & movement</div><div class="dex">the body as expressive instrument</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b44x" onclick="rate(44,'x')">✗</button>
+    <button type="button" class="rb" id="b44m" onclick="rate(44,'m')">~</button>
+    <button type="button" class="rb" id="b44s" onclick="rate(44,'s')">★</button>
+    <button type="button" class="rb rbd" id="b44ss" onclick="rate(44,'ss')">★★</button>
+  </div>
+</div></div></div><div class="cat-block"><div class="cat-hd cat-blue"><div class="cat-dot" style="background:var(--blue)"></div><span class="cat-nm" style="color:var(--blue)">Health & human development</span></div><div class="dlist"><div class="drow" id="drow45">
+  <span class="dnum">46</span>
+  <div class="dinfo"><div class="dname">Medicine & human health</div><div class="dex">how bodies work and break down</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b45x" onclick="rate(45,'x')">✗</button>
+    <button type="button" class="rb" id="b45m" onclick="rate(45,'m')">~</button>
+    <button type="button" class="rb" id="b45s" onclick="rate(45,'s')">★</button>
+    <button type="button" class="rb rbd" id="b45ss" onclick="rate(45,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow46">
+  <span class="dnum">47</span>
+  <div class="dinfo"><div class="dname">Mental health & therapy</div><div class="dex">emotional wellbeing, counselling</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b46x" onclick="rate(46,'x')">✗</button>
+    <button type="button" class="rb" id="b46m" onclick="rate(46,'m')">~</button>
+    <button type="button" class="rb" id="b46s" onclick="rate(46,'s')">★</button>
+    <button type="button" class="rb rbd" id="b46ss" onclick="rate(46,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow47">
+  <span class="dnum">48</span>
+  <div class="dinfo"><div class="dname">Nutrition & dietetics</div><div class="dex">food, bodies, and performance</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b47x" onclick="rate(47,'x')">✗</button>
+    <button type="button" class="rb" id="b47m" onclick="rate(47,'m')">~</button>
+    <button type="button" class="rb" id="b47s" onclick="rate(47,'s')">★</button>
+    <button type="button" class="rb rbd" id="b47ss" onclick="rate(47,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow48">
+  <span class="dnum">49</span>
+  <div class="dinfo"><div class="dname">Sport science & exercise</div><div class="dex">physical performance and training</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b48x" onclick="rate(48,'x')">✗</button>
+    <button type="button" class="rb" id="b48m" onclick="rate(48,'m')">~</button>
+    <button type="button" class="rb" id="b48s" onclick="rate(48,'s')">★</button>
+    <button type="button" class="rb rbd" id="b48ss" onclick="rate(48,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow49">
+  <span class="dnum">50</span>
+  <div class="dinfo"><div class="dname">Education & learning</div><div class="dex">how people learn and teach</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b49x" onclick="rate(49,'x')">✗</button>
+    <button type="button" class="rb" id="b49m" onclick="rate(49,'m')">~</button>
+    <button type="button" class="rb" id="b49s" onclick="rate(49,'s')">★</button>
+    <button type="button" class="rb rbd" id="b49ss" onclick="rate(49,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow50">
+  <span class="dnum">51</span>
+  <div class="dinfo"><div class="dname">Child & human development</div><div class="dex">how humans grow and change</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b50x" onclick="rate(50,'x')">✗</button>
+    <button type="button" class="rb" id="b50m" onclick="rate(50,'m')">~</button>
+    <button type="button" class="rb" id="b50s" onclick="rate(50,'s')">★</button>
+    <button type="button" class="rb rbd" id="b50ss" onclick="rate(50,'ss')">★★</button>
+  </div>
+</div></div></div><div class="cat-block"><div class="cat-hd cat-green"><div class="cat-dot" style="background:var(--green)"></div><span class="cat-nm" style="color:var(--green)">Business & enterprise</span></div><div class="dlist"><div class="drow" id="drow51">
+  <span class="dnum">52</span>
+  <div class="dinfo"><div class="dname">Entrepreneurship & startups</div><div class="dex">building things from nothing</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b51x" onclick="rate(51,'x')">✗</button>
+    <button type="button" class="rb" id="b51m" onclick="rate(51,'m')">~</button>
+    <button type="button" class="rb" id="b51s" onclick="rate(51,'s')">★</button>
+    <button type="button" class="rb rbd" id="b51ss" onclick="rate(51,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow52">
+  <span class="dnum">53</span>
+  <div class="dinfo"><div class="dname">Marketing & brand strategy</div><div class="dex">how ideas reach and persuade people</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b52x" onclick="rate(52,'x')">✗</button>
+    <button type="button" class="rb" id="b52m" onclick="rate(52,'m')">~</button>
+    <button type="button" class="rb" id="b52s" onclick="rate(52,'s')">★</button>
+    <button type="button" class="rb rbd" id="b52ss" onclick="rate(52,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow53">
+  <span class="dnum">54</span>
+  <div class="dinfo"><div class="dname">Social enterprise & impact</div><div class="dex">using business for social good</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b53x" onclick="rate(53,'x')">✗</button>
+    <button type="button" class="rb" id="b53m" onclick="rate(53,'m')">~</button>
+    <button type="button" class="rb" id="b53s" onclick="rate(53,'s')">★</button>
+    <button type="button" class="rb rbd" id="b53ss" onclick="rate(53,'ss')">★★</button>
+  </div>
+</div><div class="drow" id="drow54">
+  <span class="dnum">55</span>
+  <div class="dinfo"><div class="dname">Supply chains & logistics</div><div class="dex">how goods move around the world</div></div>
+  <div class="dbtns">
+    <button type="button" class="rb" id="b54x" onclick="rate(54,'x')">✗</button>
+    <button type="button" class="rb" id="b54m" onclick="rate(54,'m')">~</button>
+    <button type="button" class="rb" id="b54s" onclick="rate(54,'s')">★</button>
+    <button type="button" class="rb rbd" id="b54ss" onclick="rate(54,'ss')">★★</button>
+  </div>
+</div></div></div>
+  </div>
+
+  <div class="ctarow">
+    <button type="button" class="btnprimary" onclick="showResults()">See my spark profile →</button>
+    <button type="button" class="btnghost" onclick="doReset()">Start over</button>
+    <button type="button" class="btnignite" onclick="showPhase4()">Phase 4 — Ignite ★</button>
+  </div>
+</main>
+
+<!-- PHASE 4 OVERLAY -->
+<div id="p4overlay">
+  <div class="p4wrap">
+    <div class="p4inner">
+
+      <button type="button" class="p4close" onclick="hidePhase4()">← Back to survey</button>
+
+      <div class="p4hero">
+        <div class="p4badge">Phase 4 · 5 minutes</div>
+        <h2 class="p4title">Ignite</h2>
+        <p class="p4subtitle">Turn one spark into a concrete first step before you leave the room.</p>
+      </div>
+
+      <div class="p4why">
+        <div class="p4why-label">Why this matters</div>
+        <p class="p4why-text">A feeling that doesn't become an action fades within days. Small, specific, low-cost commitments made out loud are far more likely to be followed through than general intentions kept private. This phase creates exactly that kind of commitment.</p>
+      </div>
+
+      <div class="p4steps">
+
+        <div class="p4step">
+          <div class="p4step-num">1</div>
+          <div class="p4step-body">
+            <div class="p4step-title">Name your spark specifically <span class="p4time">1 min</span></div>
+            <p class="p4step-desc">Write one sentence in the box below. Be specific — your teacher will likely need to model this first.</p>
+            <div class="p4script">
+              "At the top of your paper, write: <strong>'I think I'm curious about ________ because ________.'</strong> Fill in both blanks. Not 'science' — be more specific. Not 'I like it' — tell us why. You've got sixty seconds."
+            </div>
+            <div class="p4example-block">
+              <div class="p4example-label">Strong example</div>
+              <div class="p4example good">"I think I'm curious about how the brain stores memories because I forget things and want to understand why."</div>
+              <div class="p4example-label" style="margin-top:8px">Too vague</div>
+              <div class="p4example vague">"I think I'm curious about maths."</div>
+            </div>
+            <textarea class="p4textarea" id="spark-sentence" placeholder="I think I'm curious about ________ because ________." rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="p4step">
+          <div class="p4step-num">2</div>
+          <div class="p4step-body">
+            <div class="p4step-title">Choose your micro-action <span class="p4time">1 min</span></div>
+            <p class="p4step-desc">Pick one thing to do in the next 48 hours. Maximum 15 minutes. This is not a project — it is a tiny first step.</p>
+            <div class="p4script">"You're going to pick one thing to do in the next 48 hours — not a project, not a goal, just a tiny first step."</div>
+            <div class="p4actions">
+              <button type="button" class="p4act" data-act="Watch" onclick="pickAction(this)">
+                <span class="p4act-icon">▶</span>
+                <div class="p4act-info">
+                  <div class="p4act-name">Watch</div>
+                  <div class="p4act-desc">Find one video, ten minutes or less, on your topic tonight</div>
+                </div>
+              </button>
+              <button type="button" class="p4act" data-act="Ask" onclick="pickAction(this)">
+                <span class="p4act-icon">?</span>
+                <div class="p4act-info">
+                  <div class="p4act-name">Ask</div>
+                  <div class="p4act-desc">Find one person who knows something about this and ask them one question</div>
+                </div>
+              </button>
+              <button type="button" class="p4act" data-act="Make" onclick="pickAction(this)">
+                <span class="p4act-icon">✦</span>
+                <div class="p4act-info">
+                  <div class="p4act-name">Make</div>
+                  <div class="p4act-desc">Spend fifteen minutes trying to create or do something related to your topic</div>
+                </div>
+              </button>
+              <button type="button" class="p4act" data-act="Read" onclick="pickAction(this)">
+                <span class="p4act-icon">◈</span>
+                <div class="p4act-info">
+                  <div class="p4act-name">Read</div>
+                  <div class="p4act-desc">Find one article, one page of a book, or one thread online about it</div>
+                </div>
+              </button>
+            </div>
+            <div class="p4selected" id="p4selected" style="display:none">
+              <span class="p4selected-label">Your choice:</span>
+              <span id="p4selected-text"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p4step">
+          <div class="p4step-num">3</div>
+          <div class="p4step-body">
+            <div class="p4step-title">Say it out loud <span class="p4time">2 min</span></div>
+            <p class="p4step-desc">When your teacher asks, say three things in ten seconds: your name, your spark, and your action. The point is not accountability — it is hearing yourself say it.</p>
+            <div class="p4script">"We're going to go around the room. Each person says three things: your name, your spark, and your action. Ten seconds each. I'll start: I'm curious about how gifted students lose interest in learning, and I'm going to read one paper about it tonight."</div>
+            <div class="p4warn">Do not explain <em>why</em> you picked your action. Just state it. Justification pressure causes you to second-guess and edit down to something that sounds more impressive — that defeats the purpose.</div>
+          </div>
+        </div>
+
+        <div class="p4step">
+          <div class="p4step-num">4</div>
+          <div class="p4step-body">
+            <div class="p4step-title">Close the loop <span class="p4time">1 min</span></div>
+            <div class="p4script">"Come back and tell me what happened — whether the feeling held up, got bigger, or completely changed. All three are useful information. Finding out you don't actually care about something after trying it? That's not failure, that's exactly what this lesson is for."</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- COMMITMENT CARD -->
+      <div class="p4commit" id="p4commit" style="display:none">
+        <div class="p4commit-label">Your commitment</div>
+        <div class="p4commit-text" id="p4commit-text"></div>
+        <div class="p4commit-actions">
+          <button type="button" class="expbtn btn-clip" onclick="copyCommitment()">⎘ Copy</button>
+          <button type="button" class="expbtn btn-pdf" onclick="downloadCommitment()">↓ Save as PDF</button>
+        </div>
+        <div class="copymsg" id="commit-copymsg">✓ Copied!</div>
+      </div>
+
+      <div class="p4generate-row">
+        <button type="button" class="btnprimary" onclick="generateCommitment()">Generate my commitment card →</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="slbar" id="slbar">
+  <span class="sllbl">Sparks:</span>
+  <div class="sltags" id="sltags"></div>
+  <button type="button" class="slbtn" onclick="showResults()">See profile</button>
+</div>
+
+<script>
+var D = [{"n": "Mathematics & logic", "cat": "Mathematics & computing"}, {"n": "Coding & programming", "cat": "Mathematics & computing"}, {"n": "Artificial intelligence", "cat": "Mathematics & computing"}, {"n": "Robotics & electronics", "cat": "Mathematics & computing"}, {"n": "Data & statistics", "cat": "Mathematics & computing"}, {"n": "Cybersecurity & cryptography", "cat": "Mathematics & computing"}, {"n": "Game design & simulation", "cat": "Mathematics & computing"}, {"n": "Physics & forces", "cat": "Natural sciences"}, {"n": "Chemistry & materials", "cat": "Natural sciences"}, {"n": "Biology & living things", "cat": "Natural sciences"}, {"n": "Genetics & evolution", "cat": "Natural sciences"}, {"n": "Neuroscience & the brain", "cat": "Natural sciences"}, {"n": "Astronomy & space", "cat": "Natural sciences"}, {"n": "Ecology & environment", "cat": "Natural sciences"}, {"n": "Geology & earth science", "cat": "Natural sciences"}, {"n": "Climate & weather systems", "cat": "Natural sciences"}, {"n": "Mechanical engineering", "cat": "Engineering & making"}, {"n": "Electrical engineering", "cat": "Engineering & making"}, {"n": "Architecture & design", "cat": "Engineering & making"}, {"n": "3D printing & fabrication", "cat": "Engineering & making"}, {"n": "Aviation & transport", "cat": "Engineering & making"}, {"n": "Sustainable technology", "cat": "Engineering & making"}, {"n": "History & civilisations", "cat": "Humanities & society"}, {"n": "Archaeology", "cat": "Humanities & society"}, {"n": "Philosophy & ethics", "cat": "Humanities & society"}, {"n": "Psychology & behaviour", "cat": "Humanities & society"}, {"n": "Sociology & culture", "cat": "Humanities & society"}, {"n": "Politics & governance", "cat": "Humanities & society"}, {"n": "Law & justice", "cat": "Humanities & society"}, {"n": "Economics & finance", "cat": "Humanities & society"}, {"n": "Geography & places", "cat": "Humanities & society"}, {"n": "Creative writing & fiction", "cat": "Language & communication"}, {"n": "Poetry & spoken word", "cat": "Language & communication"}, {"n": "Journalism & non-fiction", "cat": "Language & communication"}, {"n": "Linguistics & language", "cat": "Language & communication"}, {"n": "Debate & public speaking", "cat": "Language & communication"}, {"n": "Translation & interpretation", "cat": "Language & communication"}, {"n": "Visual art & illustration", "cat": "Arts & creative practice"}, {"n": "Photography & film", "cat": "Arts & creative practice"}, {"n": "Animation & motion design", "cat": "Arts & creative practice"}, {"n": "Graphic design & typography", "cat": "Arts & creative practice"}, {"n": "Music composition", "cat": "Arts & creative practice"}, {"n": "Music performance", "cat": "Arts & creative practice"}, {"n": "Theatre & performance", "cat": "Arts & creative practice"}, {"n": "Dance & movement", "cat": "Arts & creative practice"}, {"n": "Medicine & human health", "cat": "Health & human development"}, {"n": "Mental health & therapy", "cat": "Health & human development"}, {"n": "Nutrition & dietetics", "cat": "Health & human development"}, {"n": "Sport science & exercise", "cat": "Health & human development"}, {"n": "Education & learning", "cat": "Health & human development"}, {"n": "Child & human development", "cat": "Health & human development"}, {"n": "Entrepreneurship & startups", "cat": "Business & enterprise"}, {"n": "Marketing & brand strategy", "cat": "Business & enterprise"}, {"n": "Social enterprise & impact", "cat": "Business & enterprise"}, {"n": "Supply chains & logistics", "cat": "Business & enterprise"}];
+var TOTAL = 55;
+var MAX = 3;
+var R = {};   // ratings store: index -> 'x'|'m'|'s'|'ss'|null
+
+function count(v) {
+  var c=0; for(var k in R){ if(R[k]===v) c++; } return c;
+}
+
+function rate(i, v) {
+  var cur = R[i] || null;
+  if (cur === v) {
+    // Deselect
+    R[i] = null;
+  } else {
+    // Hard block: cannot add more if full (unless replacing same type)
+    if (v==='s'  && cur!=='s'  && count('s') >=MAX) return;
+    if (v==='ss' && cur!=='ss' && count('ss')>=MAX) return;
+    R[i] = v;
+  }
+  updateRow(i);
+  updateAll();
+}
+
+function updateRow(i) {
+  var v = R[i] || null;
+  // Row background
+  var row = document.getElementById('drow'+i);
+  row.classList.remove('v-x','v-m','v-s','v-ss');
+  if(v) row.classList.add('v-'+v);
+  // Button states — use classList.add/remove, never regex
+  var vals = ['x','m','s','ss'];
+  for(var b=0;b<vals.length;b++) {
+    var btn = document.getElementById('b'+i+vals[b]);
+    if(!btn) continue;
+    btn.classList.remove('sel-x','sel-m','sel-s','sel-ss');
+    if(v===vals[b]) btn.classList.add('sel-'+v);
+  }
+}
+
+function updateAll() {
+  var cs = count('s'), css = count('ss');
+  var sFull = cs>=MAX, ssFull = css>=MAX;
+
+  // Slots
+  for(var j=0;j<MAX;j++) {
+    var es = document.getElementById('ss'+j);
+    var ess = document.getElementById('sss'+j);
+    if(es)  es.classList.toggle('on', j<cs);
+    if(ess) ess.classList.toggle('on', j<css);
+  }
+
+  // Full messages
+  var ms = document.getElementById('msg-s');
+  var mss = document.getElementById('msg-ss');
+  if(ms)  ms.style.display  = sFull  ? 'inline-block' : 'none';
+  if(mss) mss.style.display = ssFull ? 'inline-block' : 'none';
+
+  // Lock/unlock ★ and ★★ buttons
+  for(var i=0;i<TOTAL;i++) {
+    var cur = R[i]||null;
+    var bs = document.getElementById('b'+i+'s');
+    var bss = document.getElementById('b'+i+'ss');
+    if(bs)  bs.classList.toggle('locked',  sFull  && cur!=='s');
+    if(bss) bss.classList.toggle('locked', ssFull && cur!=='ss');
+  }
+
+  // Progress bar
+  var vals = Object.values(R).filter(function(v){return v;});
+  var rated = vals.length;
+  var xs  = vals.filter(function(v){return v==='x';}).length;
+  var ms2 = vals.filter(function(v){return v==='m';}).length;
+
+  document.getElementById('pbf').style.width = Math.round(rated/TOTAL*100)+'%';
+  document.getElementById('pbt').textContent = rated+' / '+TOTAL;
+  document.getElementById('cx').textContent  = '✗ '+xs;
+  document.getElementById('cm').textContent  = '~ '+ms2;
+  document.getElementById('cs').textContent  = '★ '+cs;
+  document.getElementById('css').textContent = '★★ '+css;
+  document.getElementById('fin').classList.toggle('on', rated===TOTAL);
+
+  // Shortlist bar
+  var dstars=[], stars=[];
+  for(var k in R){ if(R[k]==='ss') dstars.push(D[parseInt(k)].n); }
+  for(var k in R){ if(R[k]==='s')  stars.push(D[parseInt(k)].n); }
+  var all = dstars.concat(stars);
+  document.getElementById('slbar').classList.toggle('on', all.length>0);
+  var sh='';
+  for(var a=0;a<dstars.length;a++) sh+='<span class="sltag-ss">★★ '+dstars[a]+'</span>';
+  for(var a=0;a<stars.length;a++)  sh+='<span class="sltag-s">★ '+stars[a]+'</span>';
+  document.getElementById('sltags').innerHTML = sh;
+}
+
+function getData() {
+  var dstars=[],stars=[],maybes=[],nos=0;
+  for(var k in R) {
+    var idx=parseInt(k), v=R[k];
+    if(v==='ss') dstars.push(D[idx].n);
+    else if(v==='s')  stars.push(D[idx].n);
+    else if(v==='m')  maybes.push(D[idx].n);
+    else if(v==='x')  nos++;
+  }
+  return {dstars:dstars,stars:stars,maybes:maybes,nos:nos};
+}
+
+function showResults() {
+  var d = getData();
+  var panel = document.getElementById('res');
+  panel.classList.add('show');
+  setTimeout(function(){panel.classList.add('vis');},10);
+
+  var h=function(list,cls){return list.map(function(s){return '<span class="rtag '+cls+'">'+s+'</span>';}).join('');}
+  document.getElementById('tags-ss').innerHTML = h(d.dstars,'rtag-ss');
+  document.getElementById('tags-s').innerHTML  = h(d.stars,'rtag-s');
+  document.getElementById('tags-m').innerHTML  = h(d.maybes.slice(0,6),'rtag-m');
+  document.getElementById('grp-ss').style.display = d.dstars.length?'block':'none';
+  document.getElementById('grp-s').style.display  = d.stars.length ?'block':'none';
+  document.getElementById('grp-m').style.display  = d.maybes.length?'block':'none';
+
+  var title = "Here's what stood out";
+  if(!d.dstars.length && !d.stars.length) title="Still searching — that\'s okay";
+  else if(d.dstars.length===1) title="Your top spark: "+d.dstars[0];
+  else if(d.dstars.length>1)  title=d.dstars.length+" top sparks identified";
+  document.getElementById('rtitle').textContent = title;
+
+  var next='';
+  if(!d.dstars.length && !d.stars.length) {
+    next='Nothing landed yet — that\'s fine. Try the card game and see if holding a domain name sparks something.';
+  } else if(d.dstars.length) {
+    next='Take your ★★ areas into the card game. Ask: "If I had one free afternoon, which would I explore?" Your ★ areas are your next step once you\'ve started on your top spark.';
+  } else {
+    next='You have ★ interests but no ★★ yet. Scroll back and see if any feels stronger — if not, take all three into the card game bracket to decide.';
+  }
+  document.getElementById('rnext').textContent = next;
+  document.getElementById('rruled').textContent = d.nos>0?'You ruled out '+d.nos+' domain'+(d.nos!==1?'s':'')+'  — that clarity is just as valuable.':'';
+  panel.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function buildText() {
+  var d=getData();
+  var dt=new Date().toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'});
+  var L=['SPARK — PASSION DISCOVERY SURVEY','Date: '+dt,''];
+  L.push('★★ MY MOST INTERESTED AREAS');
+  L.push('(Your strongest sparks — start here)');
+  if(d.dstars.length){for(var i=0;i<d.dstars.length;i++) L.push('  '+(i+1)+'. '+d.dstars[i]);}
+  else L.push('  None selected yet');
+  L.push('');
+  L.push('★ MY NEXT INTERESTS');
+  L.push('(Worth exploring after your top areas)');
+  if(d.stars.length){for(var i=0;i<d.stars.length;i++) L.push('  '+(i+1)+'. '+d.stars[i]);}
+  else L.push('  None selected yet');
+  L.push('');
+  if(d.maybes.length){
+    L.push('~ STILL ON THE TABLE');
+    for(var i=0;i<d.maybes.length;i++) L.push('  - '+d.maybes[i]);
+    L.push('');
+  }
+  L.push('Ruled out: '+d.nos+' domain'+(d.nos!==1?'s':''));
+  L.push('Next step: Take your ★★ areas into the card game.');
+  return L.join('\n');
+}
+
+function doCopy() {
+  var txt=buildText();
+  var msg=document.getElementById('copymsg');
+  function ok(){msg.classList.add('on');setTimeout(function(){msg.classList.remove('on');},3500);}
+  if(navigator.clipboard&&navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(ok,function(){ fallbackCopy(txt,ok); });
+  } else { fallbackCopy(txt,ok); }
+}
+
+function fallbackCopy(txt,cb) {
+  var ta=document.createElement('textarea');
+  ta.value=txt; ta.style.cssText='position:fixed;top:0;left:0;opacity:0;';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try{document.execCommand('copy');cb();}catch(e){alert('Please copy this text manually:\n\n'+txt);}
+  document.body.removeChild(ta);
+}
+
+function doPDF() {
+  var d=getData();
+  var dt=new Date().toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'});
+  var di=function(cls,sym,name){return '<div class="di '+cls+'">'+sym+'&nbsp; '+name+'</div>';}
+  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>My Spark Profile</title>';
+  html+='<style>body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:580px;margin:36px auto;padding:0 22px;color:#1C1A2E;}';
+  html+='h1{font-size:26px;margin-bottom:3px;}';
+  html+='.dt{font-size:12px;color:#888;margin-bottom:28px;}';
+  html+='.sec{margin-bottom:24px;}';
+  html+='.sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px;}';
+  html+='.sb{font-size:11px;color:#666;margin-bottom:10px;line-height:1.5;}';
+  html+='.di{padding:9px 13px;border-radius:9px;margin-bottom:6px;font-size:14px;font-weight:500;}';
+  html+='.dss{background:#FFF8DC;color:#7A5A00;border:1px solid rgba(184,134,11,.2);}';
+  html+='.ds{background:#EEEDFE;color:#3C3489;border:1px solid rgba(83,74,183,.15);}';
+  html+='.dm{background:#F4F3F8;color:#444;border:1px solid #ddd;}';
+  html+='.ruled{font-size:12px;color:#999;margin-top:6px;}';
+  html+='.nxt{background:#F7F6FB;border-radius:9px;padding:13px 15px;font-size:13px;color:#444;line-height:1.6;margin-top:24px;border:1px solid #E0DFF0;}';
+  html+='.nxtl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#534AB7;margin-bottom:5px;}';
+  html+='@media print{body{margin:16px auto;}@page{margin:18mm;}}';
+  html+='</style></head><body>';
+  html+='<h1>My Spark Profile</h1><div class="dt">Passion Discovery Survey &nbsp;·&nbsp; '+dt+'</div>';
+  html+='<div class="sec"><div class="sl" style="color:#9A6F00">★★ My most interested areas</div>';
+  html+='<div class="sb">My strongest sparks — where I want to start exploring.</div>';
+  if(d.dstars.length){for(var i=0;i<d.dstars.length;i++) html+=di('dss','★★',d.dstars[i]);}
+  else html+=di('dm','','None selected yet');
+  html+='</div>';
+  html+='<div class="sec"><div class="sl" style="color:#534AB7">★ My next interests</div>';
+  html+='<div class="sb">Worth exploring once I\'ve started on my top areas.</div>';
+  if(d.stars.length){for(var i=0;i<d.stars.length;i++) html+=di('ds','★',d.stars[i]);}
+  else html+=di('dm','','None selected yet');
+  html+='</div>';
+  if(d.maybes.length){
+    html+='<div class="sec"><div class="sl" style="color:#888">~ Still on the table</div>';
+    for(var i=0;i<d.maybes.length;i++) html+=di('dm','~',d.maybes[i]);
+    html+='</div>';
+  }
+  if(d.nos>0) html+='<div class="ruled">Ruled out '+d.nos+' domain'+(d.nos!==1?'s':'')+'</div>';
+  html+='<div class="nxt"><div class="nxtl">What to do next</div>';
+  html+=(d.dstars.length?'Take my ★★ areas into the card game. Ask: "If I had one free afternoon, which would I explore?" My ★ areas are next once I\'ve started on my top spark.':'Take my starred areas into the card game bracket to find my strongest spark.');
+  html+='</div></body></html>';
+
+  var blob=new Blob([html],{type:'text/html'});
+  var url=URL.createObjectURL(blob);
+  var win=window.open(url,'_blank');
+  if(win){
+    win.onload=function(){setTimeout(function(){win.print();},350);};
+  } else {
+    var a=document.createElement('a');
+    a.href=url; a.download='my-spark-profile.html';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }
+  setTimeout(function(){URL.revokeObjectURL(url);},8000);
+}
+
+function doReset() {
+  R={};
+  for(var i=0;i<TOTAL;i++) {
+    var row=document.getElementById('drow'+i);
+    if(row) {
+      row.classList.remove('v-x','v-m','v-s','v-ss');
+      var vs=['x','m','s','ss'];
+      for(var b=0;b<vs.length;b++) {
+        var btn=document.getElementById('b'+i+vs[b]);
+        if(btn) btn.classList.remove('sel-x','sel-m','sel-s','sel-ss','locked');
+      }
+    }
+  }
+  updateAll();
+  var panel=document.getElementById('res');
+  panel.classList.remove('show','vis');
+  document.getElementById('fin').classList.remove('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── PHASE 4 ──────────────────────────────────────────────
+var chosenAction = null;
+
+function showPhase4() {
+  var overlay = document.getElementById('p4overlay');
+  overlay.classList.add('p4open');
+  overlay.scrollTop = 0;
+  // Pre-fill spark sentence from results if available
+  var d = getData();
+  var ta = document.getElementById('spark-sentence');
+  if (ta && ta.value === '' && d.dstars.length) {
+    ta.value = 'I think I\'m curious about ' + d.dstars[0] + ' because ';
+  }
+}
+
+function hidePhase4() {
+  document.getElementById('p4overlay').classList.remove('p4open');
+}
+
+function pickAction(btn) {
+  chosenAction = btn.getAttribute('data-act');
+  document.querySelectorAll('.p4act').forEach(function(b){ b.classList.remove('chosen'); });
+  btn.classList.add('chosen');
+  var sel = document.getElementById('p4selected');
+  var txt = document.getElementById('p4selected-text');
+  sel.style.display = 'block';
+  var descs = {
+    'Watch': 'Find one video, ten minutes or less, on your topic tonight.',
+    'Ask':   'Find one person who knows something about this and ask them one question.',
+    'Make':  'Spend fifteen minutes trying to create or do something related to your topic.',
+    'Read':  'Find one article, one page of a book, or one thread online about it.'
+  };
+  txt.textContent = chosenAction + ' — ' + descs[chosenAction];
+}
+
+function generateCommitment() {
+  var spark = document.getElementById('spark-sentence').value.trim();
+  var commit = document.getElementById('p4commit');
+  var commitText = document.getElementById('p4commit-text');
+
+  if (!spark && !chosenAction) {
+    alert('Fill in your spark sentence and choose an action first.');
+    return;
+  }
+
+  var lines = [];
+  if (spark) lines.push('\u2733 My spark: ' + spark);
+  if (chosenAction) {
+    var descs = {
+      'Watch': 'Find one video, ten minutes or less, on this topic tonight.',
+      'Ask':   'Find one person who knows something about this and ask them one question.',
+      'Make':  'Spend fifteen minutes trying to create or do something related to this.',
+      'Read':  'Find one article, one page of a book, or one thread online about it.'
+    };
+    lines.push('\u2192 My action (' + chosenAction + '): ' + descs[chosenAction]);
+  }
+  lines.push('');
+  lines.push('I will do this in the next 48 hours.');
+
+  commitText.innerHTML = lines.map(function(l){ return l ? '<div>' + l + '</div>' : '<div style="height:6px"></div>'; }).join('');
+  commit.style.display = 'block';
+  commit.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function copyCommitment() {
+  var spark = document.getElementById('spark-sentence').value.trim();
+  var descs = {
+    'Watch': 'Find one video, ten minutes or less, on this topic tonight.',
+    'Ask':   'Find one person who knows something about this and ask them one question.',
+    'Make':  'Spend fifteen minutes trying to create or do something related to this.',
+    'Read':  'Find one article, one page of a book, or one thread online about it.'
+  };
+  var lines = ['PHASE 4 — MY COMMITMENT', ''];
+  if (spark) lines.push('My spark: ' + spark);
+  if (chosenAction) lines.push('My action (' + chosenAction + '): ' + descs[chosenAction]);
+  lines.push(''); lines.push('I will do this in the next 48 hours.');
+  var txt = lines.join('\n');
+  var msg = document.getElementById('commit-copymsg');
+  function ok(){ msg.classList.add('on'); setTimeout(function(){ msg.classList.remove('on'); }, 2500); }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(ok, function(){ fallbackCopy(txt, ok); });
+  } else { fallbackCopy(txt, ok); }
+}
+
+function downloadCommitment() {
+  var spark = document.getElementById('spark-sentence').value.trim();
+  var descs = {
+    'Watch': 'Find one video, ten minutes or less, on this topic tonight.',
+    'Ask':   'Find one person who knows something about this and ask them one question.',
+    'Make':  'Spend fifteen minutes trying to create or do something related to this.',
+    'Read':  'Find one article, one page of a book, or one thread online about it.'
+  };
+  var dt = new Date().toLocaleDateString('en-AU', {day:'numeric', month:'long', year:'numeric'});
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>My Commitment</title>';
+  html += '<style>body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:500px;margin:48px auto;padding:0 24px;color:#1C1A2E;}';
+  html += 'h1{font-size:24px;margin-bottom:4px;}';
+  html += '.dt{font-size:12px;color:#888;margin-bottom:32px;}';
+  html += '.item{padding:14px 16px;border-radius:12px;margin-bottom:12px;font-size:14px;line-height:1.6;}';
+  html += '.spark{background:#EEEDFE;color:#3C3489;border:1px solid rgba(83,74,183,.15);}';
+  html += '.action{background:#E1F5EE;color:#0F6E56;border:1px solid rgba(15,110,86,.15);}';
+  html += '.pledge{background:#1C1A2E;color:#fff;border-radius:12px;padding:16px;margin-top:20px;font-size:14px;line-height:1.6;}';
+  html += '.pl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#AFA9EC;margin-bottom:6px;}';
+  html += '@media print{body{margin:20px auto;}@page{margin:18mm;}}';
+  html += '</style></head><body>';
+  html += '<h1>My commitment</h1><div class="dt">Phase 4 — Ignite &nbsp;·&nbsp; ' + dt + '</div>';
+  if (spark) html += '<div class="item spark">\u2733 <strong>My spark:</strong> ' + spark + '</div>';
+  if (chosenAction) html += '<div class="item action">\u2192 <strong>My action (' + chosenAction + '):</strong> ' + descs[chosenAction] + '</div>';
+  html += '<div class="pledge"><div class="pl">My pledge</div>I will do this in the next 48 hours. Whether the feeling holds up, gets bigger, or changes completely — I will come back and report what happened.</div>';
+  html += '</body></html>';
+  var blob = new Blob([html], {type:'text/html'});
+  var url = URL.createObjectURL(blob);
+  var win = window.open(url, '_blank');
+  if (win) { win.onload = function(){ setTimeout(function(){ win.print(); }, 350); }; }
+  else { var a = document.createElement('a'); a.href=url; a.download='my-commitment.html'; document.body.appendChild(a); a.click(); document.body.removeChild(a); }
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 8000);
+}
+</script>
+</body>
+</html>
