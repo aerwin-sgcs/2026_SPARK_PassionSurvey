@@ -421,6 +421,76 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   text-decoration:none;padding:3px 9px;border-radius:20px;
   background:rgba(83,74,183,.2);}
 
+/* PHASE 6 BUTTON */
+.btnsubject{padding:10px 16px;border-radius:28px;
+  background:linear-gradient(135deg,#534AB7,#6E64D4);color:#fff;
+  border:none;font-size:13px;font-weight:600;cursor:pointer;
+  font-family:var(--sans);transition:all .15s;
+  box-shadow:0 2px 12px rgba(83,74,183,.3);white-space:nowrap;}
+.btnsubject:hover{background:linear-gradient(135deg,#3C3489,#534AB7);transform:translateY(-1px);}
+.btnsubject:active{transform:scale(.97);}
+
+/* PHASE 6 OVERLAY */
+#p6overlay{
+  position:fixed;inset:0;z-index:200;
+  background:var(--surf);overflow-y:auto;
+  transform:translateX(100%);
+  pointer-events:none;
+  transition:transform 0.3s ease;
+  will-change:transform;
+}
+#p6overlay.p6open{
+  transform:translateX(0%);
+  pointer-events:auto;
+}
+.p6wrap{max-width:680px;margin:0 auto;padding:20px 16px 80px;}
+.p6hero{background:var(--ink);border-radius:18px;padding:28px 24px 24px;
+  margin-bottom:20px;position:relative;overflow:hidden;}
+.p6hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 20% 60%,rgba(83,74,183,.4) 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 20%,rgba(15,110,86,.22) 0%,transparent 50%);
+  pointer-events:none;}
+.p6badge{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--purple-m);
+  background:rgba(83,74,183,.25);border:1px solid rgba(175,169,236,.3);
+  padding:4px 12px;border-radius:20px;margin-bottom:12px;position:relative;}
+
+.p6section{background:var(--card);border:1px solid rgba(0,0,0,.07);
+  border-radius:14px;padding:16px;margin-bottom:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.p6section-label{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--muted);margin-bottom:10px;}
+.p6prompt{font-size:12.5px;color:var(--muted);margin-bottom:10px;line-height:1.55;}
+
+.p6chips{display:flex;flex-wrap:wrap;gap:7px;}
+.p6chip{padding:8px 13px;border-radius:22px;border:1.5px solid rgba(0,0,0,.1);
+  background:var(--faint);font-size:13px;font-weight:500;color:var(--ink);
+  cursor:pointer;font-family:var(--sans);transition:all .15s;
+  -webkit-tap-highlight-color:transparent;text-align:left;}
+.p6chip:active{transform:scale(.97);}
+.p6chip.on{background:var(--purple);color:#fff;border-color:var(--purple);
+  box-shadow:0 2px 8px rgba(83,74,183,.25);}
+.p6chip.on-ss{background:#B8860B;color:#fff;border-color:#9A6F00;
+  box-shadow:0 2px 8px rgba(154,111,0,.3);}
+
+.p6cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px;}
+@media (max-width:560px){.p6cols{grid-template-columns:1fr;}}
+.p6col{background:var(--card);border:1px solid rgba(0,0,0,.07);
+  border-radius:14px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.p6col-label{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;margin-bottom:4px;}
+.p6col-title{font-size:14px;font-weight:700;color:var(--ink);
+  margin-bottom:12px;line-height:1.3;}
+.p6list{display:flex;flex-direction:column;gap:8px;}
+.p6item{padding:9px 12px;border-radius:9px;font-size:13px;line-height:1.5;
+  border:1px solid;}
+.p6move{background:var(--purple-l);color:var(--purple-d);border-color:rgba(83,74,183,.18);}
+.p6hook{background:var(--teal-l);color:var(--teal);border-color:rgba(15,110,86,.18);}
+
+.p6footer{margin-top:14px;padding:13px 15px;border-radius:12px;
+  background:var(--ink);color:#fff;font-size:13px;line-height:1.65;}
+.p6footer strong{color:#FFD060;}
+
 </style>
 </head>
 <body>
@@ -1008,6 +1078,7 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
     <button type="button" class="btnprimary" onclick="showResults()">See my passion profile →</button>
     <button type="button" class="btnignite" onclick="showPhase4()">Phase 4 — Ignite ★</button>
     <button type="button" class="btnwhats-next" onclick="showPhase5()">Phase 5 — What's next? →</button>
+    <button type="button" class="btnsubject" onclick="showPhase6()">Phase 6 — Use your spark →</button>
   </div>
 </main>
 
@@ -1142,6 +1213,46 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
       <p class="p5note">This list is a starting point. Things change each year — always check the website for current dates and eligibility.</p>
     </div>
     <div class="p5cats" id="p5cats"></div>
+  </div>
+</div>
+
+<!-- PHASE 6 OVERLAY -->
+<div id="p6overlay">
+  <div class="p6wrap">
+    <button type="button" class="p4close" onclick="hidePhase6()">← Back to survey</button>
+    <div class="p6hero">
+      <div class="p6badge">Phase 6 · Use your spark in class</div>
+      <h2 class="p4title">Carry your spark</h2>
+      <p class="p4subtitle">Your spark is a way of thinking, not just a topic. Every subject has places to plug it in. Pick a spark, pick the subject you're sitting in, and find your hint for this lesson.</p>
+    </div>
+
+    <div class="p6section">
+      <div class="p6section-label">Step 1 — Your spark</div>
+      <div class="p6prompt" id="p6spark-prompt">Tap one of your sparks below.</div>
+      <div class="p6chips" id="p6sparks"></div>
+    </div>
+
+    <div class="p6section">
+      <div class="p6section-label">Step 2 — Subject you're in</div>
+      <div class="p6prompt">Pick the subject. The hints below update as you switch.</div>
+      <div class="p6chips" id="p6subjects"></div>
+    </div>
+
+    <div id="p6result" style="display:none">
+      <div class="p6cols">
+        <div class="p6col">
+          <div class="p6col-label" style="color:var(--purple)">Your spark teaches you to…</div>
+          <div class="p6col-title" id="p6col-spark"></div>
+          <div class="p6list" id="p6moves"></div>
+        </div>
+        <div class="p6col">
+          <div class="p6col-label" style="color:var(--teal)">Where to plug it in</div>
+          <div class="p6col-title" id="p6col-subject"></div>
+          <div class="p6list" id="p6hooks"></div>
+        </div>
+      </div>
+      <div class="p6footer">Pick <strong>one move</strong> from the left and <strong>one hook</strong> from the right. Combine them in your head — that's your hint for this lesson. The connection itself is yours to find.</div>
+    </div>
   </div>
 </div>
 
@@ -1793,6 +1904,188 @@ function toggleCat(idx) {
       btn.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 60);
   }
+}
+
+// ── PHASE 6 ──────────────────────────────────────────────
+var SPARK_MOVES = {
+  "Mathematics & logic": ["Look for the underlying pattern.", "Strip the problem to its rules.", "Test whether something is provable.", "Find the most elegant route to the answer.", "Ask: where does this break?"],
+  "Coding & programming": ["Break the problem into smaller steps.", "Spot the repeating task that could be automated.", "Ask: could a script do this?", "Test edge cases before the obvious ones.", "Build the simplest working version first."],
+  "Artificial intelligence": ["Ask what data the system learns from.", "Spot the human judgement being replaced.", "Question the bias hidden in the training.", "Look for what the model gets confidently wrong.", "Notice where automation changes the work."],
+  "Robotics & electronics": ["Trace the path from input to output.", "Ask what sensor would detect this.", "Look for the moving part that could fail.", "Spot the energy flow through the system.", "Notice the bridge between physical and digital."],
+  "Data & statistics": ["Ask 'compared to what?' for any number.", "Hunt for the sample bias.", "Look for the trend, then the outliers.", "Question what the average is hiding.", "Find the data set behind the claim."],
+  "Cybersecurity & cryptography": ["Ask who would want to break this.", "Spot what information is being trusted.", "Look for the weak link in the chain.", "Question what a secret really protects.", "Notice where humans are the vulnerability."],
+  "Game design & simulation": ["Identify the rules, the goal, and the loop.", "Ask what real choice the player has.", "Look for the feedback that teaches behaviour.", "Spot the balance between challenge and reward.", "Model a real system as a simplified game."],
+  "Physics & forces": ["Ask what forces are acting on this.", "Look for energy moving or transforming.", "Question the scale: does it still work bigger or smaller?", "Spot the trade-off between speed, mass and energy.", "Ask: what if gravity, friction or drag changed?"],
+  "Chemistry & materials": ["Ask what this is made of, and why.", "Look for the reaction or change of state.", "Question why this material was chosen.", "Spot the trade-off — strong vs light, cheap vs durable.", "Notice the chemistry inside everyday objects."],
+  "Biology & living things": ["Ask what function each part serves.", "Look for the link between structure and behaviour.", "Spot the system within the system.", "Question how the organism stays in balance.", "Notice patterns repeated across species."],
+  "Genetics & evolution": ["Look for variation across the group.", "Ask what passes from one generation to the next.", "Spot what gives an advantage in this environment.", "Question how this trait spread.", "Trace the story of how something came to be."],
+  "Neuroscience & the brain": ["Ask which part of the brain handles this.", "Look for the link between behaviour and biology.", "Question what happens when something goes wrong.", "Spot the feedback loop in the nervous system.", "Notice how learning changes the brain."],
+  "Astronomy & space": ["Look for the scale — size, distance, time.", "Ask what is happening out there right now.", "Question how we know what we cannot reach.", "Spot the same physics on a cosmic scale.", "Notice the link between Earth and the wider universe."],
+  "Ecology & environment": ["Trace the energy through a food chain.", "Ask what depends on what.", "Spot the consequence of removing one piece.", "Question the balance between species.", "Look for the system rather than the individual."],
+  "Geology & earth science": ["Look at the deep time behind a landscape.", "Ask how this rock, soil or feature formed.", "Spot the slow process and the sudden event.", "Question what the ground tells you about the past.", "Notice the layers and what they record."],
+  "Climate & weather systems": ["Look for the pattern across decades, not days.", "Ask what drives this system.", "Spot the feedback loop — warming, cooling, melting.", "Question the model and its assumptions.", "Notice the link between local weather and global system."],
+  "Mechanical engineering": ["Trace the force through the parts.", "Ask what is moving, what is fixed, what is wearing.", "Spot the simplest mechanism that would solve it.", "Question the trade-off between strength and weight.", "Notice where the design could fail."],
+  "Electrical engineering": ["Trace where the current flows.", "Ask what controls the signal.", "Spot the input, the process, the output.", "Question how much power this really needs.", "Notice the circuit hidden inside the device."],
+  "Architecture & design": ["Look at how people move through this space.", "Ask what the building is for, then how it shows that.", "Spot the relationship between form and function.", "Question the materials and the local climate.", "Notice the proportion, the light, the feeling."],
+  "3D printing & fabrication": ["Ask: how would I make this from scratch?", "Spot the design that cannot be made the old way.", "Question the tolerance and the finish.", "Look for waste and how to reduce it.", "Notice the link between digital file and physical part."],
+  "Aviation & transport": ["Ask what makes this safe enough, fast enough, cheap enough.", "Look at the trade-offs in moving people or goods.", "Spot the bottleneck in the journey.", "Question the energy cost per kilometre.", "Notice the network behind the single trip."],
+  "Sustainable technology": ["Ask what this costs the planet over its full life.", "Spot the linear take-make-waste cycle.", "Look for the loop that closes it.", "Question whether efficient is the same as sustainable.", "Notice the trade-off behind the green claim."],
+  "History & civilisations": ["Ask why this happened now and not earlier or later.", "Look for the long causes behind the sudden event.", "Question whose story is missing from the version told.", "Spot the pattern repeating in a new century.", "Notice the ordinary life behind the big names."],
+  "Archaeology": ["Ask what an object tells you about its owner.", "Look at the layer, not just the find.", "Question what was thrown away and what survived.", "Spot the everyday inside what is left behind.", "Notice the gap between what we can prove and what we guess."],
+  "Philosophy & ethics": ["Ask: what would have to be true for that to be right?", "Spot the assumption hiding in the argument.", "Question the trade-off between two goods.", "Look for the principle behind the rule.", "Notice when an argument quietly shifts what it claims."],
+  "Psychology & behaviour": ["Ask what need this behaviour might be meeting.", "Look for the situation, not just the person.", "Question the difference between cause and correlation.", "Spot the bias in the experiment design.", "Notice how a small nudge changes a big outcome."],
+  "Sociology & culture": ["Ask what group this belongs to and what holds it together.", "Look at the unwritten rules.", "Question who benefits from this norm.", "Spot the difference between insider and outsider view.", "Notice what changes across generations."],
+  "Politics & governance": ["Ask: who decides, and how?", "Look for the interests behind the policy.", "Question what the rule does vs what it claims.", "Spot the trade-off the leader is making.", "Notice the gap between law and practice."],
+  "Law & justice": ["Ask what the rule is trying to protect.", "Look at the principle, the precedent and the case.", "Question what 'fair' would look like here.", "Spot the consequences the law did not predict.", "Notice the difference between legal and right."],
+  "Economics & finance": ["Ask: who pays, who benefits?", "Look for the incentive driving the choice.", "Question the trade-off — now vs later, mine vs ours.", "Spot the market that is missing or broken.", "Notice the second-order effect."],
+  "Geography & places": ["Ask how place shapes people, and people shape the place.", "Look at the map and the climate together.", "Spot the resource that explains the settlement.", "Question the border and what it ignores.", "Notice the layers of a single landscape."],
+  "Creative writing & fiction": ["Ask: whose story is this?", "Look for the conflict, then the cost of it.", "Question what the character wants vs what they need.", "Spot the small detail that opens a big world.", "Notice how rhythm and silence shape meaning."],
+  "Poetry & spoken word": ["Listen for the sound under the words.", "Look for the image doing the heaviest work.", "Question every word — could a sharper one replace it?", "Spot the rhythm, the break, the breath.", "Notice what is not being said."],
+  "Journalism & non-fiction": ["Ask: what is the story in one sentence?", "Look for the source and how they know.", "Question who has not been spoken to yet.", "Spot the difference between fact, claim and opinion.", "Notice the angle the writer chose."],
+  "Linguistics & language": ["Ask why this word and not another.", "Look for the pattern across languages.", "Spot the rule the speaker does not know they are using.", "Question how meaning shifts with context.", "Notice what language does to thought."],
+  "Debate & public speaking": ["Ask what the strongest version of the other side is.", "Look for the claim, the warrant, the evidence.", "Question your own argument for the weakest link.", "Spot the audience and what would land for them.", "Notice when you have won, and stop."],
+  "Translation & interpretation": ["Ask what cannot be said in the other language.", "Look for the cultural assumption inside the word.", "Question whether faithful means literal or felt.", "Spot the rhythm and tone, not just the meaning.", "Notice the gap and decide how to close it."],
+  "Visual art & illustration": ["Ask what the eye is meant to land on first.", "Look at composition, value, and colour relationship.", "Question what could be removed without loss.", "Spot the choice of medium and why it suits the idea.", "Notice the emotion before the technique."],
+  "Photography & film": ["Look for the light first, the subject second.", "Ask what is inside the frame and what is not.", "Question the angle, the height, the distance.", "Spot the moment, not just the scene.", "Notice the story inside one still image."],
+  "Animation & motion design": ["Ask what the movement reveals about the character.", "Look for timing, weight and anticipation.", "Question the simplest motion that would say it.", "Spot the rhythm of the cut.", "Notice how something inanimate becomes alive."],
+  "Graphic design & typography": ["Look at hierarchy — what reads first, second, third.", "Ask what feeling the type carries.", "Question every alignment, every margin.", "Spot the contrast doing the work.", "Notice the brand voice in a single glance."],
+  "Music composition": ["Ask what the piece is saying without words.", "Look for the structure — tension, release, return.", "Question the rhythm, the rest, the surprise.", "Spot the motif and how it transforms.", "Notice the choice of instrument and what it carries."],
+  "Music performance": ["Ask what feeling you want the audience to leave with.", "Look at the breath, the phrasing, the silence.", "Question the tempo and what it does to the meaning.", "Spot the technical bit blocking the music.", "Notice the difference between playing and communicating."],
+  "Theatre & performance": ["Ask what your character wants in this moment.", "Look for the action under the line.", "Question how the body says what the voice does not.", "Spot the relationship between you and the others on stage.", "Notice the audience as the third partner."],
+  "Dance & movement": ["Ask what the body is saying that words cannot.", "Look at the space, the level, the line.", "Question the rhythm and the stillness.", "Spot the relationship between music and movement.", "Notice how meaning lives in the muscles."],
+  "Medicine & human health": ["Ask what symptom suggests which system.", "Look at risk, benefit, and certainty.", "Question the trade-off behind the treatment.", "Spot the difference between cause and trigger.", "Notice the patient as well as the case."],
+  "Mental health & therapy": ["Ask what the behaviour might be protecting against.", "Look for the pattern across situations.", "Question the difference between feeling and meaning.", "Spot the small change that would matter.", "Notice the role of the body in the mind."],
+  "Nutrition & dietetics": ["Ask what this food does in the body.", "Look for the trade-off in any single nutrient.", "Question the claim and where the evidence comes from.", "Spot the difference between a food and a nutrient.", "Notice culture and access, not just choice."],
+  "Sport science & exercise": ["Ask what system this loads — strength, endurance, skill.", "Look at recovery, not just training.", "Question the measure and what it misses.", "Spot the trade-off between specialisation and breadth.", "Notice the link between body and mind in performance."],
+  "Education & learning": ["Ask: what does the learner actually do here?", "Look at the gap between teaching and learning.", "Question the assessment — is it measuring what matters?", "Spot the misconception blocking the next step.", "Notice the role of feedback and timing."],
+  "Child & human development": ["Ask what is age-typical for this stage.", "Look for the link between environment and growth.", "Question what looks like a problem but is a phase.", "Spot the role of relationship in development.", "Notice the difference between 'ahead' and 'different'."],
+  "Entrepreneurship & startups": ["Ask what problem this solves and for whom.", "Look for the customer behind the idea.", "Question the smallest version that would test it.", "Spot the unfair advantage you actually have.", "Notice the difference between busy and progress."],
+  "Marketing & brand strategy": ["Ask who this is for and what they already believe.", "Look at the promise and whether the product keeps it.", "Question the message at three words and at thirty.", "Spot the emotion that drives the choice.", "Notice what the audience says when you are not there."],
+  "Social enterprise & impact": ["Ask what change you would measure to know it worked.", "Look for the system, not just the symptom.", "Question whether good intent is enough.", "Spot the unintended consequence.", "Notice the difference between charity and structure."],
+  "Supply chains & logistics": ["Ask where did this come from and how it got here.", "Look at the bottleneck and the buffer.", "Question the cost of each step.", "Spot the failure that could break the chain.", "Notice the people inside the system."]
+};
+
+var SUBJECTS = [
+  { name: "English", hooks: ["The text you choose to study or analyse.", "The topic of your next piece of writing.", "The voice and audience you write for.", "Extension: how would this text read through my spark?"] },
+  { name: "Maths", hooks: ["The context for your next investigation or project.", "The data set you bring in to analyse.", "Real-world problems you build from a topic.", "Extension: where does this maths actually get used?"] },
+  { name: "Science", hooks: ["The question you investigate in a practical.", "The topic of your research task.", "The example you choose for an explanation.", "Extension: how does this connect to my spark?"] },
+  { name: "History", hooks: ["The depth study or topic you pick.", "The source you bring in to analyse.", "The figure, era or event you research.", "Extension: how would my spark have played out in this period?"] },
+  { name: "Geography", hooks: ["The case study or place you choose.", "The fieldwork topic or focus.", "The map, data or photo you bring in.", "Extension: how does my spark show up in this place or system?"] },
+  { name: "PDHPE", hooks: ["The wellbeing or movement topic you focus on.", "The skill or sport you analyse.", "The case study or campaign you design.", "Extension: how does my spark connect to body or mind?"] },
+  { name: "Visual Arts", hooks: ["The subject of your artwork.", "The artist or movement you study.", "The medium or technique you experiment with.", "Extension: how would my spark look as an image?"] },
+  { name: "Music", hooks: ["The piece you choose to perform or compose.", "The genre or musician you study.", "The mood, story or theme of your composition.", "Extension: how does my spark sound as music?"] },
+  { name: "Drama", hooks: ["The scene, character or improvisation topic.", "The play or playwright you study.", "The devised piece you build with your group.", "Extension: how would my spark become a story on stage?"] },
+  { name: "Tech Mandatory", hooks: ["The design brief you respond to.", "The user you are designing for.", "The material or process you experiment with.", "Extension: could my spark solve a real problem here?"] },
+  { name: "Commerce", hooks: ["The business, product or campaign you analyse.", "The consumer or financial scenario you build.", "The case study or news story you bring in.", "Extension: how does my spark create or capture value?"] },
+  { name: "Food Tech", hooks: ["The dish, ingredient or cuisine you design with.", "The audience or dietary brief you respond to.", "The food system or cultural angle you investigate.", "Extension: how does my spark connect to food?"] },
+  { name: "Industrial Tech — Timber", hooks: ["The end-user of your build.", "The function or style of your design.", "The joinery, finish or detail you push further.", "Extension: how would my spark shape this object?"] },
+  { name: "PASS", hooks: ["The sport, skill or movement topic.", "The research or coaching task you design.", "The participation or wellbeing project.", "Extension: how does my spark inform how I think about sport?"] },
+  { name: "Languages", hooks: ["The topic, dialogue or culture you focus on.", "The text, song or media you bring in.", "The cultural comparison you make.", "Extension: how does my spark live in another culture?"] },
+  { name: "Multimedia", hooks: ["The brief, topic or story you respond to.", "The audience you make it for.", "The style, genre or platform you target.", "Extension: how would my spark look as media?"] }
+];
+
+var p6Spark = null;
+var p6SubjectIdx = null;
+var p6SubjectsBuilt = false;
+
+function showPhase6() {
+  var overlay = document.getElementById('p6overlay');
+  overlay.classList.add('p6open');
+  overlay.scrollTop = 0;
+  buildP6Sparks();
+  buildP6Subjects();
+}
+
+function hidePhase6() {
+  document.getElementById('p6overlay').classList.remove('p6open');
+}
+
+function buildP6Sparks() {
+  var d = getData();
+  var container = document.getElementById('p6sparks');
+  var prompt = document.getElementById('p6spark-prompt');
+  container.innerHTML = '';
+  p6Spark = null;
+
+  var sparks = [];
+  for (var i = 0; i < d.dstars.length; i++) sparks.push({ name: d.dstars[i], ss: true });
+  for (var j = 0; j < d.stars.length; j++) sparks.push({ name: d.stars[j], ss: false });
+
+  if (!sparks.length) {
+    prompt.textContent = 'No sparks rated yet — pick any to browse:';
+    for (var k = 0; k < D.length; k++) sparks.push({ name: D[k].n, ss: false });
+  } else {
+    prompt.textContent = 'Tap one of your sparks.';
+  }
+
+  sparks.forEach(function(sp) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'p6chip';
+    btn.textContent = (sp.ss ? '★★ ' : '★ ') + sp.name;
+    btn.onclick = (function(name, isSS, b){
+      return function(){ pickP6Spark(name, isSS, b); };
+    })(sp.name, sp.ss, btn);
+    container.appendChild(btn);
+  });
+
+  // Auto-pick first one
+  if (sparks.length) {
+    pickP6Spark(sparks[0].name, sparks[0].ss, container.firstChild);
+  }
+}
+
+function pickP6Spark(name, ss, btnEl) {
+  p6Spark = name;
+  var chips = document.querySelectorAll('#p6sparks .p6chip');
+  for (var i = 0; i < chips.length; i++) {
+    chips[i].classList.remove('on', 'on-ss');
+  }
+  if (btnEl) btnEl.classList.add(ss ? 'on-ss' : 'on');
+  renderP6();
+}
+
+function buildP6Subjects() {
+  if (p6SubjectsBuilt) return;
+  p6SubjectsBuilt = true;
+  var container = document.getElementById('p6subjects');
+  container.innerHTML = '';
+  SUBJECTS.forEach(function(s, idx) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'p6chip';
+    btn.textContent = s.name;
+    btn.onclick = (function(i, b){
+      return function(){ pickP6Subject(i, b); };
+    })(idx, btn);
+    container.appendChild(btn);
+  });
+}
+
+function pickP6Subject(idx, btnEl) {
+  p6SubjectIdx = idx;
+  var chips = document.querySelectorAll('#p6subjects .p6chip');
+  for (var i = 0; i < chips.length; i++) {
+    chips[i].classList.remove('on');
+  }
+  if (btnEl) btnEl.classList.add('on');
+  renderP6();
+}
+
+function renderP6() {
+  if (p6Spark == null || p6SubjectIdx == null) return;
+  var moves = SPARK_MOVES[p6Spark] || ['(no moves recorded for this spark yet)'];
+  var subject = SUBJECTS[p6SubjectIdx];
+  document.getElementById('p6result').style.display = 'block';
+  document.getElementById('p6col-spark').textContent = p6Spark;
+  document.getElementById('p6col-subject').textContent = subject.name;
+  var esc = function(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
+  document.getElementById('p6moves').innerHTML = moves.map(function(m){
+    return '<div class="p6item p6move">' + esc(m) + '</div>';
+  }).join('');
+  document.getElementById('p6hooks').innerHTML = subject.hooks.map(function(h){
+    return '<div class="p6item p6hook">' + esc(h) + '</div>';
+  }).join('');
 }
 </script>
 </body>
