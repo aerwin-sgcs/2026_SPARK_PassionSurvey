@@ -194,22 +194,22 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 
 /* SHORTLIST BAR */
 .slbar{position:fixed;bottom:0;left:0;right:0;z-index:50;
-  background:var(--card);border-top:1px solid rgba(0,0,0,.08);
-  padding:9px 13px env(safe-area-inset-bottom,10px);
+  background:var(--purple);border-top:none;
+  padding:10px 16px env(safe-area-inset-bottom,10px);
   display:flex;align-items:center;gap:8px;
-  box-shadow:0 -4px 14px rgba(0,0,0,.07);
-  transform:translateY(100%);transition:transform .3s;}
+  box-shadow:0 -4px 14px rgba(83,74,183,.25);
+  transform:translateY(100%);transition:transform .3s;
+  cursor:pointer;}
 .slbar.on{transform:translateY(0);}
-.sllbl{font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap;}
+.sllbl{font-size:12px;font-weight:600;color:rgba(255,255,255,.7);white-space:nowrap;}
 .sltags{flex:1;display:flex;flex-wrap:wrap;gap:4px;overflow:hidden;max-height:48px;}
 .sltag-ss{font-size:11px;font-weight:600;padding:3px 9px;border-radius:18px;
-  background:var(--gold-l);color:var(--gold);white-space:nowrap;
-  border:1px solid rgba(154,111,0,.15);}
+  background:rgba(255,215,0,.2);color:#FFE46A;white-space:nowrap;
+  border:1px solid rgba(255,215,0,.2);}
 .sltag-s{font-size:11px;font-weight:500;padding:3px 9px;border-radius:18px;
-  background:var(--purple-l);color:var(--purple-d);white-space:nowrap;}
-.slbtn{padding:7px 14px;border-radius:18px;background:var(--purple);color:#fff;
-  border:none;font-size:12px;font-weight:600;cursor:pointer;
-  font-family:var(--sans);flex-shrink:0;}
+  background:rgba(255,255,255,.15);color:#fff;white-space:nowrap;}
+.sl-cta{font-size:12px;font-weight:700;color:#fff;white-space:nowrap;
+  opacity:.85;flex-shrink:0;}
 
 /* PHASE 4 BUTTON */
 .btnignite{padding:12px 20px;border-radius:28px;
@@ -334,6 +334,94 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   position:relative;margin-bottom:16px;}
 .p4commit-actions{display:flex;gap:8px;flex-wrap:wrap;position:relative;}
 
+/* PHASE 5 BUTTON */
+.btnwhats-next{padding:12px 20px;border-radius:28px;
+  background:linear-gradient(135deg,#0F6E56,#1A9E7A);color:#fff;
+  border:none;font-size:14px;font-weight:600;cursor:pointer;
+  font-family:var(--sans);transition:all .15s;
+  box-shadow:0 2px 12px rgba(15,110,86,.3);}
+.btnwhats-next:hover{background:linear-gradient(135deg,#0A5240,#0F6E56);transform:translateY(-1px);}
+.btnwhats-next:active{transform:scale(.97);}
+
+/* PHASE 5 OVERLAY */
+#p5overlay{
+  position:fixed;inset:0;z-index:200;
+  background:var(--surf);overflow-y:auto;
+  transform:translateX(100%);
+  pointer-events:none;
+  transition:transform 0.3s ease;
+  will-change:transform;
+}
+#p5overlay.p5open{
+  transform:translateX(0%);
+  pointer-events:auto;
+}
+.p5wrap{max-width:680px;margin:0 auto;padding:20px 16px 80px;}
+.p5hero{background:var(--ink);border-radius:18px;padding:28px 24px 24px;
+  margin-bottom:20px;position:relative;overflow:hidden;}
+.p5hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 20% 60%,rgba(15,110,86,.35) 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 20%,rgba(83,74,183,.3) 0%,transparent 50%);
+  pointer-events:none;}
+.p5note{font-size:12px;color:rgba(255,255,255,.4);margin-top:10px;
+  line-height:1.5;position:relative;font-style:italic;}
+
+/* CATEGORY BUTTONS */
+.p5cats{display:flex;flex-direction:column;gap:10px;}
+.p5catbtn{width:100%;text-align:left;padding:14px 16px;
+  border-radius:12px;border:1.5px solid rgba(0,0,0,.08);
+  background:var(--card);cursor:pointer;
+  font-family:var(--sans);transition:all .15s;
+  display:flex;align-items:center;gap:12px;
+  -webkit-tap-highlight-color:transparent;}
+.p5catbtn:active{transform:scale(.98);}
+.p5catbtn.open{border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none;}
+.p5cat-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+.p5cat-name{font-size:15px;font-weight:600;color:var(--ink);flex:1;}
+.p5cat-arrow{font-size:18px;color:var(--muted);transition:transform .2s;flex-shrink:0;}
+.p5catbtn.open .p5cat-arrow{transform:rotate(90deg);}
+
+/* CATEGORY PANEL */
+.p5panel{display:none;background:var(--card);
+  border:1.5px solid rgba(0,0,0,.08);border-top:none;
+  border-radius:0 0 12px 12px;padding:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,.06);}
+.p5panel.open{display:block;}
+.p5section-label{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;margin-bottom:10px;margin-top:14px;}
+.p5section-label:first-child{margin-top:0;}
+.p5item{padding:10px 12px;border-radius:8px;margin-bottom:7px;
+  border:1px solid rgba(0,0,0,.06);}
+.p5item-name{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px;}
+.p5item-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:5px;}
+.p5item-link{display:inline-flex;align-items:center;gap:4px;
+  font-size:11.5px;font-weight:600;text-decoration:none;
+  padding:3px 9px;border-radius:20px;
+  transition:opacity .15s;}
+.p5item-link:hover{opacity:.8;}
+
+/* READY TO GO FURTHER SECTION */
+.p5further{margin-top:16px;border-radius:10px;padding:14px 14px 10px;
+  background:var(--ink);position:relative;overflow:hidden;}
+.p5further::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 80% 50%,rgba(83,74,183,.3) 0%,transparent 60%);
+  pointer-events:none;}
+.p5further-label{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;color:rgba(255,255,255,.5);margin-bottom:4px;position:relative;}
+.p5further-title{font-size:15px;font-weight:700;color:#fff;
+  margin-bottom:3px;position:relative;}
+.p5further-sub{font-size:12px;color:rgba(255,255,255,.5);
+  margin-bottom:10px;line-height:1.4;position:relative;}
+.p5fitem{padding:9px 11px;border-radius:8px;margin-bottom:6px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  position:relative;}
+.p5fitem-name{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;}
+.p5fitem-desc{font-size:12px;color:rgba(255,255,255,.55);line-height:1.4;margin-bottom:4px;}
+.p5fitem-link{display:inline-flex;align-items:center;gap:4px;
+  font-size:11.5px;font-weight:600;color:var(--purple-m);
+  text-decoration:none;padding:3px 9px;border-radius:20px;
+  background:rgba(83,74,183,.2);}
+
 @media(max-width:480px){
   .dbtns{padding:0 6px;gap:3px;}
   .rb{width:42px;height:42px;}
@@ -393,7 +481,7 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 <main class="main">
   <div class="finbanner" id="fin">
     <span>✓</span>
-    <span style="font-size:13px;color:var(--teal);font-weight:500">All 55 rated! Tap "See my spark profile" below.</span>
+    <span style="font-size:13px;color:var(--teal);font-weight:500">All 55 rated! Tap "See my passion profile" below.</span>
   </div>
 
   <div class="results" id="res">
@@ -924,9 +1012,10 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   </div>
 
   <div class="ctarow">
-    <button type="button" class="btnprimary" onclick="showResults()">See my spark profile →</button>
+    <button type="button" class="btnprimary" onclick="showResults()">See my passion profile →</button>
     <button type="button" class="btnghost" onclick="doReset()">Start over</button>
     <button type="button" class="btnignite" onclick="showPhase4()">Phase 4 — Ignite ★</button>
+    <button type="button" class="btnwhats-next" onclick="showPhase5()">Phase 5 — What's next? →</button>
   </div>
 </main>
 
@@ -1050,10 +1139,24 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   </div>
 </div>
 
-<div class="slbar" id="slbar">
-  <span class="sllbl">Sparks:</span>
+<!-- PHASE 5 OVERLAY -->
+<div id="p5overlay">
+  <div class="p5wrap">
+    <button type="button" class="p4close" onclick="hidePhase5()">← Back to survey</button>
+    <div class="p5hero">
+      <div class="p4badge" style="background:rgba(15,110,86,.2);border-color:rgba(93,202,165,.3);color:#5DCAA5">Phase 5 · What's next?</div>
+      <h2 class="p4title">Explore further</h2>
+      <p class="p4subtitle">Competitions to enter, platforms to explore, and — when you are ready — university-level resources to go deeper. Tap a category to open it.</p>
+      <p class="p5note">This list is a starting point. Things change each year — always check the website for current dates and eligibility.</p>
+    </div>
+    <div class="p5cats" id="p5cats"></div>
+  </div>
+</div>
+
+<div class="slbar" id="slbar" onclick="showResults()" role="button" aria-label="See your passion profile" style="cursor:pointer">
+  <span class="sllbl">Your sparks:</span>
   <div class="sltags" id="sltags"></div>
-  <button type="button" class="slbtn" onclick="showResults()">See profile</button>
+  <span class="sl-cta">See passion profile →</span>
 </div>
 
 <script>
@@ -1425,6 +1528,279 @@ function downloadCommitment() {
   if (win) { win.onload = function(){ setTimeout(function(){ win.print(); }, 350); }; }
   else { var a = document.createElement('a'); a.href=url; a.download='my-commitment.html'; document.body.appendChild(a); a.click(); document.body.removeChild(a); }
   setTimeout(function(){ URL.revokeObjectURL(url); }, 8000);
+}
+// ── PHASE 5 ──────────────────────────────────────────────
+var P5_DATA = [
+  {
+    name: 'Mathematics & Computing',
+    color: '#534AB7', light: '#EEEDFE',
+    comps: [
+      { name: 'Australian Mathematics Competition', desc: 'Annual problem-solving competition for all year levels, widely recognised on academic records.', url: 'https://amt.edu.au/competitions' },
+      { name: 'Bebras Computational Thinking Challenge', desc: 'Logic and algorithmic thinking puzzles held every November. All year levels.', url: 'https://amt.edu.au/competitions' },
+      { name: 'Kangourou sans Fronti\u00e8res', desc: "The world's largest maths competition, held online each March. All year levels.", url: 'https://amt.edu.au/competitions' },
+      { name: 'Australian STEM Video Game Challenge', desc: 'Design and code a video game around an annual STEM theme. Free, Years 3\u201312.', url: 'https://www.stemgames.org.au' },
+    ],
+    resources: [
+      { name: 'Khan Academy', desc: 'Structured maths and computing courses, free, all levels.', url: 'https://www.khanacademy.org' },
+      { name: 'Code.org', desc: 'Beginner to intermediate coding, free, all ages.', url: 'https://code.org' },
+      { name: 'Tinkercad', desc: 'Free browser-based 3D design and basic circuits. KidSAFE certified.', url: 'https://www.tinkercad.com' },
+      { name: 'TED-Ed', desc: 'Short structured lessons on maths and computing topics.', url: 'https://ed.ted.com' },
+      { name: 'ABC Education', desc: 'Australian curriculum-aligned digital technology content.', url: 'https://education.abc.net.au' },
+    ],
+    further: [
+      { name: 'Coursera', desc: 'University-level computing, data science and AI courses. Many free to audit.', url: 'https://www.coursera.org' },
+      { name: 'edX', desc: 'Computer science and engineering courses from leading universities.', url: 'https://www.edx.org' },
+      { name: 'MIT OpenCourseWare', desc: 'Free lecture notes and problem sets from MIT. Real university content.', url: 'https://ocw.mit.edu' },
+    ]
+  },
+  {
+    name: 'Natural Sciences',
+    color: '#0F6E56', light: '#E1F5EE',
+    comps: [
+      { name: 'Australian Science Olympiads', desc: 'Biology, chemistry, physics and earth science — pathway to international competition. Years 9\u201312.', url: 'https://asi.edu.au/program/australian-science-olympiads' },
+      { name: 'Big Science Competition', desc: 'Mixed science knowledge and problem solving, held each May. Years 7\u201310.', url: 'https://asi.edu.au/program/big-science-competition' },
+      { name: 'ANU Science Competition', desc: 'Free online challenge open to all years, with weekly prizes and certificates.', url: 'https://www.anu.edu.au/students/academic-skills/competitions' },
+    ],
+    resources: [
+      { name: 'Khan Academy', desc: 'Biology, chemistry and physics courses, free.', url: 'https://www.khanacademy.org' },
+      { name: 'ABC Education', desc: 'Science content aligned to the Australian curriculum.', url: 'https://education.abc.net.au' },
+      { name: 'CSIRO Education', desc: "Australia's national science body — student programs and resources.", url: 'https://www.csiro.au/en/education' },
+      { name: 'NASA Learning Resources', desc: 'Space, earth science and astronomy resources for students.', url: 'https://www.nasa.gov/learning-resources' },
+      { name: 'TED-Ed', desc: 'Structured science lessons across all natural science topics.', url: 'https://ed.ted.com' },
+      { name: 'National Geographic Education', desc: 'Earth science, ecology and geography resources.', url: 'https://education.nationalgeographic.org' },
+    ],
+    further: [
+      { name: 'Coursera', desc: 'Introductory biology, chemistry, physics and neuroscience. Many free to audit.', url: 'https://www.coursera.org' },
+      { name: 'edX', desc: 'Science courses from leading universities worldwide.', url: 'https://www.edx.org' },
+      { name: 'FutureLearn', desc: 'Short science courses from universities and research institutions.', url: 'https://www.futurelearn.com' },
+    ]
+  },
+  {
+    name: 'Engineering & Making',
+    color: '#BA7517', light: '#FAEEDA',
+    comps: [
+      { name: 'VEX Robotics', desc: 'Design, build and program a robot, then compete at state and national level. Years 7\u201312.', url: 'https://www.vexrobotics.com' },
+      { name: 'FIRST Robotics Australia', desc: 'Team-based engineering and coding challenge with a strong community. Years 7\u201312.', url: 'https://firstaustralia.org' },
+      { name: 'Australian STEM Video Game Challenge', desc: 'Strong engineering design and problem-solving component. Free, Years 3\u201312.', url: 'https://www.stemgames.org.au' },
+    ],
+    resources: [
+      { name: 'Tinkercad', desc: 'Free 3D design, circuits and coding in your browser. KidSAFE certified.', url: 'https://www.tinkercad.com' },
+      { name: 'Khan Academy', desc: 'Physics and computing foundations for engineering.', url: 'https://www.khanacademy.org' },
+      { name: 'CSIRO Education', desc: 'Engineering and technology programs for students.', url: 'https://www.csiro.au/en/education' },
+      { name: 'TED-Ed', desc: 'Engineering and design thinking lessons.', url: 'https://ed.ted.com' },
+      { name: 'ABC Education', desc: 'Technology and design content for all year levels.', url: 'https://education.abc.net.au' },
+    ],
+    further: [
+      { name: 'edX', desc: 'Introductory engineering, electronics and mechanical design courses.', url: 'https://www.edx.org' },
+      { name: 'Coursera', desc: 'Engineering fundamentals and applied technology courses.', url: 'https://www.coursera.org' },
+      { name: 'MIT OpenCourseWare', desc: 'Free engineering lecture notes and projects from MIT.', url: 'https://ocw.mit.edu' },
+    ]
+  },
+  {
+    name: 'Humanities & Society',
+    color: '#993C1D', light: '#FAECE7',
+    comps: [
+      { name: 'National History Challenge', desc: 'Research-based, all years, prize money, chance to be named National Young Historian of the Year.', url: 'https://historychallenge.org.au' },
+      { name: 'Australian History Competition', desc: 'Multiple choice and short answer questions, Years 7\u201310.', url: 'https://australianhistorycompetition.org.au' },
+      { name: 'Law Society NSW Mock Trial', desc: 'Real courtroom scenarios judged by practising lawyers. Years 10\u201311.', url: 'https://www.lawsociety.com.au/Legal-Communities/High-School-Students/Mock-Trial-Competition' },
+      { name: 'Law Society NSW Mock Mediation', desc: 'Dispute resolution scenarios with legal professionals as judges. High school.', url: 'https://www.lawsociety.com.au/Legal-Communities/High-School-Students' },
+      { name: 'ASX Schools Sharemarket Game', desc: 'Manage a virtual investment portfolio and learn how markets work. Free, all high school years.', url: 'https://www.asx.com.au/investors/investment-tools-and-resources/sharemarket-game' },
+    ],
+    resources: [
+      { name: 'Khan Academy', desc: 'World history, economics and civics courses, free.', url: 'https://www.khanacademy.org' },
+      { name: 'ABC Education', desc: 'History, geography and civics content aligned to Australian curriculum.', url: 'https://education.abc.net.au' },
+      { name: 'National Archives of Australia', desc: 'Primary source documents for history research and the History Challenge.', url: 'https://www.naa.gov.au/students-and-teachers' },
+      { name: 'Smithsonian Learning Lab', desc: 'History, culture and social science resources from 19 Smithsonian museums.', url: 'https://learninglab.si.edu' },
+      { name: 'TED-Ed', desc: 'History, philosophy and social science structured lessons.', url: 'https://ed.ted.com' },
+      { name: 'National Museum of Australia', desc: 'Australian history resources and interactive teaching tools.', url: 'https://www.nma.gov.au/learn' },
+    ],
+    further: [
+      { name: 'Stanford Encyclopedia of Philosophy', desc: 'Peer-reviewed philosophy entries written by world experts. Genuinely university level.', url: 'https://plato.stanford.edu' },
+      { name: 'Coursera', desc: 'Introductory economics, law, political science and history courses.', url: 'https://www.coursera.org' },
+      { name: 'edX', desc: 'Humanities and social science courses from leading universities.', url: 'https://www.edx.org' },
+    ]
+  },
+  {
+    name: 'Language & Communication',
+    color: '#72243E', light: '#FBEAF0',
+    comps: [
+      { name: 'OzCLO Australian Linguistics Olympiad', desc: 'Solve fascinating language puzzles in teams. Years 7\u201312, with a pathway to international competition.', url: 'https://ozclo.org.au' },
+      { name: 'Insight Creative Writing Competition', desc: 'Fiction, poetry or creative nonfiction. Free, all high school years, judged by published Australian authors.', url: 'https://www.insightpublications.com.au/insight-creative-writing-competition' },
+      { name: 'Dorothea Mackellar Poetry Awards', desc: "Australia's oldest and largest school poetry competition. All year levels, annual theme.", url: 'https://dorothea.com.au' },
+    ],
+    resources: [
+      { name: 'Khan Academy', desc: 'Grammar, writing and reading comprehension courses, free.', url: 'https://www.khanacademy.org' },
+      { name: 'ABC Education', desc: 'English and literacy content for all year levels.', url: 'https://education.abc.net.au' },
+      { name: 'TED-Ed', desc: 'Language, linguistics and communication structured lessons.', url: 'https://ed.ted.com' },
+      { name: 'Behind the News', desc: 'ABC current affairs program for students — excellent for journalism and media literacy.', url: 'https://www.abc.net.au/btn' },
+      { name: 'Project Gutenberg', desc: 'Free access to thousands of classic texts in the public domain.', url: 'https://www.gutenberg.org' },
+    ],
+    further: [
+      { name: 'Coursera', desc: 'Creative writing, journalism and linguistics courses from universities.', url: 'https://www.coursera.org' },
+      { name: 'FutureLearn', desc: 'Writing, communication and media courses.', url: 'https://www.futurelearn.com' },
+      { name: 'edX', desc: 'Literature and language courses from leading universities.', url: 'https://www.edx.org' },
+    ]
+  },
+  {
+    name: 'Arts & Creative Practice',
+    color: '#993C1D', light: '#FAECE7',
+    comps: [
+      { name: 'Insight Creative Writing Competition', desc: 'Fiction, poetry and creative nonfiction. Free, all high school years, judged by published Australian authors.', url: 'https://www.insightpublications.com.au/insight-creative-writing-competition' },
+      { name: 'Dorothea Mackellar Poetry Awards', desc: "Australia's oldest and largest school poetry competition. All year levels.", url: 'https://dorothea.com.au' },
+      { name: 'Sydney Eisteddfod', desc: 'Music, visual art, dance and performance for all ages. Open to all schools.', url: 'https://www.sydneyeisteddfod.com.au' },
+      { name: 'NSW Eisteddfod', desc: 'Performing arts competition across NSW for all ages and all schools.', url: 'https://www.nsweisteddfod.com.au' },
+    ],
+    resources: [
+      { name: 'TED-Ed', desc: 'Art history and design thinking structured lessons.', url: 'https://ed.ted.com' },
+      { name: 'ABC Education', desc: 'Visual arts and music content for Australian students.', url: 'https://education.abc.net.au' },
+      { name: 'Smithsonian Learning Lab', desc: 'Art history, cultural artefacts and design resources from Smithsonian collections.', url: 'https://learninglab.si.edu' },
+      { name: 'National Gallery of Australia', desc: 'Free online collection and education resources for students.', url: 'https://nga.gov.au/learn' },
+      { name: 'Canva Design School', desc: 'Free graphic design tutorials and projects, structured for beginners.', url: 'https://www.canva.com/learn/design-school' },
+      { name: 'NFSA Education', desc: 'National Film and Sound Archive — Australian film and media resources for students.', url: 'https://www.nfsa.gov.au/education' },
+    ],
+    further: [
+      { name: 'Coursera', desc: 'Graphic design, music theory and film studies courses.', url: 'https://www.coursera.org' },
+      { name: 'FutureLearn', desc: 'Creative arts, film and design courses from universities.', url: 'https://www.futurelearn.com' },
+    ]
+  },
+  {
+    name: 'Health & Human Development',
+    color: '#185FA5', light: '#E6F1FB',
+    comps: [
+      { name: 'Australian Science Olympiads', desc: 'The biology pathway is directly relevant to health and human development. Years 9\u201312.', url: 'https://asi.edu.au/program/australian-science-olympiads' },
+      { name: 'Big Science Competition', desc: 'Health and biology content included in the competition. Years 7\u201310, held each May.', url: 'https://asi.edu.au/program/big-science-competition' },
+    ],
+    resources: [
+      { name: 'Khan Academy', desc: 'Biology, health and introductory psychology courses, free.', url: 'https://www.khanacademy.org' },
+      { name: 'ABC Education', desc: 'Health and physical education content for Australian students.', url: 'https://education.abc.net.au' },
+      { name: 'CSIRO Education', desc: 'Health science and biotechnology programs for students.', url: 'https://www.csiro.au/en/education' },
+      { name: 'Behind the News', desc: 'Health and social issues explained accessibly for students.', url: 'https://www.abc.net.au/btn' },
+      { name: 'TED-Ed', desc: 'Psychology, health and neuroscience structured lessons.', url: 'https://ed.ted.com' },
+      { name: 'Better Health Channel', desc: 'Victorian Government health resource — clear, age-appropriate and evidence-based.', url: 'https://www.betterhealth.vic.gov.au' },
+    ],
+    further: [
+      { name: 'Coursera', desc: 'Introductory psychology, public health and nutrition courses.', url: 'https://www.coursera.org' },
+      { name: 'FutureLearn', desc: 'Mental health, wellbeing and healthcare courses.', url: 'https://www.futurelearn.com' },
+      { name: 'edX', desc: 'Biology, medicine and health sciences courses from leading universities.', url: 'https://www.edx.org' },
+    ]
+  },
+  {
+    name: 'Business & Enterprise',
+    color: '#3B6D11', light: '#EAF3DE',
+    comps: [
+      { name: 'ASX Schools Sharemarket Game', desc: 'Manage a virtual investment portfolio and learn how financial markets work. Free, all high school years.', url: 'https://www.asx.com.au/investors/investment-tools-and-resources/sharemarket-game' },
+      { name: 'Tiger Global Case Competition', desc: 'Business strategy challenges for students aged 13\u201318. Real-world scenarios, judged by industry professionals.', url: 'https://www.casecomp.org' },
+    ],
+    resources: [
+      { name: 'Khan Academy', desc: 'Economics, finance and entrepreneurship courses, free.', url: 'https://www.khanacademy.org' },
+      { name: 'ABC Education', desc: 'Economics and business content for Australian students.', url: 'https://education.abc.net.au' },
+      { name: 'Behind the News', desc: 'Business and economics topics explained for students.', url: 'https://www.abc.net.au/btn' },
+      { name: 'TED-Ed', desc: 'Business, economics and entrepreneurship structured lessons.', url: 'https://ed.ted.com' },
+      { name: 'MoneySmart', desc: "ASIC's free financial literacy platform — practical money and investing knowledge.", url: 'https://moneysmart.gov.au' },
+    ],
+    further: [
+      { name: 'Coursera', desc: 'Business fundamentals, marketing and entrepreneurship courses.', url: 'https://www.coursera.org' },
+      { name: 'FutureLearn', desc: 'Business, social enterprise and leadership courses.', url: 'https://www.futurelearn.com' },
+      { name: 'edX', desc: 'Economics and business courses from leading universities.', url: 'https://www.edx.org' },
+    ]
+  }
+];
+
+function showPhase5() {
+  var overlay = document.getElementById('p5overlay');
+  overlay.classList.add('p5open');
+  overlay.scrollTop = 0;
+  buildP5Cats();
+}
+
+function hidePhase5() {
+  document.getElementById('p5overlay').classList.remove('p5open');
+}
+
+var p5Built = false;
+function buildP5Cats() {
+  if (p5Built) return;
+  p5Built = true;
+  var container = document.getElementById('p5cats');
+  container.innerHTML = '';
+
+  P5_DATA.forEach(function(cat, idx) {
+    var wrapper = document.createElement('div');
+    wrapper.className = 'p5catwrap';
+
+    // Button
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'p5catbtn';
+    btn.id = 'p5btn-' + idx;
+    btn.innerHTML =
+      '<div class="p5cat-dot" style="background:' + cat.color + '"></div>' +
+      '<span class="p5cat-name">' + cat.name + '</span>' +
+      '<span class="p5cat-arrow">›</span>';
+    btn.onclick = function() { toggleCat(idx); };
+
+    // Panel
+    var panel = document.createElement('div');
+    panel.className = 'p5panel';
+    panel.id = 'p5panel-' + idx;
+
+    // Competitions
+    var compHtml = '<div class="p5section-label" style="color:' + cat.color + '">Competitions to enter</div>';
+    cat.comps.forEach(function(c) {
+      compHtml += '<div class="p5item" style="background:' + cat.light + ';border-color:' + cat.color + '22">' +
+        '<div class="p5item-name">' + c.name + '</div>' +
+        '<div class="p5item-desc">' + c.desc + '</div>' +
+        '<a href="' + c.url + '" target="_blank" rel="noopener" class="p5item-link" style="background:' + cat.color + '22;color:' + cat.color + '">' +
+        'Visit website ›</a></div>';
+    });
+
+    // Resources
+    compHtml += '<div class="p5section-label" style="color:' + cat.color + '">Free resources to explore</div>';
+    cat.resources.forEach(function(r) {
+      compHtml += '<div class="p5item" style="background:' + cat.light + ';border-color:' + cat.color + '22">' +
+        '<div class="p5item-name">' + r.name + '</div>' +
+        '<div class="p5item-desc">' + r.desc + '</div>' +
+        '<a href="' + r.url + '" target="_blank" rel="noopener" class="p5item-link" style="background:' + cat.color + '22;color:' + cat.color + '">' +
+        'Visit website ›</a></div>';
+    });
+
+    // Ready to go further
+    compHtml += '<div class="p5further">' +
+      '<div class="p5further-label">Ready to go further?</div>' +
+      '<div class="p5further-title">University-level resources</div>' +
+      '<div class="p5further-sub">Challenging — but worth it if your spark is strong. Open to any year level.</div>';
+    cat.further.forEach(function(f) {
+      compHtml += '<div class="p5fitem">' +
+        '<div class="p5fitem-name">' + f.name + '</div>' +
+        '<div class="p5fitem-desc">' + f.desc + '</div>' +
+        '<a href="' + f.url + '" target="_blank" rel="noopener" class="p5fitem-link">Visit website ›</a></div>';
+    });
+    compHtml += '</div>';
+
+    panel.innerHTML = compHtml;
+    wrapper.appendChild(btn);
+    wrapper.appendChild(panel);
+    container.appendChild(wrapper);
+  });
+}
+
+function toggleCat(idx) {
+  var btn = document.getElementById('p5btn-' + idx);
+  var panel = document.getElementById('p5panel-' + idx);
+  var isOpen = panel.classList.contains('open');
+
+  // Close all
+  document.querySelectorAll('.p5panel').forEach(function(p) { p.classList.remove('open'); });
+  document.querySelectorAll('.p5catbtn').forEach(function(b) { b.classList.remove('open'); });
+
+  if (!isOpen) {
+    panel.classList.add('open');
+    btn.classList.add('open');
+    // Auto-scroll so panel is visible
+    setTimeout(function() {
+      btn.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+  }
 }
 </script>
 </body>
