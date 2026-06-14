@@ -491,6 +491,22 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   background:var(--ink);color:#fff;font-size:13px;line-height:1.65;}
 .p6footer strong{color:#FFD060;}
 
+/* RESTORE TOAST */
+.rtoast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
+  z-index:300;background:var(--ink);color:#fff;
+  padding:11px 16px 11px 14px;border-radius:30px;
+  box-shadow:0 6px 22px rgba(0,0,0,.25);
+  display:none;align-items:center;gap:10px;
+  font-size:13px;font-weight:500;
+  opacity:0;transition:opacity .25s, transform .25s;
+  max-width:calc(100vw - 32px);}
+.rtoast.on{display:inline-flex;opacity:1;transform:translateX(-50%) translateY(0);}
+.rtoast-dot{width:8px;height:8px;border-radius:50%;background:#5DCAA5;flex-shrink:0;}
+.rtoast-close{background:transparent;border:0;color:rgba(255,255,255,.6);
+  font-size:18px;line-height:1;cursor:pointer;padding:0 0 0 6px;
+  font-family:var(--sans);}
+.rtoast-close:hover{color:#fff;}
+
 </style>
 </head>
 <body>
@@ -1256,6 +1272,12 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   </div>
 </div>
 
+<div class="rtoast" id="rtoast">
+  <span class="rtoast-dot"></span>
+  <span id="rtoast-text">Restored your previous answers.</span>
+  <button type="button" class="rtoast-close" onclick="hideRestoreToast()" aria-label="Dismiss">×</button>
+</div>
+
 <div class="slbar" id="slbar" onclick="showResults()" role="button" aria-label="See your passion profile" style="cursor:pointer">
   <span class="sllbl">Your sparks:</span>
   <div class="sltags" id="sltags"></div>
@@ -1267,6 +1289,90 @@ var D = [{"n": "Mathematics & logic", "cat": "Mathematics & computing"}, {"n": "
 var TOTAL = 55;
 var MAX = 3;
 var R = {};   // ratings store: index -> 'x'|'m'|'s'|'ss'|null
+
+// ── AUTO-SAVE (localStorage) ─────────────────────────────
+var STORAGE_KEY = 'spark_survey_v1';
+
+function saveState() {
+  try {
+    var ta = document.getElementById('spark-sentence');
+    var payload = {
+      v: 1,
+      R: R,
+      sparkSentence: ta ? ta.value : '',
+      chosenAction: (typeof chosenAction !== 'undefined') ? chosenAction : null,
+      savedAt: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  } catch(e) { /* storage full or disabled — fail silently */ }
+}
+
+function clearSavedState() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+}
+
+function loadState() {
+  var raw;
+  try { raw = localStorage.getItem(STORAGE_KEY); } catch(e) { return; }
+  if (!raw) return;
+  var data;
+  try { data = JSON.parse(raw); } catch(e) { return; }
+  if (!data || data.v !== 1) return;
+
+  var restoredCount = 0;
+
+  // Restore ratings
+  if (data.R && typeof data.R === 'object') {
+    for (var k in data.R) {
+      var v = data.R[k];
+      if (v === 'x' || v === 'm' || v === 's' || v === 'ss') {
+        R[k] = v;
+        restoredCount++;
+      }
+    }
+    for (var i = 0; i < TOTAL; i++) {
+      if (R[i]) updateRow(i);
+    }
+    updateAll();
+  }
+
+  // Restore Phase 4 spark sentence
+  if (data.sparkSentence) {
+    var ta = document.getElementById('spark-sentence');
+    if (ta) ta.value = data.sparkSentence;
+  }
+
+  // Restore Phase 4 action choice
+  if (data.chosenAction) {
+    var actBtns = document.querySelectorAll('.p4act');
+    for (var a = 0; a < actBtns.length; a++) {
+      if (actBtns[a].getAttribute('data-act') === data.chosenAction) {
+        pickAction(actBtns[a]);
+        break;
+      }
+    }
+  }
+
+  if (restoredCount > 0 || data.sparkSentence || data.chosenAction) {
+    showRestoreToast(restoredCount);
+  }
+}
+
+function showRestoreToast(n) {
+  var t = document.getElementById('rtoast');
+  var txt = document.getElementById('rtoast-text');
+  if (!t) return;
+  if (txt && n > 0) {
+    txt.textContent = 'Restored ' + n + ' previous answer' + (n === 1 ? '' : 's') + '.';
+  }
+  t.classList.add('on');
+  setTimeout(function(){ t.classList.remove('on'); }, 5000);
+}
+
+function hideRestoreToast() {
+  var t = document.getElementById('rtoast');
+  if (t) t.classList.remove('on');
+}
 
 function count(v) {
   var c=0; for(var k in R){ if(R[k]===v) c++; } return c;
@@ -1285,6 +1391,7 @@ function rate(i, v) {
   }
   updateRow(i);
   updateAll();
+  saveState();
 }
 
 function updateRow(i) {
@@ -1513,6 +1620,19 @@ function doReset() {
   var panel=document.getElementById('res');
   panel.classList.remove('show','vis');
   document.getElementById('fin').classList.remove('on');
+
+  // Reset Phase 4 state
+  chosenAction = null;
+  var ta = document.getElementById('spark-sentence');
+  if (ta) ta.value = '';
+  var sel = document.getElementById('p4selected');
+  if (sel) sel.style.display = 'none';
+  var commit = document.getElementById('p4commit');
+  if (commit) commit.style.display = 'none';
+  var actBtns = document.querySelectorAll('.p4act');
+  for (var ab = 0; ab < actBtns.length; ab++) actBtns[ab].classList.remove('chosen');
+
+  clearSavedState();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -1549,6 +1669,7 @@ function pickAction(btn) {
     'Read':  'Find one article, one page of a book, or one thread online about it.'
   };
   txt.textContent = chosenAction + ' — ' + descs[chosenAction];
+  saveState();
 }
 
 function generateCommitment() {
@@ -2087,6 +2208,21 @@ function renderP6() {
     return '<div class="p6item p6hook">' + esc(h) + '</div>';
   }).join('');
 }
+
+// ── INIT ────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function(){
+  // Save spark sentence as student types (debounced)
+  var ta = document.getElementById('spark-sentence');
+  if (ta) {
+    var saveTimer = null;
+    ta.addEventListener('input', function(){
+      if (saveTimer) clearTimeout(saveTimer);
+      saveTimer = setTimeout(saveState, 400);
+    });
+  }
+  // Restore from localStorage
+  loadState();
+});
 </script>
 </body>
 </html>
