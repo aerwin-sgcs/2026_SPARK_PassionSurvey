@@ -1,0 +1,12 @@
+.DS_Store
+
+# Local version snapshots — recovery copies of index.html, not for GitHub Pages
+indexv*.html
+
+# Local-only documentation (Markdown sources stay on laptop)
+student-tutorial.md
+handover.md
+app-guide.md
+
+# Note: student-tutorial.html and student-tutorial.pdf are tracked
+# so they deploy to GitHub Pages alongside index.html.

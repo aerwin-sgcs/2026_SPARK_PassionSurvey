@@ -47,6 +47,15 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 .sym-s{background:rgba(83,74,183,.2);border-color:rgba(175,169,236,.4);color:var(--purple-m);}
 .sym-ss{background:rgba(154,111,0,.2);border-color:rgba(255,215,0,.35);color:#FFD060;}
 .hero-note{font-size:12px;color:rgba(255,255,255,.4);position:relative;}
+.hero-tut{display:inline-flex;align-items:center;gap:6px;margin-top:14px;
+  padding:8px 16px;border-radius:22px;
+  background:rgba(255,255,255,.1);color:#fff;
+  border:1px solid rgba(255,255,255,.22);
+  font-size:12.5px;font-weight:500;font-family:var(--sans);
+  text-decoration:none;cursor:pointer;position:relative;
+  transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.hero-tut:hover{background:rgba(255,255,255,.18);transform:translateY(-1px);}
+.hero-tut-icon{font-size:14px;}
 
 /* SLOT TRACKER */
 .slotbar{background:#16142A;border-bottom:1px solid rgba(255,255,255,.06);
@@ -379,6 +388,9 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 .p5cat-name{font-size:15px;font-weight:600;color:var(--ink);flex:1;}
 .p5cat-arrow{font-size:18px;color:var(--muted);transition:transform .2s;flex-shrink:0;}
 .p5catbtn.open .p5cat-arrow{transform:rotate(90deg);}
+.p5catbadge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:12px;
+  letter-spacing:.04em;white-space:nowrap;flex-shrink:0;
+  display:inline-flex;align-items:center;}
 
 /* CATEGORY PANEL */
 .p5panel{display:none;background:var(--card);
@@ -491,6 +503,17 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   background:var(--ink);color:#fff;font-size:13px;line-height:1.65;}
 .p6footer strong{color:#FFD060;}
 
+.p6morebtn{background:transparent;border:0;padding:8px 0;margin-top:6px;
+  font-size:12.5px;font-weight:600;color:var(--purple);cursor:pointer;
+  font-family:var(--sans);text-align:left;
+  -webkit-tap-highlight-color:transparent;}
+.p6morebtn:hover{text-decoration:underline;}
+.p6more{margin-top:8px;display:flex;flex-direction:column;gap:11px;}
+.p6moregrouplbl{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;margin-bottom:5px;}
+.p6morechips{display:flex;flex-wrap:wrap;gap:5px;}
+.p6chip-compact{font-size:12px;padding:6px 11px;border-width:1px;font-weight:500;}
+
 /* RESTORE TOAST */
 .rtoast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
   z-index:300;background:var(--ink);color:#fff;
@@ -522,6 +545,10 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
     <span class="sym sym-ss">★★ Most interested</span>
   </div>
   <div class="hero-note">Choose up to 3 starred (★) and 3 double-starred (★★) domains</div>
+  <a href="student-tutorial.html" class="hero-tut" target="_blank" rel="noopener">
+    <span class="hero-tut-icon">📖</span>
+    <span>How to use this app</span>
+  </a>
 </header>
 
 <div class="slotbar">
@@ -1246,6 +1273,8 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
       <div class="p6section-label">Step 1 — Your spark</div>
       <div class="p6prompt" id="p6spark-prompt">Tap one of your sparks below.</div>
       <div class="p6chips" id="p6sparks"></div>
+      <button type="button" class="p6morebtn" id="p6morebtn" onclick="toggleP6More()">+ Browse more sparks</button>
+      <div id="p6sparks-more" class="p6more" style="display:none"></div>
     </div>
 
     <div class="p6section">
@@ -1941,14 +1970,31 @@ function hidePhase5() {
   document.getElementById('p5overlay').classList.remove('p5open');
 }
 
-var p5Built = false;
 function buildP5Cats() {
-  if (p5Built) return;
-  p5Built = true;
+  // Compute per-category star counts from current ratings
+  var catStars = {};
+  for (var k in R) {
+    var v = R[k];
+    if (v !== 's' && v !== 'ss') continue;
+    var cn = D[parseInt(k)].cat;
+    if (!catStars[cn]) catStars[cn] = { ss: 0, s: 0 };
+    catStars[cn][v]++;
+  }
+  function lookupStars(p5Name) {
+    var lc = p5Name.toLowerCase();
+    for (var cn in catStars) {
+      if (cn.toLowerCase() === lc) return catStars[cn];
+    }
+    return null;
+  }
+
   var container = document.getElementById('p5cats');
   container.innerHTML = '';
 
   P5_DATA.forEach(function(cat, idx) {
+    var stars = lookupStars(cat.name);
+    var tier = stars && stars.ss > 0 ? 'ss' : (stars && stars.s > 0 ? 's' : '');
+
     var wrapper = document.createElement('div');
     wrapper.className = 'p5catwrap';
 
@@ -1957,9 +2003,29 @@ function buildP5Cats() {
     btn.type = 'button';
     btn.className = 'p5catbtn';
     btn.id = 'p5btn-' + idx;
+
+    // Tier-based tint
+    if (tier === 'ss') {
+      btn.setAttribute('style', 'background:' + cat.light + ';border-left:4px solid ' + cat.color + ';');
+    } else if (tier === 's') {
+      btn.setAttribute('style', 'border-left:4px solid ' + cat.color + '66;');
+    }
+
+    // Star count badge
+    var badge = '';
+    if (stars) {
+      var parts = [];
+      if (stars.ss) parts.push('★★ ' + stars.ss);
+      if (stars.s) parts.push('★ ' + stars.s);
+      var bgAlpha = tier === 'ss' ? '26' : '14';
+      badge = '<span class="p5catbadge" style="color:' + cat.color +
+        ';background:' + cat.color + bgAlpha + '">' + parts.join('  ') + '</span>';
+    }
+
     btn.innerHTML =
       '<div class="p5cat-dot" style="background:' + cat.color + '"></div>' +
       '<span class="p5cat-name">' + cat.name + '</span>' +
+      badge +
       '<span class="p5cat-arrow">›</span>';
     btn.onclick = function() { toggleCat(idx); };
 
@@ -2109,6 +2175,30 @@ var p6Spark = null;
 var p6SubjectIdx = null;
 var p6SubjectsBuilt = false;
 
+// Category → {color, light} lookup, keyed by D[i].cat sentence-case names
+var CAT_COLORS = {
+  "Mathematics & computing":    { color: "#534AB7", light: "#EEEDFE" },
+  "Natural sciences":           { color: "#0F6E56", light: "#E1F5EE" },
+  "Engineering & making":       { color: "#BA7517", light: "#FAEEDA" },
+  "Humanities & society":       { color: "#993C1D", light: "#FAECE7" },
+  "Language & communication":   { color: "#72243E", light: "#FBEAF0" },
+  "Arts & creative practice":   { color: "#993C1D", light: "#FAECE7" },
+  "Health & human development": { color: "#185FA5", light: "#E6F1FB" },
+  "Business & enterprise":      { color: "#3B6D11", light: "#EAF3DE" }
+};
+function catFor(domainName) {
+  for (var i = 0; i < D.length; i++) {
+    if (D[i].n === domainName) return CAT_COLORS[D[i].cat] || null;
+  }
+  return null;
+}
+function p6ChipRestStyle(color, light) {
+  return 'background:' + light + ';border-color:' + color + '66;color:' + color + ';';
+}
+function p6ChipOnStyle(color) {
+  return 'background:' + color + ';border-color:' + color + ';color:#fff;box-shadow:0 2px 8px ' + color + '40;';
+}
+
 function showPhase6() {
   var overlay = document.getElementById('p6overlay');
   overlay.classList.add('p6open');
@@ -2132,17 +2222,20 @@ function buildP6Sparks() {
   for (var i = 0; i < d.dstars.length; i++) sparks.push({ name: d.dstars[i], ss: true });
   for (var j = 0; j < d.stars.length; j++) sparks.push({ name: d.stars[j], ss: false });
 
-  if (!sparks.length) {
-    prompt.textContent = 'No sparks rated yet — pick any to browse:';
-    for (var k = 0; k < D.length; k++) sparks.push({ name: D[k].n, ss: false });
-  } else {
+  if (sparks.length) {
     prompt.textContent = 'Tap one of your sparks.';
+  } else {
+    prompt.textContent = 'No sparks rated yet — open "Browse more sparks" below to explore.';
   }
 
   sparks.forEach(function(sp) {
+    var cat = catFor(sp.name) || { color: '#534AB7', light: '#EEEDFE' };
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'p6chip';
+    btn.dataset.catColor = cat.color;
+    btn.dataset.catLight = cat.light;
+    btn.setAttribute('style', p6ChipRestStyle(cat.color, cat.light));
     btn.textContent = (sp.ss ? '★★ ' : '★ ') + sp.name;
     btn.onclick = (function(name, isSS, b){
       return function(){ pickP6Spark(name, isSS, b); };
@@ -2150,19 +2243,105 @@ function buildP6Sparks() {
     container.appendChild(btn);
   });
 
-  // Auto-pick first one
+  // Reset Step 3 (other sparks) state to collapsed
+  var more = document.getElementById('p6sparks-more');
+  var moreBtn = document.getElementById('p6morebtn');
+  if (more) { more.style.display = 'none'; more.innerHTML = ''; }
+  if (moreBtn) {
+    var remaining = D.length - d.dstars.length - d.stars.length - d.nos;
+    moreBtn.textContent = '+ Browse more sparks (' + remaining + ')';
+  }
+
+  // Auto-pick first spark, or auto-expand Step 3 if no sparks yet
   if (sparks.length) {
     pickP6Spark(sparks[0].name, sparks[0].ss, container.firstChild);
+  } else {
+    toggleP6More();
+  }
+}
+
+function buildP6MoreSparks() {
+  var d = getData();
+  var container = document.getElementById('p6sparks-more');
+  container.innerHTML = '';
+
+  // Build set of sparks already in Step 1
+  var used = {};
+  for (var i = 0; i < d.dstars.length; i++) used[d.dstars[i]] = 1;
+  for (var j = 0; j < d.stars.length; j++) used[d.stars[j]] = 1;
+
+  // Group remaining domains by category — exclude already-starred and ✗ ruled-out
+  var groups = {};
+  for (var k = 0; k < D.length; k++) {
+    var name = D[k].n;
+    var cat = D[k].cat;
+    if (used[name]) continue;
+    if (R[k] === 'x') continue;
+    if (!groups[cat]) groups[cat] = [];
+    groups[cat].push(name);
+  }
+
+  // Render in D's natural category order
+  var seen = {};
+  for (var m = 0; m < D.length; m++) {
+    var cat2 = D[m].cat;
+    if (seen[cat2]) continue;
+    seen[cat2] = 1;
+    if (!groups[cat2] || !groups[cat2].length) continue;
+    var catCol = CAT_COLORS[cat2] || { color: '#534AB7', light: '#EEEDFE' };
+
+    var group = document.createElement('div');
+    var lbl = document.createElement('div');
+    lbl.className = 'p6moregrouplbl';
+    lbl.style.color = catCol.color;
+    lbl.textContent = cat2;
+    group.appendChild(lbl);
+
+    var chips = document.createElement('div');
+    chips.className = 'p6morechips';
+    groups[cat2].forEach(function(name) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'p6chip p6chip-compact';
+      btn.dataset.catColor = catCol.color;
+      btn.dataset.catLight = catCol.light;
+      btn.setAttribute('style', p6ChipRestStyle(catCol.color, catCol.light));
+      btn.textContent = name;
+      btn.onclick = (function(n, b){
+        return function(){ pickP6Spark(n, false, b); };
+      })(name, btn);
+      chips.appendChild(btn);
+    });
+    group.appendChild(chips);
+    container.appendChild(group);
+  }
+}
+
+function toggleP6More() {
+  var c = document.getElementById('p6sparks-more');
+  var b = document.getElementById('p6morebtn');
+  var d = getData();
+  var remaining = D.length - d.dstars.length - d.stars.length - d.nos;
+  if (c.style.display === 'none') {
+    buildP6MoreSparks();
+    c.style.display = 'flex';
+    b.textContent = '− Hide other sparks';
+  } else {
+    c.style.display = 'none';
+    b.textContent = '+ Browse more sparks (' + remaining + ')';
   }
 }
 
 function pickP6Spark(name, ss, btnEl) {
   p6Spark = name;
-  var chips = document.querySelectorAll('#p6sparks .p6chip');
-  for (var i = 0; i < chips.length; i++) {
-    chips[i].classList.remove('on', 'on-ss');
+  var allChips = document.querySelectorAll('#p6sparks .p6chip, #p6sparks-more .p6chip');
+  for (var i = 0; i < allChips.length; i++) {
+    var c = allChips[i];
+    c.setAttribute('style', p6ChipRestStyle(c.dataset.catColor || '#534AB7', c.dataset.catLight || '#EEEDFE'));
   }
-  if (btnEl) btnEl.classList.add(ss ? 'on-ss' : 'on');
+  if (btnEl) {
+    btnEl.setAttribute('style', p6ChipOnStyle(btnEl.dataset.catColor || '#534AB7'));
+  }
   renderP6();
 }
 

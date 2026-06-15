@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Spark — How to use this app</title>
+<style>
+:root{
+  --purple:#534AB7;--purple-l:#EEEDFE;--purple-m:#AFA9EC;--purple-d:#3C3489;
+  --teal:#0F6E56;--teal-l:#E1F5EE;--teal-m:#5DCAA5;
+  --amber:#BA7517;--amber-l:#FAEEDA;
+  --coral:#993C1D;--coral-l:#FAECE7;--coral-m:#F0997B;
+  --blue:#185FA5;--blue-l:#E6F1FB;
+  --green:#3B6D11;--green-l:#EAF3DE;
+  --pink:#72243E;--pink-l:#FBEAF0;
+  --gold:#9A6F00;--gold-l:#FFF8DC;--gold-bg:#FFD700;
+  --ink:#1C1A2E;--muted:#6B6880;--faint:#F4F3F8;
+  --card:#fff;--surf:#F7F6FB;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --serif:-apple-system-ui-serif,ui-serif,Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:100vh;line-height:1.55;}
+
+.hero{background:var(--ink);padding:48px 22px 56px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 60%,rgba(83,74,183,.35) 0%,transparent 60%),
+             radial-gradient(ellipse at 75% 20%,rgba(15,110,86,.25) 0%,transparent 50%);
+  pointer-events:none;}
+.hero-lbl{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--purple-m);
+  background:rgba(83,74,183,.18);border:1px solid rgba(175,169,236,.3);
+  padding:5px 14px;border-radius:20px;margin-bottom:16px;position:relative;}
+.hero h1{font-family:var(--serif);font-size:clamp(30px,7vw,46px);
+  color:#fff;line-height:1.1;margin-bottom:11px;position:relative;}
+.hero h1 em{font-style:italic;color:var(--purple-m);}
+.hero p{font-size:14px;color:rgba(255,255,255,.7);max-width:520px;
+  margin:0 auto 18px;line-height:1.65;position:relative;}
+.hero-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;position:relative;}
+.heroact{padding:9px 16px;border-radius:24px;border:0;cursor:pointer;
+  font-size:13px;font-weight:600;font-family:var(--sans);transition:all .15s;}
+.heroact-primary{background:#fff;color:var(--ink);}
+.heroact-primary:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.2);}
+.heroact-ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25);}
+.heroact-ghost:hover{background:rgba(255,255,255,.18);}
+
+.wrap{max-width:760px;margin:0 auto;padding:32px 18px 80px;}
+
+.intro{background:var(--card);border-radius:16px;padding:22px 24px;
+  border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04);
+  font-size:15px;line-height:1.7;color:var(--ink);margin-bottom:28px;}
+.intro strong{color:var(--purple-d);}
+
+.btnrow{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.btn{padding:8px 14px;border-radius:18px;border:1.5px solid rgba(0,0,0,.1);
+  background:var(--card);font-size:12.5px;font-weight:500;color:var(--ink);
+  display:inline-flex;align-items:center;gap:6px;}
+.btn-x{background:var(--coral-l);color:var(--coral);border-color:var(--coral-m);}
+.btn-m{background:var(--amber-l);color:var(--amber);border-color:#EF9F27;}
+.btn-s{background:var(--purple-l);color:var(--purple);border-color:var(--purple-m);}
+.btn-ss{background:var(--gold-l);color:var(--gold);border-color:var(--gold-bg);}
+
+.phase{background:var(--card);border-radius:14px;border:1px solid rgba(0,0,0,.06);
+  margin-bottom:18px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);
+  page-break-inside:avoid;break-inside:avoid;}
+.phase-hd{display:flex;align-items:center;gap:14px;padding:18px 22px;border-bottom:1px solid rgba(0,0,0,.05);}
+.phase-num{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:700;color:#fff;flex-shrink:0;background:var(--purple);}
+.phase-num.p2{background:var(--teal);}
+.phase-num.p3{background:var(--amber);}
+.phase-num.p4{background:#B8860B;}
+.phase-num.p5{background:var(--teal);}
+.phase-num.p6{background:var(--purple);}
+.phase-name{font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink);line-height:1.2;}
+.phase-time{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:3px;}
+.phase-bd{padding:18px 22px 22px;font-size:14px;line-height:1.7;color:var(--ink);}
+.phase-bd p{margin-bottom:10px;}
+.phase-bd p:last-child{margin-bottom:0;}
+.phase-bd ol{margin:8px 0 12px 22px;}
+.phase-bd ul{margin:8px 0 12px 22px;}
+.phase-bd li{margin-bottom:6px;}
+.phase-bd strong{color:var(--purple-d);}
+
+.tip{background:var(--teal-l);border-left:3px solid var(--teal-m);border-radius:0 8px 8px 0;
+  padding:10px 14px;margin:10px 0;font-size:13px;color:var(--teal);}
+.tip-lbl{font-weight:700;text-transform:uppercase;font-size:10px;letter-spacing:.08em;margin-right:6px;}
+
+.warn{background:var(--amber-l);border-left:3px solid #EF9F27;border-radius:0 8px 8px 0;
+  padding:10px 14px;margin:10px 0;font-size:13px;color:#633806;}
+.warn-lbl{font-weight:700;text-transform:uppercase;font-size:10px;letter-spacing:.08em;margin-right:6px;}
+
+.callout{background:var(--purple-l);border-radius:10px;padding:14px 16px;margin:14px 0;
+  font-size:13.5px;color:var(--purple-d);line-height:1.65;}
+
+.kbd{background:var(--faint);border:1px solid rgba(0,0,0,.1);border-radius:5px;
+  padding:1px 6px;font-family:ui-monospace,SFMono-Regular,monospace;font-size:12.5px;color:var(--ink);}
+
+.divider{height:1px;background:rgba(0,0,0,.06);margin:32px 0;}
+
+.finale{background:var(--ink);color:#fff;border-radius:16px;padding:26px 24px;
+  position:relative;overflow:hidden;margin-top:8px;}
+.finale::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 60%,rgba(184,134,11,.3) 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 20%,rgba(83,74,183,.3) 0%,transparent 50%);
+  pointer-events:none;}
+.finale-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;
+  color:#FFD060;margin-bottom:8px;position:relative;}
+.finale-text{font-size:16px;line-height:1.7;position:relative;font-family:var(--serif);}
+
+.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px;padding:0 18px;}
+
+.printbar{position:fixed;top:14px;right:14px;z-index:50;}
+.printbtn{padding:10px 16px;border-radius:24px;background:var(--purple);color:#fff;
+  border:0;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans);
+  box-shadow:0 4px 14px rgba(83,74,183,.35);transition:all .15s;}
+.printbtn:hover{background:var(--purple-d);transform:translateY(-1px);}
+
+@media print {
+  .printbar, .hero-actions {display:none !important;}
+  body{background:#fff;}
+  .hero{background:var(--ink) !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:24px 22px;}
+  .phase, .intro, .finale{box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .tip, .warn, .callout, .btn-x, .btn-m, .btn-s, .btn-ss, .phase-num{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  @page{margin:14mm;}
+}
+</style>
+</head>
+<body>
+
+<div class="printbar">
+  <button type="button" class="printbtn" onclick="window.print()">↓ Save as PDF / Print</button>
+</div>
+
+<header class="hero">
+  <div class="hero-lbl">Student tutorial</div>
+  <h1>How to use the <em>Spark</em> app</h1>
+  <p>A short guide to finding what you're curious about. Takes about 30 minutes the first time — and you can come back to it whenever you want.</p>
+  <div class="hero-actions">
+    <button type="button" class="heroact heroact-ghost" onclick="window.print()">Save as PDF</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="intro">
+    The app shows you <strong>55 areas of interest</strong>. You'll rate each one, see your top picks, and then turn one into something you can actually do this week. There are no right answers. Move fast — your first instinct is usually right.
+  </div>
+
+  <!-- RATING BUTTONS -->
+  <div class="phase">
+    <div class="phase-hd">
+      <div class="phase-num" style="background:var(--ink);">★</div>
+      <div>
+        <div class="phase-name">The rating buttons</div>
+        <div class="phase-time">Used through every area</div>
+      </div>
+    </div>
+    <div class="phase-bd">
+      <p>Each area has four buttons. Pick one:</p>
+      <div class="btnrow">
+        <span class="btn btn-x">✗ No thanks</span>
+        <span class="btn btn-m">~ Maybe</span>
+        <span class="btn btn-s">★ Interested</span>
+        <span class="btn btn-ss">★★ Most interested</span>
+      </div>
+      <p><strong>Rules:</strong></p>
+      <ul>
+        <li>You can only pick <strong>3 as ★</strong> and <strong>3 as ★★</strong>.</li>
+        <li>Once you fill all 3, the buttons lock until you free a slot.</li>
+        <li>Tap the same button again to un-pick it.</li>
+        <li>No limit on ✗ or ~.</li>
+      </ul>
+      <div class="tip"><span class="tip-lbl">Tip</span>The bar at the top of the app shows how many slots you've used. Watch it.</div>
+    </div>
+  </div>
+
+  <!-- STEP 1 — SURVEY -->
+  <div class="phase">
+    <div class="phase-hd">
+      <div class="phase-num p2">1</div>
+      <div>
+        <div class="phase-name">The survey</div>
+        <div class="phase-time">About 12 minutes</div>
+      </div>
+    </div>
+    <div class="phase-bd">
+      <ol>
+        <li>Rate every one of the 55 areas. Don't skip — even a <strong>✗</strong> is useful.</li>
+        <li>Trust your gut. Stuck? It's probably a <strong>~</strong>.</li>
+        <li>The progress bar shows how far through you are.</li>
+      </ol>
+      <div class="tip"><span class="tip-lbl">Tip</span>You can change your mind any time before you click <strong>"See my passion profile"</strong>.</div>
+    </div>
+  </div>
+
+  <!-- STEP 2 — IGNITE -->
+  <div class="phase">
+    <div class="phase-hd">
+      <div class="phase-num p4">2</div>
+      <div>
+        <div class="phase-name">Ignite</div>
+        <div class="phase-time">5 minutes · tap Phase 4 button</div>
+      </div>
+    </div>
+    <div class="phase-bd">
+      <p>This is the most important 5 minutes. Don't skip.</p>
+      <ol>
+        <li><strong>Name your spark.</strong> Write one sentence: <em>"I think I'm curious about ____ because ____."</em> Be specific. Not "science" — say <em>what</em> about science.</li>
+        <li><strong>Choose one tiny action.</strong> Watch / Ask / Make / Read. Just one. Fifteen minutes max. You'll do it in the next 48 hours.</li>
+        <li><strong>Say it out loud.</strong> Even just to yourself, or to someone you trust. Hearing yourself say it makes you far more likely to follow through.</li>
+        <li><strong>Come back later.</strong> Once you've done your action, notice what happened — did the feeling hold up, get bigger, or change completely? All three answers are useful.</li>
+      </ol>
+      <p>Then tap <strong>"Generate my commitment card"</strong> — copy it or save as a PDF.</p>
+      <div class="callout">A feeling that doesn't become an action fades within days. This step is where you turn the feeling into something you'll actually do.</div>
+    </div>
+  </div>
+
+  <!-- STEP 3 — WHAT'S NEXT -->
+  <div class="phase">
+    <div class="phase-hd">
+      <div class="phase-num p5">3</div>
+      <div>
+        <div class="phase-name">What's next?</div>
+        <div class="phase-time">Self-paced · tap Phase 5 button</div>
+      </div>
+    </div>
+    <div class="phase-bd">
+      <p>Tap <strong>"Phase 5 — What's next?"</strong> to see places to go further.</p>
+      <ul>
+        <li>Eight category buttons, one per area of interest.</li>
+        <li>Categories where you starred sparks are <strong>tinted</strong> in their colour with a small badge like <em>"★★ 1 · ★ 2"</em> — so you know at a glance which ones matter to you.</li>
+        <li>You can still tap any category, even ones you didn't star.</li>
+      </ul>
+      <p>Inside each category:</p>
+      <ul>
+        <li><strong>Competitions</strong> you can enter</li>
+        <li><strong>Free resources</strong> to explore</li>
+        <li><strong>University-level resources</strong> for when you're ready to go deeper</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STEP 4 — USE YOUR SPARK -->
+  <div class="phase">
+    <div class="phase-hd">
+      <div class="phase-num p6">4</div>
+      <div>
+        <div class="phase-name">Use your spark in class</div>
+        <div class="phase-time">Self-paced · tap Phase 6 button</div>
+      </div>
+    </div>
+    <div class="phase-bd">
+      <p>Tap <strong>"Phase 6 — Use your spark →"</strong>. This is for when you're sitting in another lesson — English, Maths, History — and you want to make it more interesting.</p>
+      <p><strong>How it works:</strong></p>
+      <ol>
+        <li><strong>Pick a spark</strong> — your sparks are at the top, colour-coded by category.</li>
+        <li><strong>Pick the subject you're in</strong> — English, Maths, Science, etc.</li>
+        <li>You'll see two columns:
+          <ul>
+            <li><strong>Left</strong> — five "moves" your spark teaches you to make</li>
+            <li><strong>Right</strong> — four "hooks" where each subject lets you plug your spark in</li>
+          </ul>
+        </li>
+        <li>Pick <strong>one from each side</strong>. That's your hint for the lesson.</li>
+      </ol>
+      <p>Want more options? Tap <strong>"+ Browse more sparks"</strong> to see every other area you haven't ruled out, grouped by category.</p>
+      <div class="callout">Your spark isn't just a topic — it's a way of thinking that travels into every subject.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SAVING -->
+  <div class="phase">
+    <div class="phase-hd">
+      <div class="phase-num" style="background:var(--blue);">↻</div>
+      <div>
+        <div class="phase-name">Will my answers be saved?</div>
+        <div class="phase-time">Auto-save</div>
+      </div>
+    </div>
+    <div class="phase-bd">
+      <p>The app <strong>remembers your answers automatically</strong> on the iPad you used. Close the tab and come back later — your ratings will be there. You'll see a small message at the bottom: <em>"Restored your previous answers."</em></p>
+      <div class="warn"><span class="warn-lbl">Important</span>It only works on the <strong>same iPad</strong>, in the <strong>same browser</strong> (usually Safari). A different iPad won't see your answers. If you clear Safari history, your answers are gone. <strong>Save a PDF of your results</strong> — it's the safest way to keep them.</div>
+      <p>Tap <strong>"Start over"</strong> at the bottom of the survey to wipe everything and start fresh.</p>
+    </div>
+  </div>
+
+  <!-- TROUBLESHOOTING -->
+  <div class="phase">
+    <div class="phase-hd">
+      <div class="phase-num" style="background:var(--coral);">?</div>
+      <div>
+        <div class="phase-name">If something isn't working</div>
+        <div class="phase-time">Quick fixes</div>
+      </div>
+    </div>
+    <div class="phase-bd">
+      <ul>
+        <li><strong>Buttons not working?</strong> Make sure you opened the link in <strong>Safari</strong>, not inside a Schoology or Classroom file viewer. The URL should look like <span class="kbd">username.github.io/…</span>.</li>
+        <li><strong>Page looks weird?</strong> Pull down to refresh.</li>
+        <li><strong>Lost your work?</strong> If auto-save didn't catch it, you'll need to rate again. Saving as PDF after the survey is your insurance.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="finale">
+    <div class="finale-lbl">One more thing</div>
+    <div class="finale-text">Finding out you <em>don't</em> care about something is just as valuable as finding out you do. The point isn't to lock you into a passion — it's to help you notice what you're actually drawn to right now. Have fun.</div>
+  </div>
+
+  <div class="footer">Spark — Passion Discovery Survey · Student tutorial</div>
+
+</main>
+
+</body>
+</html>
