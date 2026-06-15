@@ -41,8 +41,6 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 .hero-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;position:relative;}
 .heroact{padding:9px 16px;border-radius:24px;border:0;cursor:pointer;
   font-size:13px;font-weight:600;font-family:var(--sans);transition:all .15s;}
-.heroact-primary{background:#fff;color:var(--ink);}
-.heroact-primary:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.2);}
 .heroact-ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25);}
 .heroact-ghost:hover{background:rgba(255,255,255,.18);}
 
@@ -69,7 +67,6 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 .phase-num{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
   font-size:15px;font-weight:700;color:#fff;flex-shrink:0;background:var(--purple);}
 .phase-num.p2{background:var(--teal);}
-.phase-num.p3{background:var(--amber);}
 .phase-num.p4{background:#B8860B;}
 .phase-num.p5{background:var(--teal);}
 .phase-num.p6{background:var(--purple);}
@@ -93,6 +90,10 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 
 .callout{background:var(--purple-l);border-radius:10px;padding:14px 16px;margin:14px 0;
   font-size:13.5px;color:var(--purple-d);line-height:1.65;}
+
+.sub{background:var(--faint);border-left:3px solid var(--purple-m);border-radius:0 8px 8px 0;
+  padding:10px 14px;margin:10px 0;font-size:13.5px;color:var(--ink);line-height:1.6;}
+.sub strong{color:var(--purple-d);}
 
 .kbd{background:var(--faint);border:1px solid rgba(0,0,0,.1);border-radius:5px;
   padding:1px 6px;font-family:ui-monospace,SFMono-Regular,monospace;font-size:12.5px;color:var(--ink);}
@@ -122,7 +123,7 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   body{background:#fff;}
   .hero{background:var(--ink) !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:24px 22px;}
   .phase, .intro, .finale{box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-  .tip, .warn, .callout, .btn-x, .btn-m, .btn-s, .btn-ss, .phase-num{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .tip, .warn, .callout, .sub, .btn-x, .btn-m, .btn-s, .btn-ss, .phase-num{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   @page{margin:14mm;}
 }
 </style>
@@ -192,6 +193,14 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
         <li>The progress bar shows how far through you are.</li>
       </ol>
       <div class="tip"><span class="tip-lbl">Tip</span>You can change your mind any time before you click <strong>"See my passion profile"</strong>.</div>
+
+      <div class="sub">
+        <strong>Two helpers built into the survey:</strong>
+        <ul style="margin-top:6px;">
+          <li>The <strong>?</strong> button next to each area's name tells you what that area actually is — what people who do this spend their time on. Tap to read, tap again to close.</li>
+          <li><strong>"Not sure where to start? Tap an interest →"</strong> at the very top opens a list of things you might already love — drawing, video games, animals, music, helping people, and many more. Tap one and the matching areas of the survey light up in orange. Tap a name to jump straight there. Pick a new interest any time, or tap <em>Clear</em>.</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -239,6 +248,10 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
         <li><strong>Free resources</strong> to explore</li>
         <li><strong>University-level resources</strong> for when you're ready to go deeper</li>
       </ul>
+
+      <div class="sub">
+        <strong>Plus — questions you could ask an expert.</strong> Near the top of Phase 5 there's a small gold button: <em>"Scroll down to see questions you could ask an expert ↓"</em>. Tap it to jump to a section at the bottom with 8 questions per category — to ask an adult who actually works in that area. Screenshot a category's questions before you talk to someone whose job sounds like your spark.
+      </div>
     </div>
   </div>
 
@@ -255,7 +268,7 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
       <p>Tap <strong>"Phase 6 — Use your spark →"</strong>. This is for when you're sitting in another lesson — English, Maths, History — and you want to make it more interesting.</p>
       <p><strong>How it works:</strong></p>
       <ol>
-        <li><strong>Pick a spark</strong> — your sparks are at the top, colour-coded by category.</li>
+        <li><strong>Pick a spark</strong> — your sparks are at the top, colour-coded by category. Tap the spark name (shown with a small <em>(?)</em>) to see what it actually means.</li>
         <li><strong>Pick the subject you're in</strong> — English, Maths, Science, etc.</li>
         <li>You'll see two columns:
           <ul>
@@ -271,6 +284,34 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   </div>
 
   <div class="divider"></div>
+
+  <!-- JUMP PILLS -->
+  <div class="phase">
+    <div class="phase-hd">
+      <div class="phase-num" style="background:var(--gold);">↔</div>
+      <div>
+        <div class="phase-name">Jumping between phases</div>
+        <div class="phase-time">All three overlays</div>
+      </div>
+    </div>
+    <div class="phase-bd">
+      <p>At the top of <strong>Phase 4, 5, and 6</strong> there are now small jump pills — gold for Phase 4, teal for Phase 5, purple for Phase 6. Tap one to switch phases directly, without going back through the survey.</p>
+    </div>
+  </div>
+
+  <!-- ALSO EXPLORE -->
+  <div class="phase">
+    <div class="phase-hd">
+      <div class="phase-num" style="background:var(--teal);">✦</div>
+      <div>
+        <div class="phase-name">Also explore</div>
+        <div class="phase-time">At the bottom of your results</div>
+      </div>
+    </div>
+    <div class="phase-bd">
+      <p>On the results screen, each ★★ spark has a small <strong>"Also explore"</strong> row showing two related areas and one <em>"Another possibility:"</em> suggestion. They're hints for what to look at next once you've started on your top spark.</p>
+    </div>
+  </div>
 
   <!-- SAVING -->
   <div class="phase">
