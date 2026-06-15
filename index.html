@@ -118,6 +118,9 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 .rgrplbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;}
 .rgrpsub{font-size:11px;color:rgba(255,255,255,.5);margin-bottom:9px;line-height:1.4;}
 .rtags{display:flex;flex-wrap:wrap;gap:6px;}
+#tags-ss{flex-direction:column;align-items:flex-start;gap:10px;}
+.rblk-ss{display:flex;flex-direction:column;align-items:flex-start;gap:0;width:100%;}
+.rblk-ss .rtag-ss{align-self:flex-start;}
 .rtag{padding:5px 12px;border-radius:28px;font-size:13px;font-weight:500;}
 .rtag-ss{background:rgba(154,111,0,.3);color:#FFE46A;border:1px solid rgba(255,215,0,.2);}
 .rtag-s{background:rgba(83,74,183,.35);color:#D0CDFB;border:1px solid rgba(175,169,236,.25);}
@@ -530,6 +533,139 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   font-family:var(--sans);}
 .rtoast-close:hover{color:#fff;}
 
+/* ── GLOSSARY (Feature 1) ── */
+.gbtn{display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(0,0,0,.15);
+  background:var(--card);font-size:11px;font-weight:700;color:var(--muted);
+  cursor:pointer;font-family:var(--sans);margin-left:6px;flex-shrink:0;
+  transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.gbtn:hover{background:var(--purple-l);color:var(--purple);border-color:var(--purple-m);}
+.gbtn.open{background:var(--purple);color:#fff;border-color:var(--purple);}
+.gpanel{display:none;margin-top:8px;padding:12px 14px;
+  background:var(--purple-l);border:1px solid rgba(83,74,183,.2);
+  border-radius:10px;font-size:13px;line-height:1.6;color:#2A2470;}
+.gpanel.open{display:block;}
+
+.drow .dname-wrap{display:flex;align-items:center;flex-wrap:wrap;}
+
+/* ── INTEREST FINDER STRIP (Feature 7) ── */
+.ifstrip{background:var(--card);border-radius:14px;border:1px solid rgba(0,0,0,.07);
+  margin-bottom:16px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.04);}
+.ifstrip-toggle{width:100%;text-align:left;padding:12px 16px;
+  background:transparent;border:0;cursor:pointer;font-family:var(--sans);
+  font-size:13.5px;font-weight:600;color:var(--purple);
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  -webkit-tap-highlight-color:transparent;}
+.ifstrip-toggle:hover{background:var(--faint);}
+.ifstrip-toggle-arrow{font-size:14px;transition:transform .2s;}
+.ifstrip.open .ifstrip-toggle-arrow{transform:rotate(90deg);}
+.ifstrip-body{display:none;padding:0 16px 14px;}
+.ifstrip.open .ifstrip-body{display:block;}
+.ifstrip-prompt{font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5;}
+.iftag{padding:6px 12px;border-radius:18px;border:1.5px solid rgba(0,0,0,.1);
+  background:var(--faint);font-size:12px;font-weight:500;color:var(--ink);
+  cursor:pointer;font-family:var(--sans);margin:0;
+  -webkit-tap-highlight-color:transparent;transition:all .12s;}
+.iftag:active{transform:scale(.97);}
+.iftag.on{background:#BA7517;color:#fff;border-color:#BA7517;
+  box-shadow:0 2px 8px rgba(186,117,23,.3);}
+.iftags{display:flex;flex-wrap:wrap;gap:6px;}
+.ifresult{margin-top:12px;padding:10px 12px;border-radius:10px;
+  background:var(--amber-l);border:1px solid rgba(186,117,23,.18);}
+.ifresult-lbl{font-size:11.5px;color:#7A4D0E;margin-bottom:6px;line-height:1.45;}
+.ifresult-lbl strong{color:#BA7517;}
+.ifresult-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;}
+.ifresult-chip{padding:5px 10px;border-radius:14px;font-size:12px;
+  background:#fff;border:1px solid rgba(186,117,23,.3);color:#7A4D0E;
+  cursor:pointer;font-family:var(--sans);
+  -webkit-tap-highlight-color:transparent;}
+.ifresult-chip:hover{background:#FFF8EC;}
+.ifclear{font-size:11.5px;color:var(--muted);background:transparent;
+  border:0;cursor:pointer;text-decoration:underline;padding:2px 0;
+  font-family:var(--sans);}
+
+/* Row flag */
+.drow.if-match{box-shadow:inset 4px 0 0 #EF9F27;}
+.if-pill{display:none;font-size:10px;font-weight:600;
+  padding:2px 7px;border-radius:10px;
+  background:rgba(186,117,23,.15);color:#7A4D0E;
+  margin-left:6px;white-space:nowrap;}
+.drow.if-match .if-pill{display:inline-block;}
+
+/* ── ADJACENCY (Feature 8) ── */
+.adjwrap{margin-top:10px;padding:11px 13px;border-radius:10px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);}
+.adjlbl{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:rgba(255,255,255,.55);margin-bottom:7px;}
+.adjchips{display:flex;flex-wrap:wrap;gap:5px;}
+.adjchip{padding:4px 10px;border-radius:14px;font-size:11.5px;font-weight:500;
+  background:rgba(255,255,255,.1);color:rgba(255,255,255,.9);
+  border:1px solid rgba(255,255,255,.15);white-space:nowrap;}
+.adjchip-stretch{background:rgba(255,215,0,.18);color:#FFE680;
+  border-color:rgba(255,215,0,.3);font-style:italic;}
+
+/* Phase 6 glossary trigger on the column title */
+.p6col-title{cursor:pointer;}
+.p6col-title:hover{color:var(--purple);}
+.p6gpanel{display:none;margin-bottom:10px;padding:10px 12px;border-radius:9px;
+  background:var(--purple-l);color:#2A2470;font-size:12.5px;line-height:1.55;
+  border:1px solid rgba(83,74,183,.18);}
+.p6gpanel.open{display:block;}
+
+/* ── INTERVIEW KIT (Feature 10) ── */
+.p5ikit{margin-top:30px;padding-top:24px;border-top:1px solid rgba(0,0,0,.08);}
+.p5ikit-hd{font-family:var(--serif);font-size:22px;color:var(--ink);
+  line-height:1.2;margin-bottom:6px;}
+.p5ikit-sub{font-size:13px;color:var(--muted);line-height:1.6;
+  margin-bottom:16px;}
+.p5ikit-cats{display:flex;flex-direction:column;gap:10px;}
+.p5ikit-wrap{}
+.p5ikit-cat{width:100%;text-align:left;padding:14px 16px;
+  border-radius:12px;border:1.5px solid rgba(0,0,0,.08);
+  background:var(--card);cursor:pointer;font-family:var(--sans);
+  display:flex;align-items:center;gap:12px;transition:all .15s;
+  -webkit-tap-highlight-color:transparent;}
+.p5ikit-cat:active{transform:scale(.99);}
+.p5ikit-cat.open{border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none;}
+.p5ikit-count{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
+.p5ikit-panel{display:none;background:var(--card);
+  border:1.5px solid rgba(0,0,0,.08);border-top:none;
+  border-radius:0 0 12px 12px;padding:16px 18px 18px;
+  box-shadow:0 4px 12px rgba(0,0,0,.06);}
+.p5ikit-panel.open{display:block;}
+.p5ikit-list{list-style:decimal inside;padding-left:6px;margin:0;}
+.p5ikit-list.bord{padding-left:14px;border-left-width:3px;border-left-style:solid;}
+.p5ikit-q{font-size:13.5px;line-height:1.65;color:var(--ink);
+  padding:5px 0 5px 4px;margin-bottom:2px;}
+.p5ikit-q::marker{font-weight:700;color:var(--muted);}
+
+.p5ikit-jump{display:inline-flex;align-items:center;gap:6px;margin-top:14px;
+  padding:9px 16px;border-radius:24px;
+  background:rgba(255,215,0,.16);color:#FFD060;
+  border:1px solid rgba(255,215,0,.28);
+  font-size:13px;font-weight:600;font-family:var(--sans);
+  cursor:pointer;position:relative;transition:all .15s;
+  -webkit-tap-highlight-color:transparent;}
+.p5ikit-jump:hover{background:rgba(255,215,0,.24);transform:translateY(-1px);}
+.p5ikit-jump:active{transform:scale(.97);}
+
+/* ── PHASE NAV (cross-phase jump pills) ── */
+.phasenav{display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.phasenav .p4close{margin-bottom:0;}
+.pjumps{display:flex;gap:6px;flex-wrap:wrap;}
+.pjump{padding:6px 12px;border-radius:18px;font-size:12px;font-weight:600;
+  border:1.5px solid;cursor:pointer;font-family:var(--sans);
+  transition:all .15s;white-space:nowrap;
+  -webkit-tap-highlight-color:transparent;}
+.pjump:active{transform:scale(.97);}
+.pjump-4{background:rgba(184,134,11,.14);color:#8A6B17;border-color:rgba(184,134,11,.35);}
+.pjump-4:hover{background:rgba(184,134,11,.22);}
+.pjump-5{background:rgba(15,110,86,.12);color:var(--teal);border-color:rgba(15,110,86,.3);}
+.pjump-5:hover{background:rgba(15,110,86,.2);}
+.pjump-6{background:rgba(83,74,183,.12);color:var(--purple);border-color:rgba(83,74,183,.3);}
+.pjump-6:hover{background:rgba(83,74,183,.22);}
+
 </style>
 </head>
 <body>
@@ -584,6 +720,24 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 </div>
 
 <main class="main">
+
+  <!-- INTEREST FINDER STRIP (Feature 7) -->
+  <div class="ifstrip" id="ifstrip">
+    <button type="button" class="ifstrip-toggle" onclick="toggleIfStrip()">
+      <span>Not sure where to start? Tap an interest →</span>
+      <span class="ifstrip-toggle-arrow">›</span>
+    </button>
+    <div class="ifstrip-body">
+      <div class="ifstrip-prompt">Pick a thing you love. The matching areas of the survey will glow orange — tap a name to jump there, then rate it like normal.</div>
+      <div class="iftags" id="iftags"></div>
+      <div class="ifresult" id="ifresult" style="display:none">
+        <div class="ifresult-lbl">Areas matching <strong id="ifresult-tag"></strong>:</div>
+        <div class="ifresult-chips" id="ifresult-chips"></div>
+        <button type="button" class="ifclear" onclick="clearIfTag()">Clear</button>
+      </div>
+    </div>
+  </div>
+
   <div class="finbanner" id="fin">
     <span>✓</span>
     <span style="font-size:13px;color:var(--teal);font-weight:500">All 55 rated! Tap "See my passion profile" below.</span>
@@ -1130,7 +1284,13 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   <div class="p4wrap">
     <div class="p4inner">
 
-      <button type="button" class="p4close" onclick="hidePhase4()">← Back to survey</button>
+      <div class="phasenav">
+        <button type="button" class="p4close" onclick="hidePhase4()">← Back to survey</button>
+        <div class="pjumps">
+          <button type="button" class="pjump pjump-5" onclick="hidePhase4(); showPhase5();">Phase 5 · What's next? →</button>
+          <button type="button" class="pjump pjump-6" onclick="hidePhase4(); showPhase6();">Phase 6 · Use your spark →</button>
+        </div>
+      </div>
 
       <div class="p4hero">
         <div class="p4badge">Phase 4 · 5 minutes</div>
@@ -1248,21 +1408,41 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 <!-- PHASE 5 OVERLAY -->
 <div id="p5overlay">
   <div class="p5wrap">
-    <button type="button" class="p4close" onclick="hidePhase5()">← Back to survey</button>
+    <div class="phasenav">
+      <button type="button" class="p4close" onclick="hidePhase5()">← Back to survey</button>
+      <div class="pjumps">
+        <button type="button" class="pjump pjump-4" onclick="hidePhase5(); showPhase4();">Phase 4 · Ignite ★</button>
+        <button type="button" class="pjump pjump-6" onclick="hidePhase5(); showPhase6();">Phase 6 · Use your spark →</button>
+      </div>
+    </div>
     <div class="p5hero">
       <div class="p4badge" style="background:rgba(15,110,86,.2);border-color:rgba(93,202,165,.3);color:#5DCAA5">Phase 5 · What's next?</div>
       <h2 class="p4title">Explore further</h2>
       <p class="p4subtitle">Competitions to enter, platforms to explore, and — when you are ready — university-level resources to go deeper. Tap a category to open it.</p>
       <p class="p5note">This list is a starting point. Things change each year — always check the website for current dates and eligibility.</p>
+      <button type="button" class="p5ikit-jump" onclick="scrollToIKit()">Scroll down to see questions you could ask an expert ↓</button>
     </div>
     <div class="p5cats" id="p5cats"></div>
+
+    <!-- Interview kit (Feature 10) -->
+    <div class="p5ikit">
+      <h3 class="p5ikit-hd">Interview kit</h3>
+      <p class="p5ikit-sub">Questions to ask someone who works in your spark area. Print these or screenshot them, find an adult who does this kind of work, and ask them. Tap a category below to open its questions.</p>
+      <div class="p5ikit-cats" id="p5ikit-cats"></div>
+    </div>
   </div>
 </div>
 
 <!-- PHASE 6 OVERLAY -->
 <div id="p6overlay">
   <div class="p6wrap">
-    <button type="button" class="p4close" onclick="hidePhase6()">← Back to survey</button>
+    <div class="phasenav">
+      <button type="button" class="p4close" onclick="hidePhase6()">← Back to survey</button>
+      <div class="pjumps">
+        <button type="button" class="pjump pjump-4" onclick="hidePhase6(); showPhase4();">Phase 4 · Ignite ★</button>
+        <button type="button" class="pjump pjump-5" onclick="hidePhase6(); showPhase5();">Phase 5 · What's next? →</button>
+      </div>
+    </div>
     <div class="p6hero">
       <div class="p6badge">Phase 6 · Use your spark in class</div>
       <h2 class="p4title">Carry your spark</h2>
@@ -1287,7 +1467,8 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
       <div class="p6cols">
         <div class="p6col">
           <div class="p6col-label" style="color:var(--purple)">Your spark teaches you to…</div>
-          <div class="p6col-title" id="p6col-spark"></div>
+          <div class="p6col-title" id="p6col-spark" onclick="toggleP6Gloss()" title="Tap to see what this means"></div>
+          <div class="p6gpanel" id="p6gpanel"></div>
           <div class="p6list" id="p6moves"></div>
         </div>
         <div class="p6col">
@@ -1511,7 +1692,11 @@ function showResults() {
   setTimeout(function(){panel.classList.add('vis');},10);
 
   var h=function(list,cls){return list.map(function(s){return '<span class="rtag '+cls+'">'+s+'</span>';}).join('');}
-  document.getElementById('tags-ss').innerHTML = h(d.dstars,'rtag-ss');
+  // ★★ — each spark gets its own block with adjacency underneath
+  var ssBlocks = d.dstars.map(function(s){
+    return '<div class="rblk-ss"><span class="rtag rtag-ss">' + escHtml(s) + '</span>' + adjacencyHtml(s) + '</div>';
+  }).join('');
+  document.getElementById('tags-ss').innerHTML = ssBlocks;
   document.getElementById('tags-s').innerHTML  = h(d.stars,'rtag-s');
   document.getElementById('tags-m').innerHTML  = h(d.maybes.slice(0,6),'rtag-m');
   document.getElementById('grp-ss').style.display = d.dstars.length?'block':'none';
@@ -1528,11 +1713,11 @@ function showResults() {
   if(!d.dstars.length && !d.stars.length) {
     next='Nothing landed yet — that\'s fine. Try the card game and see if holding a domain name sparks something.';
   } else if(d.dstars.length) {
-    next='Take your ★★ areas into the card game. Ask: "If I had one free afternoon, which would I explore?" Your ★ areas are your next step once you\'ve started on your top spark.';
+    next='Take your ★★ areas into the card game. Ask: "If I had one free afternoon, which would I explore?"<br>Your ★ areas are your next step once you\'ve started on your top spark.';
   } else {
     next='You have ★ interests but no ★★ yet. Scroll back and see if any feels stronger — if not, take all three into the card game bracket to decide.';
   }
-  document.getElementById('rnext').textContent = next;
+  document.getElementById('rnext').innerHTML = next;
   document.getElementById('rruled').textContent = d.nos>0?'You ruled out '+d.nos+' domain'+(d.nos!==1?'s':'')+'  — that clarity is just as valuable.':'';
   panel.scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -1959,11 +2144,154 @@ var P5_DATA = [
   }
 ];
 
+// ── INTERVIEW KIT (Feature 10) ──────────────────────────
+var INTERVIEW_KIT = {
+  "Mathematics & Computing": [
+    "How did you first get into maths, coding, or working with computers?",
+    "What does a normal work day actually look like for you?",
+    "What technology, tools, or equipment do you use regularly?",
+    "What surprised you the most when you started doing this for real?",
+    "How much teamwork is involved in your job?",
+    "What skills do employers look for when hiring new people in this industry?",
+    "How is your area changing — what do you think it'll look like in 10 years?",
+    "If you were my age now, what would you do to start exploring this?"
+  ],
+  "Natural Sciences": [
+    "What inspired you to choose this career?",
+    "What does a normal day in your work actually look like?",
+    "What qualifications, training, or education did you need to get this job?",
+    "What is the most rewarding project or achievement you have worked on?",
+    "What personal qualities are important for someone wanting to succeed in this field?",
+    "What's the hardest part of scientific work that most people don't see?",
+    "What trends do you think will affect this industry in the future?",
+    "If you were back in high school, what would you do differently to prepare for this career?"
+  ],
+  "Engineering & Making": [
+    "How did you first get into engineering or making things?",
+    "What technology, tools, or equipment do you use regularly?",
+    "What skill matters most for engineers that school doesn't teach you?",
+    "What does success look like in your job?",
+    "How much independent work do you do?",
+    "What's the hardest part most people don't see when they look at your finished work?",
+    "Are there any work experience, volunteering, or internship opportunities that would help me learn more about this field?",
+    "If you could describe your job in three words, what would they be and why?"
+  ],
+  "Humanities & Society": [
+    "What inspired you to choose this career?",
+    "What does a normal work day actually look like for you?",
+    "Which school subjects helped most, and which mattered less than you'd expected?",
+    "What personal qualities are important for someone wanting to succeed in this field?",
+    "How important are communication skills in your role?",
+    "What opportunities for career growth or advancement are available in this profession?",
+    "What mistakes do people commonly make when entering this profession?",
+    "What extracurricular activities, hobbies, or experiences would help prepare someone for this career?"
+  ],
+  "Language & Communication": [
+    "How did you first get into writing, languages, or working with words?",
+    "What do you enjoy most about your work?",
+    "What skill matters most that you can only learn by doing, not by being taught?",
+    "What is the most rewarding project or achievement you have worked on?",
+    "How much independent work do you do?",
+    "What are the working hours typically like?",
+    "What opportunities are there to travel or work in different locations?",
+    "If you were my age now, what would you do first?"
+  ],
+  "Arts & Creative Practice": [
+    "What inspired you to choose this career?",
+    "What does a normal work day or week actually look like for you?",
+    "What skill matters more than talent — the thing nobody tells you?",
+    "What do you enjoy most about your work?",
+    "What's the hardest part of creative work that the audience never sees?",
+    "How important are communication skills in your role?",
+    "What is the most rewarding project or achievement you have worked on?",
+    "If you could describe your job in three words, what would they be and why?"
+  ],
+  "Health & Human Development": [
+    "How did you first get into health, medicine, or working closely with people?",
+    "What qualifications, training, or education did you need to get this job?",
+    "What personal qualities are important for someone wanting to succeed in this field?",
+    "What surprised you the most when you started working with people in this way?",
+    "How much teamwork is involved in your job?",
+    "What are the working hours typically like?",
+    "What mistakes do people commonly make when entering this profession?",
+    "If you were back in high school, what would you do differently to prepare for this career?"
+  ],
+  "Business & Enterprise": [
+    "How did you first get into business or start your own thing?",
+    "What do you enjoy most about your work?",
+    "What skills do employers look for when hiring new people in this industry?",
+    "What does success look like in your job?",
+    "How important are communication skills in your role?",
+    "What technology, tools, or equipment do you use regularly?",
+    "What opportunities for career growth or advancement are available in this profession?",
+    "What trends do you think will affect this industry in the future?"
+  ]
+};
+
+function buildP5IKit() {
+  var container = document.getElementById('p5ikit-cats');
+  if (!container) return;
+  container.innerHTML = '';
+  P5_DATA.forEach(function(cat, idx){
+    var questions = INTERVIEW_KIT[cat.name] || [];
+    if (!questions.length) return;
+
+    var wrap = document.createElement('div');
+    wrap.className = 'p5ikit-wrap';
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'p5ikit-cat';
+    btn.id = 'p5ikit-btn-' + idx;
+    btn.innerHTML =
+      '<div class="p5cat-dot" style="background:' + cat.color + '"></div>' +
+      '<span class="p5cat-name">' + cat.name + '</span>' +
+      '<span class="p5ikit-count" style="color:' + cat.color + '">' + questions.length + ' questions</span>' +
+      '<span class="p5cat-arrow">›</span>';
+    btn.onclick = (function(i){ return function(){ toggleP5IKit(i); }; })(idx);
+
+    var panel = document.createElement('div');
+    panel.className = 'p5ikit-panel';
+    panel.id = 'p5ikit-panel-' + idx;
+    var html = '<ol class="p5ikit-list bord" style="border-left-color:' + cat.color + '">';
+    questions.forEach(function(q){
+      html += '<li class="p5ikit-q">' + escHtml(q) + '</li>';
+    });
+    html += '</ol>';
+    panel.innerHTML = html;
+
+    wrap.appendChild(btn);
+    wrap.appendChild(panel);
+    container.appendChild(wrap);
+  });
+}
+
+function toggleP5IKit(idx) {
+  var btn = document.getElementById('p5ikit-btn-' + idx);
+  var panel = document.getElementById('p5ikit-panel-' + idx);
+  var isOpen = panel.classList.contains('open');
+  var panels = document.querySelectorAll('.p5ikit-panel');
+  for (var i = 0; i < panels.length; i++) panels[i].classList.remove('open');
+  var btns = document.querySelectorAll('.p5ikit-cat');
+  for (var j = 0; j < btns.length; j++) btns[j].classList.remove('open');
+  if (!isOpen) {
+    panel.classList.add('open');
+    btn.classList.add('open');
+    setTimeout(function(){ btn.scrollIntoView({behavior:'smooth',block:'start'}); }, 60);
+  }
+}
+
 function showPhase5() {
   var overlay = document.getElementById('p5overlay');
   overlay.classList.add('p5open');
   overlay.scrollTop = 0;
   buildP5Cats();
+  buildP5IKit();
+}
+
+function scrollToIKit() {
+  var el = document.querySelector('.p5ikit');
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function hidePhase5() {
@@ -2377,8 +2705,11 @@ function renderP6() {
   var moves = SPARK_MOVES[p6Spark] || ['(no moves recorded for this spark yet)'];
   var subject = SUBJECTS[p6SubjectIdx];
   document.getElementById('p6result').style.display = 'block';
-  document.getElementById('p6col-spark').textContent = p6Spark;
+  document.getElementById('p6col-spark').textContent = p6Spark + ' (?)';
   document.getElementById('p6col-subject').textContent = subject.name;
+  // Reset glossary panel for the newly selected spark
+  var gp = document.getElementById('p6gpanel');
+  if (gp) { gp.textContent = GLOSSARY[p6Spark] || ''; gp.classList.remove('open'); }
   var esc = function(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
   document.getElementById('p6moves').innerHTML = moves.map(function(m){
     return '<div class="p6item p6move">' + esc(m) + '</div>';
@@ -2386,6 +2717,347 @@ function renderP6() {
   document.getElementById('p6hooks').innerHTML = subject.hooks.map(function(h){
     return '<div class="p6item p6hook">' + esc(h) + '</div>';
   }).join('');
+}
+
+function toggleP6Gloss() {
+  var gp = document.getElementById('p6gpanel');
+  if (gp) gp.classList.toggle('open');
+}
+
+// ── GLOSSARY (Feature 1) ──────────────────────────────
+var GLOSSARY = {
+  "Mathematics & logic": "The study of numbers, shapes, patterns, and the rules that connect them. Example: working out why prime numbers don't follow an obvious pattern, or proving that a triangle's angles always add to 180°. People who love this often become mathematicians, statisticians, cryptographers, finance analysts, or research scientists.",
+  "Coding & programming": "Writing instructions for computers to follow, so machines can do something useful. Example: building an app that tracks your habits, or scripting a small game in Python. People who love this become software engineers, app developers, web developers, or build their own tech startups.",
+  "Artificial intelligence": "Teaching computers to learn from data so they can do things that normally need human thinking, like recognising faces or translating languages. Example: training a model on thousands of photos so it can tell dogs from cats. People who love this become AI researchers, machine-learning engineers, or work at companies like Anthropic, OpenAI, and Google DeepMind.",
+  "Robotics & electronics": "Designing physical machines that sense, think, and move, by combining circuits, sensors, and code. Example: building a robot arm that sorts coloured blocks, or wiring a sensor that lights up when it gets dark. People who love this become robotics engineers, hardware engineers, or work on drones, prosthetics, and space rovers.",
+  "Data & statistics": "Finding the story hidden inside numbers — patterns, trends, and what's signal vs noise. Example: analysing a football team's match data to figure out why they lose more away games. People who love this become data scientists, statisticians, sports analysts, or work for big tech, banks, and government.",
+  "Cybersecurity & cryptography": "Protecting information from attackers, and the maths of keeping secrets safe. Example: cracking a substitution cipher, or finding a security hole in a website before bad actors do. People who love this become security analysts, ethical hackers, or work for intelligence agencies and tech firms.",
+  "Game design & simulation": "Building interactive worlds with rules, goals, and choices that players want to keep coming back to. Example: prototyping a card game where every round changes the rules slightly, or building a small video game in Unity. People who love this become game designers, level designers, narrative writers, or work in serious games used for training pilots and doctors.",
+  "Physics & forces": "How the universe actually works at every scale — why things move, fall, heat up, glow, or hold together. Example: working out why a heavier ball doesn't fall faster than a lighter one, or how a black hole bends light. People who love this become physicists, engineers, astronomers, or work on energy, space, and quantum computing.",
+  "Chemistry & materials": "What stuff is made of, how it reacts, and how to make new materials that didn't exist before. Example: figuring out why some plastics melt at low temperatures, or designing a new battery chemistry. People who love this become chemists, materials scientists, pharmacists, or work in pharmaceuticals, energy, and manufacturing.",
+  "Biology & living things": "How living organisms work, from single cells to whole ecosystems. Example: dissecting a flower to see how it makes seeds, or watching how bacteria respond to antibiotics. People who love this become biologists, doctors, ecologists, biotech researchers, or wildlife scientists.",
+  "Genetics & evolution": "How traits pass from parents to offspring, and how species change over millions of years. Example: working out why some people can roll their tongue and others can't, or how dogs were bred from wolves. People who love this become geneticists, evolutionary biologists, medical researchers, or work in personalised medicine and conservation.",
+  "Neuroscience & the brain": "How the brain produces thought, memory, emotion, and decision — and what goes wrong when it doesn't. Example: studying why people remember music from childhood better than maths from last year. People who love this become neuroscientists, psychiatrists, brain-imaging researchers, or work in mental health, AI, and education.",
+  "Astronomy & space": "Studying everything beyond Earth — stars, planets, galaxies, and the universe itself. Example: tracking how Jupiter's moons orbit using a backyard telescope, or learning how astronomers found exoplanets. People who love this become astronomers, astrophysicists, planetary scientists, or work for NASA, ESA, or SpaceX.",
+  "Ecology & environment": "How living things depend on each other and on the land, water, and air around them. Example: tracing what happens to a pond when you take away the frogs, or measuring how a forest's temperature changes after a fire. People who love this become ecologists, environmental scientists, conservation officers, or work for parks, NGOs, and councils.",
+  "Geology & earth science": "The rocks, soil, and forces that built the planet, and the story they tell across deep time. Example: identifying why a cliff is shaped like a staircase, or tracking how a fault line moved during an earthquake. People who love this become geologists, palaeontologists, mining engineers, or work in oil, mining, and disaster planning.",
+  "Climate & weather systems": "The patterns that drive storms, droughts, ocean currents, and the long-term changes to the planet's climate. Example: working out why El Niño years bring drier summers to Australia, or modelling sea-level rise by 2100. People who love this become climate scientists, meteorologists, oceanographers, or work in policy, agriculture, and emergency services.",
+  "Mechanical engineering": "Designing things that move, hold force, or transfer energy — from bicycles to bridges to rockets. Example: working out why one bike frame is stiffer than another, or designing a mechanism that opens an umbrella with one button. People who love this become mechanical engineers, aerospace engineers, or work in cars, robotics, defence, and manufacturing.",
+  "Electrical engineering": "Designing circuits, signals, and power systems — the invisible nervous system inside every modern device. Example: building a circuit that brightens a light as a room gets dark, or designing a phone charger that doesn't overheat. People who love this become electrical engineers, electronics designers, or work in chips, energy grids, and consumer electronics.",
+  "Architecture & design": "Designing buildings and spaces that work for people — beautiful, functional, and made for the place. Example: designing a school that gets the right amount of sun in winter, or sketching a treehouse that holds three friends safely. People who love this become architects, interior designers, urban planners, or set designers.",
+  "3D printing & fabrication": "Making physical objects from digital designs, layer by layer. Example: designing a custom phone case in software and printing it overnight, or fabricating a replacement part for a 50-year-old machine. People who love this become product designers, prototypers, fabrication engineers, or makers running their own small businesses.",
+  "Aviation & transport": "How planes, trains, ships and cars move people and goods around the world. Example: working out why a plane needs flaps for landing but not for cruising, or planning a freight route that uses the least fuel. People who love this become pilots, transport engineers, logistics planners, or work in airlines, shipping, and rail.",
+  "Sustainable technology": "Designing tech that uses less, wastes less, and works with the planet rather than against it. Example: designing a solar oven for places without electricity, or working out how to reuse battery materials. People who love this become sustainability engineers, clean-tech entrepreneurs, or work in renewable energy, recycling, and green building.",
+  "History & civilisations": "How past societies rose, lived, traded, fought, and disappeared — and what their stories tell us about now. Example: working out why the Roman Empire collapsed in the West but kept going for another thousand years in the East. People who love this become historians, archaeologists, teachers, museum curators, or journalists.",
+  "Archaeology": "Finding and interpreting the physical objects past people left behind — tools, bones, buildings, rubbish. Example: digging a Roman fort and using broken pottery to date the layers. People who love this become archaeologists, museum researchers, heritage consultants, or work in cultural heritage protection.",
+  "Philosophy & ethics": "Asking the big questions about what's true, what's good, and what we should do — and arguing about the answers. Example: debating whether a self-driving car should swerve to save a child if it kills the passenger. People who love this become philosophers, ethicists, lawyers, journalists, or work in policy and AI safety.",
+  "Psychology & behaviour": "Why people think, feel, and act the way they do — and how to help when that goes wrong. Example: running an experiment to see if listening to music changes how much homework you remember. People who love this become psychologists, counsellors, UX researchers, marketers, or work in HR and education.",
+  "Sociology & culture": "How groups, societies, and cultures shape what their members believe, value, and do. Example: studying why teenagers in different schools dress differently even when no one tells them to. People who love this become sociologists, cultural researchers, journalists, social workers, or policy analysts.",
+  "Politics & governance": "How power gets organised — who decides, how laws get made, and who gets left out. Example: working out why the same election system produces a clear winner in one country and chaos in another. People who love this become politicians, political analysts, public servants, lobbyists, or journalists.",
+  "Law & justice": "The rules a society lives by, the courts that test them, and the principle of fairness underneath. Example: arguing whether a 14-year-old who steals a phone should be treated the same as a 40-year-old. People who love this become lawyers, judges, paralegals, human-rights advocates, or work in police, justice and policy.",
+  "Economics & finance": "How money, work, prices, and resources move through a society, and what makes some economies thrive. Example: working out why the same coffee costs $4 in Sydney and $1 in Hanoi. People who love this become economists, financial analysts, bankers, accountants, or work in government and business strategy.",
+  "Geography & places": "How land, climate, and people shape each other — and what each place is like to live in. Example: working out why most of Australia's cities sit on the east coast, or why some neighbourhoods get hotter than others in a heatwave. People who love this become geographers, urban planners, GIS analysts, travel writers, or work in environment and policy.",
+  "Creative writing & fiction": "Inventing stories with characters, conflict, and worlds that pull readers in. Example: writing a short story where the narrator slowly turns out to be lying. People who love this become novelists, screenwriters, game writers, journalists, or work in publishing and content.",
+  "Poetry & spoken word": "Writing where every word matters — image, rhythm, and meaning compressed into something you can read aloud. Example: writing a four-line poem about losing a friend that makes someone cry. People who love this become poets, lyricists, spoken-word performers, copywriters, or English teachers.",
+  "Journalism & non-fiction": "Researching real stories and writing them so readers understand what happened and why it matters. Example: interviewing students and teachers to find out why your school's attendance dropped this term. People who love this become journalists, news editors, documentary makers, non-fiction authors, or research analysts.",
+  "Linguistics & language": "How languages work, where they come from, and the patterns hidden inside every sentence. Example: working out why English makes plurals so weirdly (one mouse, two mice — but one house, two houses). People who love this become linguists, translators, language teachers, computational linguists in AI, or speech therapists.",
+  "Debate & public speaking": "Arguing a case clearly and persuasively, in front of an audience or against an opponent. Example: preparing both sides of an argument about whether phones belong in classrooms, then defending the side you don't agree with. People who love this become lawyers, politicians, executives, teachers, or work in PR and media.",
+  "Translation & interpretation": "Carrying meaning across languages — keeping the tone, the rhythm, and the cultural feel intact. Example: translating a Japanese poem into English without losing the silence the poet built in. People who love this become translators, interpreters at the UN or in courts, subtitlers, or work in publishing and diplomacy.",
+  "Visual art & illustration": "Making images by hand or digitally — painting, sketching, illustrating to express or explain. Example: illustrating a children's book where the pictures carry half the story. People who love this become illustrators, painters, concept artists, comic-book artists, or art teachers.",
+  "Photography & film": "Capturing or constructing moments and stories using cameras, light, and editing. Example: shooting a 60-second film about a single chair, told only through changes in light. People who love this become photographers, filmmakers, cinematographers, video editors, or documentary makers.",
+  "Animation & motion design": "Making images move, frame by frame or by computer, to tell stories or explain ideas. Example: animating a short character walking from sad to happy without any words. People who love this become animators, motion designers, VFX artists, or work in film, games and advertising.",
+  "Graphic design & typography": "Designing posters, websites, packaging, and brands using layout, colour, image, and type. Example: designing a poster for a school musical that makes you want to buy a ticket before you read the words. People who love this become graphic designers, UI designers, brand designers, or work in advertising and publishing.",
+  "Music composition": "Writing music from scratch — choosing notes, rhythms, instruments, and structure to say something without words. Example: composing a one-minute piece that builds tension and then lets it go. People who love this become composers, songwriters, film score composers, producers, or music teachers.",
+  "Music performance": "Playing or singing music live — alone, in a band, or in an orchestra — for an audience. Example: practising the same hard 4 bars until you can play them at full speed without thinking. People who love this become musicians, singers, conductors, orchestra players, or music teachers.",
+  "Theatre & performance": "Performing live on stage — bringing characters, scenes, and stories to an audience. Example: playing a villain so well the audience hates you, even though you're nice in real life. People who love this become actors, directors, drama teachers, or work in TV and film.",
+  "Dance & movement": "Using the body to express feeling, story, or idea — alone or with others. Example: choreographing a 90-second piece that shows the moment a friendship breaks. People who love this become dancers, choreographers, dance teachers, or work in physical theatre, music videos, and sport.",
+  "Medicine & human health": "Diagnosing, treating, and preventing illness in people, using science and human care. Example: working out why a patient's stomach hurts when only one specific food triggers it. People who love this become doctors, surgeons, nurses, paramedics, public-health workers, or medical researchers.",
+  "Mental health & therapy": "Helping people understand and manage their thoughts and feelings, and supporting them through hard times. Example: helping a friend recognise that their nightly worry isn't laziness, it's anxiety. People who love this become psychologists, counsellors, psychiatrists, social workers, or youth workers.",
+  "Nutrition & dietetics": "How what you eat affects your body, mind, and health — across whole lives and whole populations. Example: working out a meal plan for a teenage athlete that doesn't leave them hungry by 11am. People who love this become dietitians, sports nutritionists, food scientists, public-health researchers, or chefs.",
+  "Sport science & exercise": "How the body performs, recovers, and improves with training — and the science behind every elite athlete. Example: figuring out why a sprinter is faster off the blocks but slower over 200m than a teammate. People who love this become sports scientists, physiotherapists, strength coaches, trainers, or work in elite sport.",
+  "Education & learning": "How people learn best, and how to design teaching that actually works. Example: testing whether spaced practice helps students remember vocab better than cramming. People who love this become teachers, lecturers, education researchers, curriculum designers, or work in edtech.",
+  "Child & human development": "How people grow from babies to adults — body, mind, language, and behaviour at each stage. Example: noticing why a 4-year-old can play with imaginary friends but a 14-year-old usually can't. People who love this become early-childhood educators, paediatricians, child psychologists, social workers, or speech therapists.",
+  "Entrepreneurship & startups": "Building a business from an idea — finding a real problem and a way to solve it for paying customers. Example: noticing that no one near your school sells decent vegan lunches, then turning it into a stall. People who love this become founders, product managers, business owners, or work in venture capital and innovation.",
+  "Marketing & brand strategy": "Understanding what audiences want and helping them want what you have. Example: redesigning a school fundraiser ad that gets 5× more clicks than last year's version. People who love this become marketers, brand strategists, copywriters, social-media managers, or work in advertising agencies.",
+  "Social enterprise & impact": "Using business and design to solve real social or environmental problems — not just to make money. Example: starting a community-run café that hires people just out of jail. People who love this become social entrepreneurs, NGO founders, impact investors, or work in non-profits and government.",
+  "Supply chains & logistics": "How goods move from farm or factory to your hand — and the timing, transport, and choreography that makes it work. Example: tracking why a single shipping delay in China causes school stationery shortages in Sydney 3 weeks later. People who love this become logistics managers, supply-chain analysts, operations leaders, or work in shipping, retail, and manufacturing."
+};
+
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function buildGlossaryButtons() {
+  for (var i = 0; i < D.length; i++) {
+    var row = document.getElementById('drow' + i);
+    if (!row) continue;
+    var dinfo = row.querySelector('.dinfo');
+    if (!dinfo) continue;
+    var dname = dinfo.querySelector('.dname');
+    if (!dname || dname.parentNode.querySelector('.gbtn')) continue;
+
+    // Wrap dname + button so they sit on one line
+    var wrap = document.createElement('div');
+    wrap.className = 'dname-wrap';
+    var nameClone = dname.cloneNode(true);
+    wrap.appendChild(nameClone);
+    var pill = document.createElement('span');
+    pill.className = 'if-pill';
+    pill.textContent = '';
+    wrap.appendChild(pill);
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'gbtn';
+    btn.setAttribute('aria-label', 'About this area');
+    btn.textContent = '?';
+    btn.onclick = (function(idx, b){ return function(e){ e.stopPropagation(); toggleGlossary(idx, b); }; })(i, btn);
+    wrap.appendChild(btn);
+    dinfo.replaceChild(wrap, dname);
+
+    var panel = document.createElement('div');
+    panel.className = 'gpanel';
+    panel.id = 'gpanel' + i;
+    panel.textContent = GLOSSARY[D[i].n] || '';
+    dinfo.appendChild(panel);
+  }
+}
+
+function toggleGlossary(i, btn) {
+  var panel = document.getElementById('gpanel' + i);
+  if (!panel) return;
+  var isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open');
+  if (btn) btn.classList.toggle('open');
+}
+
+// ── INTEREST FINDER (Feature 7) ──────────────────────────
+var TAGS = [
+  "drawing & art","photography","video & film","animation","design & style","music",
+  "writing stories","poetry & words","performing & acting","dance & movement",
+  "building things","fixing things","machines","electronics","cooking & food","sport & fitness",
+  "numbers & patterns","solving puzzles","coding","video games","AI & robots","secrets & codes","inventing",
+  "animals","plants & nature","how bodies work","how the brain works","mental health",
+  "space","weather","how the planet works","history","ancient things","places & travel","other cultures","languages",
+  "helping people","connecting with people","teaching","being a leader","persuading & selling",
+  "justice & fairness","ethics & big questions","money & business","news & current events","debating & arguing"
+];
+
+var DOMAIN_TAGS = {
+  "Mathematics & logic": ["numbers & patterns","solving puzzles","secrets & codes","inventing"],
+  "Coding & programming": ["coding","video games","building things","solving puzzles","inventing"],
+  "Artificial intelligence": ["coding","AI & robots","how the brain works","solving puzzles"],
+  "Robotics & electronics": ["building things","fixing things","machines","electronics","AI & robots","inventing"],
+  "Data & statistics": ["numbers & patterns","solving puzzles","news & current events","sport & fitness"],
+  "Cybersecurity & cryptography": ["secrets & codes","coding","solving puzzles","justice & fairness"],
+  "Game design & simulation": ["video games","coding","design & style","writing stories","solving puzzles"],
+  "Physics & forces": ["how the planet works","numbers & patterns","space","solving puzzles","inventing"],
+  "Chemistry & materials": ["cooking & food","inventing","plants & nature","machines"],
+  "Biology & living things": ["animals","plants & nature","how bodies work","how the brain works"],
+  "Genetics & evolution": ["animals","plants & nature","how bodies work","history","ancient things"],
+  "Neuroscience & the brain": ["how the brain works","mental health","how bodies work","AI & robots"],
+  "Astronomy & space": ["space","numbers & patterns","ancient things"],
+  "Ecology & environment": ["animals","plants & nature","how the planet works","helping people"],
+  "Geology & earth science": ["how the planet works","ancient things","places & travel"],
+  "Climate & weather systems": ["weather","how the planet works","news & current events","helping people"],
+  "Mechanical engineering": ["building things","fixing things","machines","inventing"],
+  "Electrical engineering": ["electronics","building things","fixing things","machines","inventing"],
+  "Architecture & design": ["building things","design & style","drawing & art","places & travel"],
+  "3D printing & fabrication": ["building things","design & style","inventing","machines"],
+  "Aviation & transport": ["machines","places & travel","building things"],
+  "Sustainable technology": ["how the planet works","inventing","helping people","building things"],
+  "History & civilisations": ["history","ancient things","other cultures","places & travel"],
+  "Archaeology": ["history","ancient things","places & travel","solving puzzles"],
+  "Philosophy & ethics": ["ethics & big questions","justice & fairness","debating & arguing"],
+  "Psychology & behaviour": ["how the brain works","connecting with people","mental health","helping people"],
+  "Sociology & culture": ["other cultures","connecting with people","news & current events","justice & fairness"],
+  "Politics & governance": ["news & current events","being a leader","justice & fairness","debating & arguing","persuading & selling"],
+  "Law & justice": ["justice & fairness","debating & arguing","ethics & big questions","helping people"],
+  "Economics & finance": ["money & business","numbers & patterns","news & current events"],
+  "Geography & places": ["places & travel","other cultures","how the planet works","history"],
+  "Creative writing & fiction": ["writing stories","poetry & words","performing & acting"],
+  "Poetry & spoken word": ["poetry & words","writing stories","performing & acting","music"],
+  "Journalism & non-fiction": ["writing stories","news & current events","justice & fairness","history"],
+  "Linguistics & language": ["languages","poetry & words","other cultures"],
+  "Debate & public speaking": ["debating & arguing","persuading & selling","being a leader","performing & acting"],
+  "Translation & interpretation": ["languages","other cultures","poetry & words"],
+  "Visual art & illustration": ["drawing & art","design & style","video & film"],
+  "Photography & film": ["photography","video & film","design & style","news & current events","places & travel"],
+  "Animation & motion design": ["animation","drawing & art","video & film","design & style"],
+  "Graphic design & typography": ["design & style","drawing & art","persuading & selling"],
+  "Music composition": ["music","poetry & words","numbers & patterns"],
+  "Music performance": ["music","performing & acting","dance & movement"],
+  "Theatre & performance": ["performing & acting","writing stories","dance & movement"],
+  "Dance & movement": ["dance & movement","performing & acting","music","sport & fitness"],
+  "Medicine & human health": ["how bodies work","helping people","how the brain works"],
+  "Mental health & therapy": ["mental health","connecting with people","helping people","how the brain works"],
+  "Nutrition & dietetics": ["cooking & food","how bodies work","sport & fitness","helping people"],
+  "Sport science & exercise": ["sport & fitness","how bodies work","dance & movement"],
+  "Education & learning": ["teaching","connecting with people","how the brain works","helping people"],
+  "Child & human development": ["connecting with people","helping people","how the brain works","teaching"],
+  "Entrepreneurship & startups": ["money & business","inventing","being a leader","persuading & selling"],
+  "Marketing & brand strategy": ["persuading & selling","design & style","money & business","news & current events"],
+  "Social enterprise & impact": ["helping people","money & business","justice & fairness","being a leader"],
+  "Supply chains & logistics": ["money & business","places & travel","machines"]
+};
+
+var ifBuilt = false;
+var ifActiveTag = null;
+
+function buildIfTags() {
+  if (ifBuilt) return;
+  ifBuilt = true;
+  var container = document.getElementById('iftags');
+  if (!container) return;
+  TAGS.forEach(function(t){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'iftag';
+    b.textContent = t;
+    b.onclick = (function(tag, btn){ return function(){ pickIfTag(tag, btn); }; })(t, b);
+    container.appendChild(b);
+  });
+}
+
+function toggleIfStrip() {
+  var strip = document.getElementById('ifstrip');
+  if (!strip) return;
+  buildIfTags();
+  strip.classList.toggle('open');
+}
+
+function pickIfTag(tag, btnEl) {
+  if (ifActiveTag === tag) { clearIfTag(); return; }
+  ifActiveTag = tag;
+  var btns = document.querySelectorAll('.iftag');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('on');
+  if (btnEl) btnEl.classList.add('on');
+
+  // Find matching domains
+  var matches = [];
+  for (var k = 0; k < D.length; k++) {
+    var tags = DOMAIN_TAGS[D[k].n] || [];
+    if (tags.indexOf(tag) !== -1) matches.push(k);
+  }
+
+  // Clear all row flags, then apply new
+  var allRows = document.querySelectorAll('.drow');
+  for (var r = 0; r < allRows.length; r++) {
+    allRows[r].classList.remove('if-match');
+    var pill = allRows[r].querySelector('.if-pill');
+    if (pill) pill.textContent = '';
+  }
+  for (var m = 0; m < matches.length; m++) {
+    var row = document.getElementById('drow' + matches[m]);
+    if (row) {
+      row.classList.add('if-match');
+      var p = row.querySelector('.if-pill');
+      if (p) p.textContent = 'matches: ' + tag;
+    }
+  }
+
+  // Render result strip
+  var result = document.getElementById('ifresult');
+  var lblTag = document.getElementById('ifresult-tag');
+  var chips = document.getElementById('ifresult-chips');
+  lblTag.textContent = tag;
+  chips.innerHTML = '';
+  matches.forEach(function(idx){
+    var c = document.createElement('button');
+    c.type = 'button';
+    c.className = 'ifresult-chip';
+    c.textContent = D[idx].n;
+    c.onclick = (function(i){ return function(){ jumpToRow(i); }; })(idx);
+    chips.appendChild(c);
+  });
+  result.style.display = matches.length ? 'block' : 'none';
+}
+
+function jumpToRow(idx) {
+  var row = document.getElementById('drow' + idx);
+  if (!row) return;
+  row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function clearIfTag() {
+  ifActiveTag = null;
+  var btns = document.querySelectorAll('.iftag');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('on');
+  var allRows = document.querySelectorAll('.drow');
+  for (var r = 0; r < allRows.length; r++) {
+    allRows[r].classList.remove('if-match');
+    var pill = allRows[r].querySelector('.if-pill');
+    if (pill) pill.textContent = '';
+  }
+  var result = document.getElementById('ifresult');
+  if (result) result.style.display = 'none';
+}
+
+// ── ADJACENCY (Feature 8) ────────────────────────────────
+var ADJACENCY = {
+  "Mathematics & logic": { close: ["Coding & programming","Data & statistics"], stretch: "Music composition" },
+  "Coding & programming": { close: ["Mathematics & logic","Game design & simulation"], stretch: "Linguistics & language" },
+  "Artificial intelligence": { close: ["Coding & programming","Data & statistics"], stretch: "Neuroscience & the brain" },
+  "Robotics & electronics": { close: ["Mechanical engineering","Electrical engineering"], stretch: "Biology & living things" },
+  "Data & statistics": { close: ["Mathematics & logic","Artificial intelligence"], stretch: "Sport science & exercise" },
+  "Cybersecurity & cryptography": { close: ["Coding & programming","Mathematics & logic"], stretch: "Philosophy & ethics" },
+  "Game design & simulation": { close: ["Coding & programming","Animation & motion design"], stretch: "Psychology & behaviour" },
+  "Physics & forces": { close: ["Mathematics & logic","Mechanical engineering"], stretch: "Astronomy & space" },
+  "Chemistry & materials": { close: ["Biology & living things","Sustainable technology"], stretch: "Nutrition & dietetics" },
+  "Biology & living things": { close: ["Genetics & evolution","Medicine & human health"], stretch: "Ecology & environment" },
+  "Genetics & evolution": { close: ["Biology & living things","Medicine & human health"], stretch: "History & civilisations" },
+  "Neuroscience & the brain": { close: ["Psychology & behaviour","Medicine & human health"], stretch: "Artificial intelligence" },
+  "Astronomy & space": { close: ["Physics & forces","Aviation & transport"], stretch: "Philosophy & ethics" },
+  "Ecology & environment": { close: ["Biology & living things","Sustainable technology"], stretch: "Politics & governance" },
+  "Geology & earth science": { close: ["Climate & weather systems","Archaeology"], stretch: "Astronomy & space" },
+  "Climate & weather systems": { close: ["Ecology & environment","Geography & places"], stretch: "Politics & governance" },
+  "Mechanical engineering": { close: ["Robotics & electronics","Physics & forces"], stretch: "Architecture & design" },
+  "Electrical engineering": { close: ["Robotics & electronics","Coding & programming"], stretch: "Music performance" },
+  "Architecture & design": { close: ["3D printing & fabrication","Graphic design & typography"], stretch: "Psychology & behaviour" },
+  "3D printing & fabrication": { close: ["Architecture & design","Mechanical engineering"], stretch: "Visual art & illustration" },
+  "Aviation & transport": { close: ["Mechanical engineering","Supply chains & logistics"], stretch: "Geography & places" },
+  "Sustainable technology": { close: ["Ecology & environment","Chemistry & materials"], stretch: "Social enterprise & impact" },
+  "History & civilisations": { close: ["Archaeology","Politics & governance"], stretch: "Creative writing & fiction" },
+  "Archaeology": { close: ["History & civilisations","Geology & earth science"], stretch: "Genetics & evolution" },
+  "Philosophy & ethics": { close: ["Law & justice","Politics & governance"], stretch: "Artificial intelligence" },
+  "Psychology & behaviour": { close: ["Neuroscience & the brain","Mental health & therapy"], stretch: "Marketing & brand strategy" },
+  "Sociology & culture": { close: ["Psychology & behaviour","Politics & governance"], stretch: "Photography & film" },
+  "Politics & governance": { close: ["Law & justice","Economics & finance"], stretch: "Debate & public speaking" },
+  "Law & justice": { close: ["Politics & governance","Philosophy & ethics"], stretch: "Journalism & non-fiction" },
+  "Economics & finance": { close: ["Politics & governance","Entrepreneurship & startups"], stretch: "Psychology & behaviour" },
+  "Geography & places": { close: ["Climate & weather systems","Geology & earth science"], stretch: "Photography & film" },
+  "Creative writing & fiction": { close: ["Poetry & spoken word","Theatre & performance"], stretch: "Psychology & behaviour" },
+  "Poetry & spoken word": { close: ["Creative writing & fiction","Music performance"], stretch: "Philosophy & ethics" },
+  "Journalism & non-fiction": { close: ["Creative writing & fiction","Politics & governance"], stretch: "Data & statistics" },
+  "Linguistics & language": { close: ["Translation & interpretation","Creative writing & fiction"], stretch: "Artificial intelligence" },
+  "Debate & public speaking": { close: ["Politics & governance","Law & justice"], stretch: "Theatre & performance" },
+  "Translation & interpretation": { close: ["Linguistics & language","Sociology & culture"], stretch: "Politics & governance" },
+  "Visual art & illustration": { close: ["Graphic design & typography","Animation & motion design"], stretch: "Architecture & design" },
+  "Photography & film": { close: ["Visual art & illustration","Animation & motion design"], stretch: "Journalism & non-fiction" },
+  "Animation & motion design": { close: ["Graphic design & typography","Game design & simulation"], stretch: "Music composition" },
+  "Graphic design & typography": { close: ["Visual art & illustration","Marketing & brand strategy"], stretch: "Linguistics & language" },
+  "Music composition": { close: ["Music performance","Poetry & spoken word"], stretch: "Mathematics & logic" },
+  "Music performance": { close: ["Music composition","Theatre & performance"], stretch: "Sport science & exercise" },
+  "Theatre & performance": { close: ["Music performance","Dance & movement"], stretch: "Psychology & behaviour" },
+  "Dance & movement": { close: ["Theatre & performance","Music performance"], stretch: "Sport science & exercise" },
+  "Medicine & human health": { close: ["Biology & living things","Mental health & therapy"], stretch: "Philosophy & ethics" },
+  "Mental health & therapy": { close: ["Psychology & behaviour","Medicine & human health"], stretch: "Education & learning" },
+  "Nutrition & dietetics": { close: ["Medicine & human health","Sport science & exercise"], stretch: "Chemistry & materials" },
+  "Sport science & exercise": { close: ["Medicine & human health","Nutrition & dietetics"], stretch: "Psychology & behaviour" },
+  "Education & learning": { close: ["Psychology & behaviour","Child & human development"], stretch: "Game design & simulation" },
+  "Child & human development": { close: ["Education & learning","Psychology & behaviour"], stretch: "Neuroscience & the brain" },
+  "Entrepreneurship & startups": { close: ["Marketing & brand strategy","Economics & finance"], stretch: "Social enterprise & impact" },
+  "Marketing & brand strategy": { close: ["Graphic design & typography","Psychology & behaviour"], stretch: "Entrepreneurship & startups" },
+  "Social enterprise & impact": { close: ["Entrepreneurship & startups","Sustainable technology"], stretch: "Politics & governance" },
+  "Supply chains & logistics": { close: ["Aviation & transport","Economics & finance"], stretch: "Geography & places" }
+};
+
+function adjacencyHtml(sparkName) {
+  var a = ADJACENCY[sparkName];
+  if (!a) return '';
+  var chips = '';
+  a.close.forEach(function(n){ chips += '<span class="adjchip">' + escHtml(n) + '</span>'; });
+  if (a.stretch) chips += '<span class="adjchip adjchip-stretch">Another possibility: ' + escHtml(a.stretch) + '</span>';
+  return '<div class="adjwrap">' +
+    '<div class="adjlbl">Also explore</div>' +
+    '<div class="adjchips">' + chips + '</div></div>';
 }
 
 // ── INIT ────────────────────────────────────────────────
@@ -2401,6 +3073,8 @@ document.addEventListener('DOMContentLoaded', function(){
   }
   // Restore from localStorage
   loadState();
+  // Build glossary buttons on every survey row
+  buildGlossaryButtons();
 });
 </script>
 </body>
