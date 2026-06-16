@@ -113,7 +113,9 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 .ri{position:relative;}
 .rlbl{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
   color:var(--purple-m);margin-bottom:9px;}
-.rtitle{font-family:var(--serif);font-size:22px;color:#fff;margin-bottom:18px;line-height:1.25;}
+.rtitle{font-family:var(--serif);font-size:22px;color:#fff;margin-bottom:6px;line-height:1.25;}
+.rsub{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:18px;
+  line-height:1.55;font-style:italic;}
 .rgrp{margin-bottom:14px;}
 .rgrplbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;}
 .rgrpsub{font-size:11px;color:rgba(255,255,255,.5);margin-bottom:9px;line-height:1.4;}
@@ -506,6 +508,122 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   background:var(--ink);color:#fff;font-size:13px;line-height:1.65;}
 .p6footer strong{color:#FFD060;}
 
+.p6stretch{margin-top:6px;margin-bottom:12px;padding:10px 14px;
+  border-radius:10px;background:var(--amber-l);
+  border:1px solid rgba(186,117,23,.25);border-left:3px solid #EF9F27;
+  color:#7A4D0E;font-size:13px;line-height:1.6;font-style:italic;}
+
+/* ── HABITS OF MIND (Phase 4 action HoM + popup) ── */
+.p4act-habit{font-size:11.5px;color:var(--muted);margin-top:5px;line-height:1.5;}
+.p4hom{background:transparent;border:0;border-bottom:1px dashed var(--purple);
+  color:var(--purple);font-size:11.5px;font-weight:600;padding:0 0 1px 0;
+  cursor:pointer;font-family:var(--sans);
+  -webkit-tap-highlight-color:transparent;}
+.p4hom:hover{color:var(--purple-d);}
+.p4act.chosen .p4hom{color:var(--purple-d);border-bottom-color:var(--purple-d);}
+
+.hompopup{position:fixed;z-index:300;
+  background:var(--ink);color:#fff;
+  padding:14px 18px 14px 16px;border-radius:12px;
+  max-width:300px;font-size:13px;line-height:1.6;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+  opacity:0;transform:translateY(-4px);pointer-events:none;
+  transition:opacity .15s,transform .15s;}
+.hompopup.open{opacity:1;transform:translateY(0);pointer-events:auto;}
+.hompopup-name{font-weight:700;color:#FFD060;margin-bottom:6px;
+  font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  padding-right:24px;line-height:1.4;}
+.hompopup-close{position:absolute;top:6px;right:8px;
+  background:transparent;border:0;color:rgba(255,255,255,.5);
+  cursor:pointer;font-size:18px;padding:0 6px;line-height:1;
+  font-family:var(--sans);}
+.hompopup-close:hover{color:#fff;}
+
+/* ── REFLECTION PANEL (Feature #2) ── */
+.rreflect{padding:6px 4px 8px;display:none;position:relative;}
+.rreflect-lbl{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:rgba(255,255,255,.5);margin-bottom:6px;}
+.rreflect-title{font-family:var(--serif);font-size:22px;color:#fff;
+  margin-bottom:8px;line-height:1.25;}
+.rreflect-sub{font-size:13px;color:rgba(255,255,255,.6);line-height:1.55;
+  font-style:italic;margin-bottom:14px;}
+.rreflect-list{margin:0 0 14px 20px;padding:0;
+  color:rgba(255,255,255,.78);font-size:13.5px;line-height:1.8;}
+.rreflect-ta{width:100%;background:rgba(255,255,255,.06);color:#fff;
+  border:1px solid rgba(255,255,255,.15);border-radius:10px;
+  padding:11px 13px;font-size:13.5px;font-family:var(--sans);
+  line-height:1.6;resize:vertical;transition:all .15s;}
+.rreflect-ta:focus{outline:none;border-color:var(--purple-m);
+  background:rgba(255,255,255,.1);}
+.rreflect-ta::placeholder{color:rgba(255,255,255,.4);}
+.rreflect-row{display:flex;align-items:center;gap:14px;margin-top:14px;
+  flex-wrap:wrap;}
+.rreflect-btn{padding:10px 18px;border-radius:24px;background:#fff;
+  color:var(--ink);border:0;font-weight:600;font-size:13px;
+  cursor:pointer;font-family:var(--sans);transition:all .15s;
+  -webkit-tap-highlight-color:transparent;}
+.rreflect-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.rreflect-skip{background:transparent;border:0;color:rgba(255,255,255,.5);
+  font-size:12.5px;cursor:pointer;text-decoration:underline;
+  font-family:var(--sans);padding:6px 4px;
+  -webkit-tap-highlight-color:transparent;}
+.rreflect-skip:hover{color:#fff;}
+
+/* Reflection block on PDF/copy result */
+.rmymem{background:#FFF8DC;color:#7A5A00;border:1px solid rgba(184,134,11,.25);
+  border-radius:9px;padding:11px 14px;margin-top:20px;}
+.rmymem-lbl{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:#9A6F00;margin-bottom:5px;}
+.rmymem-txt{font-size:13px;line-height:1.6;white-space:pre-wrap;}
+
+/* ── ZONE PICKS (Feature #6) ── */
+.rzones{display:flex;align-items:flex-start;flex-wrap:wrap;gap:7px;
+  margin-top:8px;width:100%;}
+.zlbl{font-size:10.5px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.07em;color:rgba(255,255,255,.45);
+  align-self:center;margin-right:4px;}
+.zpill{display:flex;flex-direction:column;align-items:flex-start;
+  padding:7px 11px;border-radius:11px;
+  background:rgba(255,255,255,.05);
+  border:1.5px solid rgba(255,255,255,.13);
+  color:rgba(255,255,255,.85);
+  font-family:var(--sans);cursor:pointer;text-align:left;
+  transition:all .12s;-webkit-tap-highlight-color:transparent;
+  min-width:0;max-width:200px;}
+.zpill:active{transform:scale(.97);}
+.zpill-name{font-size:11.5px;font-weight:700;margin-bottom:1px;}
+.zpill-sub{font-size:10.5px;font-weight:400;font-style:italic;
+  opacity:.65;line-height:1.35;}
+.zpill.on{color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.25);}
+.zcomfort.on{background:rgba(15,110,86,.55);border-color:var(--teal-m);}
+.zlearning.on{background:rgba(184,134,11,.55);border-color:#E6A817;}
+.zpanic.on{background:rgba(153,60,29,.55);border-color:var(--coral-m);}
+
+.zhint{margin-top:14px;padding:10px 14px;border-radius:10px;
+  background:rgba(184,134,11,.18);border:1px solid rgba(184,134,11,.3);
+  color:#FFD060;font-size:12.5px;line-height:1.55;
+  display:none;}
+.zhint.on{display:block;}
+.zhint strong{color:#FFE680;}
+
+/* ── CHECK-IN PANEL (Feature #5, inside Phase 4 Step 4) ── */
+.p4check{margin-top:14px;background:var(--purple-l);
+  border:1px solid rgba(83,74,183,.2);border-radius:10px;
+  padding:13px 14px 14px;}
+.p4check-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--purple);margin-bottom:8px;}
+.p4check-sub{font-size:12px;color:#3C3489;line-height:1.55;
+  font-style:italic;margin-bottom:10px;}
+.p4check-list{margin:0 0 11px 18px;padding:0;
+  color:#3C3489;font-size:13px;line-height:1.75;}
+.p4check-ta{width:100%;padding:10px 12px;
+  border:1.5px solid rgba(83,74,183,.25);border-radius:9px;
+  background:#fff;color:var(--ink);font-size:13.5px;
+  font-family:var(--sans);line-height:1.6;resize:vertical;
+  transition:border-color .15s;}
+.p4check-ta:focus{outline:none;border-color:var(--purple);
+  box-shadow:0 0 0 3px rgba(83,74,183,.12);}
+
 .p6morebtn{background:transparent;border:0;padding:8px 0;margin-top:6px;
   font-size:12.5px;font-weight:600;color:var(--purple);cursor:pointer;
   font-family:var(--sans);text-align:left;
@@ -745,12 +863,32 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 
   <div class="results" id="res">
     <div class="ri">
+
+      <!-- REFLECTION PANEL (Feature #2) -->
+      <div class="rreflect" id="rreflect">
+        <div class="rreflect-lbl">Quick reflection · optional</div>
+        <h3 class="rreflect-title">Before you see your profile…</h3>
+        <p class="rreflect-sub">A small pause. Notice yourself as a learner first — the result will still be there in a minute.</p>
+        <ul class="rreflect-list">
+          <li>Which areas were easy to rate?</li>
+          <li>Which were hard?</li>
+          <li>What surprised you?</li>
+        </ul>
+        <textarea class="rreflect-ta" id="reflect-ta" rows="5" placeholder="A few notes — even one sentence covering all three is fine."></textarea>
+        <div class="rreflect-row">
+          <button type="button" class="rreflect-btn" onclick="proceedToResults()">Show me my profile →</button>
+          <button type="button" class="rreflect-skip" onclick="proceedToResults()">Skip</button>
+        </div>
+      </div>
+
       <div class="rlbl">Your spark profile</div>
       <div class="rtitle" id="rtitle">Here's what stood out</div>
+      <div class="rsub" id="rsub">Whatever you found — or didn't find yet — is information.</div>
       <div class="rgrp" id="grp-ss" style="display:none">
         <div class="rgrplbl" style="color:#FFD060">★★ Your most interested areas</div>
         <div class="rgrpsub">These are the domains that lit you up the most — your strongest sparks to pursue first.</div>
         <div class="rtags" id="tags-ss"></div>
+        <div class="zhint" id="zhint"><strong>Learning zone</strong> = where your brain grows the fastest. Consider starting your Phase 4 action here.</div>
       </div>
       <div class="rgrp" id="grp-s" style="display:none">
         <div class="rgrplbl" style="color:var(--purple-m)">★ Your next interests</div>
@@ -1335,6 +1473,7 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
                 <div class="p4act-info">
                   <div class="p4act-name">Watch</div>
                   <div class="p4act-desc">Find one video, ten minutes or less, on your topic tonight</div>
+                  <div class="p4act-habit">Builds the habit of: <span class="p4hom" role="button" tabindex="0" onclick="showHomPopup('Watch', event)">Gathering data through all senses</span></div>
                 </div>
               </button>
               <button type="button" class="p4act" data-act="Ask" onclick="pickAction(this)">
@@ -1342,6 +1481,7 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
                 <div class="p4act-info">
                   <div class="p4act-name">Ask</div>
                   <div class="p4act-desc">Find one person who knows something about this and ask them one question</div>
+                  <div class="p4act-habit">Builds the habit of: <span class="p4hom" role="button" tabindex="0" onclick="showHomPopup('Ask', event)">Questioning and posing problems</span></div>
                 </div>
               </button>
               <button type="button" class="p4act" data-act="Make" onclick="pickAction(this)">
@@ -1349,6 +1489,7 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
                 <div class="p4act-info">
                   <div class="p4act-name">Make</div>
                   <div class="p4act-desc">Spend fifteen minutes trying to create or do something related to your topic</div>
+                  <div class="p4act-habit">Builds the habit of: <span class="p4hom" role="button" tabindex="0" onclick="showHomPopup('Make', event)">Creating, imagining, innovating</span></div>
                 </div>
               </button>
               <button type="button" class="p4act" data-act="Read" onclick="pickAction(this)">
@@ -1356,6 +1497,7 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
                 <div class="p4act-info">
                   <div class="p4act-name">Read</div>
                   <div class="p4act-desc">Find one article, one page of a book, or one thread online about it</div>
+                  <div class="p4act-habit">Builds the habit of: <span class="p4hom" role="button" tabindex="0" onclick="showHomPopup('Read', event)">Remaining open to continuous learning</span></div>
                 </div>
               </button>
             </div>
@@ -1381,6 +1523,17 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
           <div class="p4step-body">
             <div class="p4step-title">Close the loop <span class="p4time">1 min</span></div>
             <div class="p4script">"Come back and tell me what happened — whether the feeling held up, got bigger, or completely changed. All three are useful information. Finding out you don't actually care about something after trying it? That's not failure, that's exactly what this lesson is for."</div>
+
+            <div class="p4check">
+              <div class="p4check-lbl">When you're back from doing your action…</div>
+              <p class="p4check-sub">Fill this in once you've actually done your action. No rush — your notes save automatically.</p>
+              <ul class="p4check-list">
+                <li>What did you do to learn more about your passion area? (the action you took, which may not be the one you had planned)</li>
+                <li>What happened to your interest? (still there / got bigger / changed completely)</li>
+                <li>What did you find out about your strengths, the parts you struggled with, and how you like to learn?</li>
+              </ul>
+              <textarea class="p4check-ta" id="check-in-ta" rows="5" placeholder="A few notes — even one paragraph covering all three is fine."></textarea>
+            </div>
           </div>
         </div>
 
@@ -1464,6 +1617,7 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
     </div>
 
     <div id="p6result" style="display:none">
+      <div class="p6stretch">Notice if this feels stretchy. Stretchy = your brain growing.</div>
       <div class="p6cols">
         <div class="p6col">
           <div class="p6col-label" style="color:var(--purple)">Your spark teaches you to…</div>
@@ -1486,6 +1640,12 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   <span class="rtoast-dot"></span>
   <span id="rtoast-text">Restored your previous answers.</span>
   <button type="button" class="rtoast-close" onclick="hideRestoreToast()" aria-label="Dismiss">×</button>
+</div>
+
+<div class="hompopup" id="hompopup">
+  <button type="button" class="hompopup-close" onclick="hideHomPopup()" aria-label="Close">×</button>
+  <div class="hompopup-name" id="hompopup-name"></div>
+  <div id="hompopup-text"></div>
 </div>
 
 <div class="slbar" id="slbar" onclick="showResults()" role="button" aria-label="See your passion profile" style="cursor:pointer">
@@ -1511,6 +1671,10 @@ function saveState() {
       R: R,
       sparkSentence: ta ? ta.value : '',
       chosenAction: (typeof chosenAction !== 'undefined') ? chosenAction : null,
+      reflectionText: reflectionText,
+      reflectionDone: reflectionDone,
+      zonePicks: zonePicks,
+      checkInText: checkInText,
       savedAt: Date.now()
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -1551,6 +1715,25 @@ function loadState() {
     var ta = document.getElementById('spark-sentence');
     if (ta) ta.value = data.sparkSentence;
   }
+
+  // Restore reflection
+  if (typeof data.reflectionText === 'string') reflectionText = data.reflectionText;
+  if (data.reflectionDone === true) reflectionDone = true;
+  var rta = document.getElementById('reflect-ta');
+  if (rta && reflectionText) rta.value = reflectionText;
+
+  // Restore zone picks
+  if (data.zonePicks && typeof data.zonePicks === 'object') {
+    for (var zk in data.zonePicks) {
+      var zv = data.zonePicks[zk];
+      if (zv === 'comfort' || zv === 'learning' || zv === 'panic') zonePicks[zk] = zv;
+    }
+  }
+
+  // Restore check-in text
+  if (typeof data.checkInText === 'string') checkInText = data.checkInText;
+  var cita = document.getElementById('check-in-ta');
+  if (cita && checkInText) cita.value = checkInText;
 
   // Restore Phase 4 action choice
   if (data.chosenAction) {
@@ -1685,18 +1868,141 @@ function getData() {
   return {dstars:dstars,stars:stars,maybes:maybes,nos:nos};
 }
 
+// ── REFLECTION (Feature #2) ──────────────────────────────
+var reflectionText = '';
+var reflectionDone = false;
+
+// ── CHECK-IN (Feature #5, Phase 4 Step 4) ────────────────
+var checkInText = '';
+
+// ── ZONE PICKS (Feature #6) ──────────────────────────────
+var zonePicks = {}; // spark name -> 'comfort' | 'learning' | 'panic'
+var ZONE_LABELS = {
+  comfort:  { name: 'Comfort',  sub: 'I could do this with my eyes closed.' },
+  learning: { name: 'Learning', sub: 'Stretchy — possible if I try.' },
+  panic:    { name: 'Panic',    sub: 'Too much right now.' }
+};
+
+function zonePillsHtml(sparkName) {
+  var current = zonePicks[sparkName] || '';
+  var keys = ['comfort','learning','panic'];
+  var html = '<div class="rzones"><span class="zlbl">How does this feel?</span>';
+  keys.forEach(function(k){
+    var on = (current === k) ? ' on' : '';
+    var lbl = ZONE_LABELS[k];
+    html += '<button type="button" class="zpill z' + k + on + '"' +
+      ' onclick="pickZone(' + JSON.stringify(sparkName) + ',' + JSON.stringify(k) + ')">' +
+      '<span class="zpill-name">' + escHtml(lbl.name) + '</span>' +
+      '<span class="zpill-sub">' + escHtml(lbl.sub) + '</span>' +
+      '</button>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function pickZone(sparkName, zone) {
+  if (zonePicks[sparkName] === zone) {
+    // tap again to deselect
+    delete zonePicks[sparkName];
+  } else {
+    zonePicks[sparkName] = zone;
+  }
+  saveState();
+  refreshZonePills();
+  updateZoneHint();
+}
+
+function refreshZonePills() {
+  // Re-render each ★★ block's zone pills based on current picks
+  var blks = document.querySelectorAll('#tags-ss .rblk-ss');
+  blks.forEach(function(blk){
+    var name = blk.getAttribute('data-spark');
+    if (!name) return;
+    var oldZ = blk.querySelector('.rzones');
+    if (!oldZ) return;
+    var temp = document.createElement('div');
+    temp.innerHTML = zonePillsHtml(name);
+    oldZ.parentNode.replaceChild(temp.firstChild, oldZ);
+  });
+}
+
+function updateZoneHint() {
+  var hint = document.getElementById('zhint');
+  if (!hint) return;
+  var hasLearning = false;
+  for (var k in zonePicks) { if (zonePicks[k] === 'learning') { hasLearning = true; break; } }
+  hint.classList.toggle('on', hasLearning);
+}
+
+function showReflectionPanel() {
+  document.getElementById('rreflect').style.display = 'block';
+  var hideEls = ['rlbl','rtitle','rsub','grp-ss','grp-s','grp-m','rnext','rruled'];
+  hideEls.forEach(function(id){
+    var el = document.getElementById(id);
+    if (!el) {
+      // fall back to class-based lookup for .rlbl
+      var byClass = document.querySelector('#res .' + id);
+      if (byClass) byClass.style.display = 'none';
+    } else { el.style.display = 'none'; }
+  });
+  var rlbl = document.querySelector('#res .rlbl');
+  if (rlbl) rlbl.style.display = 'none';
+  var exp = document.querySelector('#res .exprow');
+  if (exp) exp.style.display = 'none';
+  var copymsg = document.getElementById('copymsg');
+  if (copymsg) copymsg.style.display = 'none';
+  var ta = document.getElementById('reflect-ta');
+  if (ta && reflectionText) ta.value = reflectionText;
+}
+
+function hideReflectionPanel() {
+  document.getElementById('rreflect').style.display = 'none';
+  var rlbl = document.querySelector('#res .rlbl');
+  if (rlbl) rlbl.style.display = '';
+  document.getElementById('rtitle').style.display = '';
+  document.getElementById('rsub').style.display = '';
+  document.getElementById('rnext').style.display = '';
+  document.getElementById('rruled').style.display = '';
+  var exp = document.querySelector('#res .exprow');
+  if (exp) exp.style.display = '';
+  var copymsg = document.getElementById('copymsg');
+  if (copymsg) copymsg.style.display = '';
+  // (.rgrp display is set by showResults based on data)
+}
+
+function proceedToResults() {
+  var ta = document.getElementById('reflect-ta');
+  if (ta) reflectionText = ta.value.trim();
+  reflectionDone = true;
+  saveState();
+  showResults();
+}
+
 function showResults() {
   var d = getData();
   var panel = document.getElementById('res');
   panel.classList.add('show');
   setTimeout(function(){panel.classList.add('vis');},10);
 
+  // Gate: show reflection first (unless already done this session)
+  if (!reflectionDone) {
+    showReflectionPanel();
+    panel.scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  hideReflectionPanel();
+
   var h=function(list,cls){return list.map(function(s){return '<span class="rtag '+cls+'">'+s+'</span>';}).join('');}
-  // ★★ — each spark gets its own block with adjacency underneath
+  // ★★ — each spark gets its own block with zone pills and adjacency underneath
   var ssBlocks = d.dstars.map(function(s){
-    return '<div class="rblk-ss"><span class="rtag rtag-ss">' + escHtml(s) + '</span>' + adjacencyHtml(s) + '</div>';
+    return '<div class="rblk-ss" data-spark="' + escHtml(s) + '">' +
+      '<span class="rtag rtag-ss">' + escHtml(s) + '</span>' +
+      zonePillsHtml(s) +
+      adjacencyHtml(s) +
+      '</div>';
   }).join('');
   document.getElementById('tags-ss').innerHTML = ssBlocks;
+  updateZoneHint();
   document.getElementById('tags-s').innerHTML  = h(d.stars,'rtag-s');
   document.getElementById('tags-m').innerHTML  = h(d.maybes.slice(0,6),'rtag-m');
   document.getElementById('grp-ss').style.display = d.dstars.length?'block':'none';
@@ -1704,7 +2010,7 @@ function showResults() {
   document.getElementById('grp-m').style.display  = d.maybes.length?'block':'none';
 
   var title = "Here's what stood out";
-  if(!d.dstars.length && !d.stars.length) title="Still searching — that\'s okay";
+  if(!d.dstars.length && !d.stars.length) title="Still searching — yet";
   else if(d.dstars.length===1) title="Your top spark: "+d.dstars[0];
   else if(d.dstars.length>1)  title=d.dstars.length+" top sparks identified";
   document.getElementById('rtitle').textContent = title;
@@ -1728,7 +2034,13 @@ function buildText() {
   var L=['SPARK — PASSION DISCOVERY SURVEY','Date: '+dt,''];
   L.push('★★ MY MOST INTERESTED AREAS');
   L.push('(Your strongest sparks — start here)');
-  if(d.dstars.length){for(var i=0;i<d.dstars.length;i++) L.push('  '+(i+1)+'. '+d.dstars[i]);}
+  if(d.dstars.length){
+    for(var i=0;i<d.dstars.length;i++){
+      var ssn = d.dstars[i];
+      var zz = zonePicks[ssn];
+      L.push('  '+(i+1)+'. '+ssn + (zz ? '  ['+zz.charAt(0).toUpperCase()+zz.slice(1)+' zone]' : ''));
+    }
+  }
   else L.push('  None selected yet');
   L.push('');
   L.push('★ MY NEXT INTERESTS');
@@ -1743,6 +2055,11 @@ function buildText() {
   }
   L.push('Ruled out: '+d.nos+' domain'+(d.nos!==1?'s':''));
   L.push('Next step: Take your ★★ areas into the card game.');
+  if (reflectionText) {
+    L.push('');
+    L.push('— BEFORE I KNEW MY PROFILE —');
+    L.push(reflectionText);
+  }
   return L.join('\n');
 }
 
@@ -1780,13 +2097,23 @@ function doPDF() {
   html+='.dm{background:#F4F3F8;color:#444;border:1px solid #ddd;}';
   html+='.ruled{font-size:12px;color:#999;margin-top:6px;}';
   html+='.nxt{background:#F7F6FB;border-radius:9px;padding:13px 15px;font-size:13px;color:#444;line-height:1.6;margin-top:24px;border:1px solid #E0DFF0;}';
+  html+='.rmymem{background:#FFF8DC;color:#7A5A00;border:1px solid rgba(184,134,11,.25);border-radius:9px;padding:11px 14px;margin-top:20px;}';
+  html+='.rmymem-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#9A6F00;margin-bottom:5px;}';
+  html+='.rmymem-txt{font-size:13px;line-height:1.6;white-space:pre-wrap;}';
   html+='.nxtl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#534AB7;margin-bottom:5px;}';
   html+='@media print{body{margin:16px auto;}@page{margin:18mm;}}';
   html+='</style></head><body>';
   html+='<h1>My Spark Profile</h1><div class="dt">Passion Discovery Survey &nbsp;·&nbsp; '+dt+'</div>';
   html+='<div class="sec"><div class="sl" style="color:#9A6F00">★★ My most interested areas</div>';
   html+='<div class="sb">My strongest sparks — where I want to start exploring.</div>';
-  if(d.dstars.length){for(var i=0;i<d.dstars.length;i++) html+=di('dss','★★',d.dstars[i]);}
+  if(d.dstars.length){
+    for(var i=0;i<d.dstars.length;i++){
+      var ssn = d.dstars[i];
+      var zz = zonePicks[ssn];
+      var zsuffix = zz ? ' <span style="font-size:11px;font-weight:600;padding:2px 7px;border-radius:10px;margin-left:6px;background:#FFF8DC;color:#7A5A00;border:1px solid rgba(184,134,11,.3);">'+zz.charAt(0).toUpperCase()+zz.slice(1)+' zone</span>' : '';
+      html+=di('dss','★★',escHtml(ssn) + zsuffix);
+    }
+  }
   else html+=di('dm','','None selected yet');
   html+='</div>';
   html+='<div class="sec"><div class="sl" style="color:#534AB7">★ My next interests</div>';
@@ -1800,6 +2127,9 @@ function doPDF() {
     html+='</div>';
   }
   if(d.nos>0) html+='<div class="ruled">Ruled out '+d.nos+' domain'+(d.nos!==1?'s':'')+'</div>';
+  if (reflectionText) {
+    html += '<div class="rmymem"><div class="rmymem-lbl">Before I knew my profile</div><div class="rmymem-txt">' + escHtml(reflectionText) + '</div></div>';
+  }
   html+='<div class="nxt"><div class="nxtl">What to do next</div>';
   html+=(d.dstars.length?'Take my ★★ areas into the card game. Ask: "If I had one free afternoon, which would I explore?" My ★ areas are next once I\'ve started on my top spark.':'Take my starred areas into the card game bracket to find my strongest spark.');
   html+='</div></body></html>';
@@ -1839,6 +2169,24 @@ function doReset() {
   chosenAction = null;
   var ta = document.getElementById('spark-sentence');
   if (ta) ta.value = '';
+
+  // Reset reflection
+  reflectionText = '';
+  reflectionDone = false;
+  var rta = document.getElementById('reflect-ta');
+  if (rta) rta.value = '';
+  var rfl = document.getElementById('rreflect');
+  if (rfl) rfl.style.display = 'none';
+
+  // Reset zone picks
+  zonePicks = {};
+  var zh = document.getElementById('zhint');
+  if (zh) zh.classList.remove('on');
+
+  // Reset check-in
+  checkInText = '';
+  var cita3 = document.getElementById('check-in-ta');
+  if (cita3) cita3.value = '';
   var sel = document.getElementById('p4selected');
   if (sel) sel.style.display = 'none';
   var commit = document.getElementById('p4commit');
@@ -1906,9 +2254,18 @@ function generateCommitment() {
       'Read':  'Find one article, one page of a book, or one thread online about it.'
     };
     lines.push('\u2192 My action (' + chosenAction + '): ' + descs[chosenAction]);
+    if (HOM_ACTIONS[chosenAction]) {
+      lines.push('\u2605 Habit of Mind: ' + HOM_ACTIONS[chosenAction].hom);
+    }
   }
   lines.push('');
   lines.push('I will do this in the next 48 hours.');
+  if (checkInText && checkInText.trim()) {
+    lines.push('');
+    lines.push('— MY CHECK-IN —');
+    var ciClean = checkInText.trim();
+    ciClean.split('\n').forEach(function(ln){ lines.push(ln); });
+  }
 
   commitText.innerHTML = lines.map(function(l){ return l ? '<div>' + l + '</div>' : '<div style="height:6px"></div>'; }).join('');
   commit.style.display = 'block';
@@ -1926,7 +2283,11 @@ function copyCommitment() {
   var lines = ['PHASE 4 — MY COMMITMENT', ''];
   if (spark) lines.push('My spark: ' + spark);
   if (chosenAction) lines.push('My action (' + chosenAction + '): ' + descs[chosenAction]);
+  if (chosenAction && HOM_ACTIONS[chosenAction]) lines.push('Habit of Mind: ' + HOM_ACTIONS[chosenAction].hom);
   lines.push(''); lines.push('I will do this in the next 48 hours.');
+  if (checkInText && checkInText.trim()) {
+    lines.push(''); lines.push('— MY CHECK-IN —'); lines.push(checkInText.trim());
+  }
   var txt = lines.join('\n');
   var msg = document.getElementById('commit-copymsg');
   function ok(){ msg.classList.add('on'); setTimeout(function(){ msg.classList.remove('on'); }, 2500); }
@@ -1951,6 +2312,10 @@ function downloadCommitment() {
   html += '.item{padding:14px 16px;border-radius:12px;margin-bottom:12px;font-size:14px;line-height:1.6;}';
   html += '.spark{background:#EEEDFE;color:#3C3489;border:1px solid rgba(83,74,183,.15);}';
   html += '.action{background:#E1F5EE;color:#0F6E56;border:1px solid rgba(15,110,86,.15);}';
+  html += '.habit{background:#FFF8DC;color:#7A5A00;border:1px solid rgba(184,134,11,.25);}';
+  html += '.checkin{background:#EEEDFE;color:#3C3489;border:1px solid rgba(83,74,183,.2);border-radius:12px;padding:14px 16px;margin-top:18px;font-size:13.5px;line-height:1.6;}';
+  html += '.checkin-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#534AB7;margin-bottom:6px;}';
+  html += '.checkin-txt{white-space:pre-wrap;}';
   html += '.pledge{background:#1C1A2E;color:#fff;border-radius:12px;padding:16px;margin-top:20px;font-size:14px;line-height:1.6;}';
   html += '.pl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#AFA9EC;margin-bottom:6px;}';
   html += '@media print{body{margin:20px auto;}@page{margin:18mm;}}';
@@ -1958,7 +2323,11 @@ function downloadCommitment() {
   html += '<h1>My commitment</h1><div class="dt">Phase 4 — Ignite &nbsp;·&nbsp; ' + dt + '</div>';
   if (spark) html += '<div class="item spark">\u2733 <strong>My spark:</strong> ' + spark + '</div>';
   if (chosenAction) html += '<div class="item action">\u2192 <strong>My action (' + chosenAction + '):</strong> ' + descs[chosenAction] + '</div>';
+  if (chosenAction && HOM_ACTIONS[chosenAction]) html += '<div class="item habit">\u2605 <strong>Habit of Mind:</strong> ' + HOM_ACTIONS[chosenAction].hom + '</div>';
   html += '<div class="pledge"><div class="pl">My pledge</div>I will do this in the next 48 hours. Whether the feeling holds up, gets bigger, or changes completely — I will come back and report what happened.</div>';
+  if (checkInText && checkInText.trim()) {
+    html += '<div class="checkin"><div class="checkin-lbl">My check-in</div><div class="checkin-txt">' + escHtml(checkInText.trim()) + '</div></div>';
+  }
   html += '</body></html>';
   var blob = new Blob([html], {type:'text/html'});
   var url = URL.createObjectURL(blob);
@@ -2709,7 +3078,7 @@ function renderP6() {
   document.getElementById('p6col-subject').textContent = subject.name;
   // Reset glossary panel for the newly selected spark
   var gp = document.getElementById('p6gpanel');
-  if (gp) { gp.textContent = GLOSSARY[p6Spark] || ''; gp.classList.remove('open'); }
+  if (gp) { gp.innerHTML = renderGlossaryHTML(p6Spark); gp.classList.remove('open'); }
   var esc = function(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
   document.getElementById('p6moves').innerHTML = moves.map(function(m){
     return '<div class="p6item p6move">' + esc(m) + '</div>';
@@ -2785,6 +3154,110 @@ var GLOSSARY = {
 
 function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
+// ── HABITS OF MIND (Feature #7 — glossary extension) ──
+var GLOSSARY_HOM = {
+  "Mathematics & logic": { h1:"persisting", h2:"thinking about thinking", why:"sticking with hard problems and noticing how you reason" },
+  "Coding & programming": { h1:"persisting", h2:"striving for accuracy", why:"one missing item can break the whole program" },
+  "Artificial intelligence": { h1:"questioning and posing problems", h2:"applying past knowledge to new situations", why:"asking what the model is learning and how it decides" },
+  "Robotics & electronics": { h1:"persisting", h2:"creating, imagining, innovating", why:"most builds don't work first time" },
+  "Data & statistics": { h1:"striving for accuracy", h2:"questioning and posing problems", why:"always ask 'compared to what?' before believing a number" },
+  "Cybersecurity & cryptography": { h1:"questioning and posing problems", h2:"thinking flexibly", why:"anticipating how a system could be attacked from any angle" },
+  "Game design & simulation": { h1:"creating, imagining, innovating", h2:"thinking flexibly", why:"designing rules that produce surprising experiences" },
+  "Physics & forces": { h1:"persisting", h2:"striving for accuracy", why:"the universe doesn't bend its rules for you" },
+  "Chemistry & materials": { h1:"striving for accuracy", h2:"gathering data through all senses", why:"what you see, smell, and measure all carry information" },
+  "Biology & living things": { h1:"gathering data through all senses", h2:"responding with wonderment and awe", why:"looking closely at what's alive in front of you" },
+  "Genetics & evolution": { h1:"questioning and posing problems", h2:"applying past knowledge to new situations", why:"connecting what came before to what changes next" },
+  "Neuroscience & the brain": { h1:"thinking about thinking", h2:"questioning and posing problems", why:"your brain studying itself" },
+  "Astronomy & space": { h1:"responding with wonderment and awe", h2:"persisting", why:"most discoveries take long years of patient looking" },
+  "Ecology & environment": { h1:"thinking interdependently", h2:"gathering data through all senses", why:"everything in nature is connected to something else" },
+  "Geology & earth science": { h1:"persisting", h2:"applying past knowledge to new situations", why:"the rocks remember billions of years" },
+  "Climate & weather systems": { h1:"thinking flexibly", h2:"striving for accuracy", why:"climate systems behave in non-obvious ways" },
+  "Mechanical engineering": { h1:"creating, imagining, innovating", h2:"persisting", why:"designing things that work, then making them work better" },
+  "Electrical engineering": { h1:"striving for accuracy", h2:"creating, imagining, innovating", why:"circuits are unforgiving and beautiful in equal measure" },
+  "Architecture & design": { h1:"creating, imagining, innovating", h2:"thinking interdependently", why:"buildings serve people, climate, place, and budget all at once" },
+  "3D printing & fabrication": { h1:"creating, imagining, innovating", h2:"taking responsible risks", why:"designing things that have never existed before" },
+  "Aviation & transport": { h1:"striving for accuracy", h2:"managing impulsivity", why:"safety lives in checklists and patience" },
+  "Sustainable technology": { h1:"thinking interdependently", h2:"creating, imagining, innovating", why:"designing solutions that don't break something else" },
+  "History & civilisations": { h1:"applying past knowledge to new situations", h2:"questioning and posing problems", why:"patterns from the past help explain now" },
+  "Archaeology": { h1:"gathering data through all senses", h2:"persisting", why:"most digs turn up nothing for weeks before something extraordinary" },
+  "Philosophy & ethics": { h1:"thinking about thinking", h2:"questioning and posing problems", why:"examining the assumptions underneath every argument" },
+  "Psychology & behaviour": { h1:"listening with understanding and empathy", h2:"questioning and posing problems", why:"understanding why people act as they do" },
+  "Sociology & culture": { h1:"listening with understanding and empathy", h2:"thinking flexibly", why:"seeing what's invisible to people inside their own culture" },
+  "Politics & governance": { h1:"thinking interdependently", h2:"listening with understanding and empathy", why:"making decisions that affect many lives at once" },
+  "Law & justice": { h1:"thinking and communicating with clarity and precision", h2:"striving for accuracy", why:"one wrong word in a law has years of consequences" },
+  "Economics & finance": { h1:"thinking about thinking", h2:"applying past knowledge to new situations", why:"incentives shape behaviour in ways that aren't always obvious" },
+  "Geography & places": { h1:"gathering data through all senses", h2:"thinking interdependently", why:"a place is its climate, its people, and its history together" },
+  "Creative writing & fiction": { h1:"creating, imagining, innovating", h2:"listening with understanding and empathy", why:"inventing characters who feel real because you understood theirs" },
+  "Poetry & spoken word": { h1:"creating, imagining, innovating", h2:"thinking and communicating with clarity and precision", why:"every word must carry weight" },
+  "Journalism & non-fiction": { h1:"striving for accuracy", h2:"listening with understanding and empathy", why:"getting the facts right while taking people seriously" },
+  "Linguistics & language": { h1:"thinking about thinking", h2:"striving for accuracy", why:"paying attention to how language carries meaning" },
+  "Debate & public speaking": { h1:"thinking and communicating with clarity and precision", h2:"listening with understanding and empathy", why:"winning starts with understanding the other side" },
+  "Translation & interpretation": { h1:"striving for accuracy", h2:"listening with understanding and empathy", why:"carrying meaning across languages without losing the soul" },
+  "Visual art & illustration": { h1:"creating, imagining, innovating", h2:"persisting", why:"the difference between sketches and finished art is hundreds of small choices" },
+  "Photography & film": { h1:"gathering data through all senses", h2:"creating, imagining, innovating", why:"noticing the moment AND framing it" },
+  "Animation & motion design": { h1:"creating, imagining, innovating", h2:"persisting", why:"animating ten seconds can take a day" },
+  "Graphic design & typography": { h1:"striving for accuracy", h2:"creating, imagining, innovating", why:"every pixel and letter is a choice" },
+  "Music composition": { h1:"creating, imagining, innovating", h2:"thinking about thinking", why:"listening to what you wrote and asking why it works" },
+  "Music performance": { h1:"persisting", h2:"managing impulsivity", why:"the same bar of music practised hundreds of times" },
+  "Theatre & performance": { h1:"listening with understanding and empathy", h2:"taking responsible risks", why:"becoming someone you're not, in front of an audience" },
+  "Dance & movement": { h1:"persisting", h2:"gathering data through all senses", why:"feeling music in the body and translating it through movement" },
+  "Medicine & human health": { h1:"listening with understanding and empathy", h2:"striving for accuracy", why:"a small detail can change the diagnosis" },
+  "Mental health & therapy": { h1:"listening with understanding and empathy", h2:"managing impulsivity", why:"staying calm when others can't" },
+  "Nutrition & dietetics": { h1:"striving for accuracy", h2:"listening with understanding and empathy", why:"what works for one body may not work for another" },
+  "Sport science & exercise": { h1:"persisting", h2:"striving for accuracy", why:"small training changes produce big performance shifts" },
+  "Education & learning": { h1:"listening with understanding and empathy", h2:"thinking about thinking", why:"meeting learners where they are" },
+  "Child & human development": { h1:"listening with understanding and empathy", h2:"gathering data through all senses", why:"children rarely tell you what's actually going on" },
+  "Entrepreneurship & startups": { h1:"taking responsible risks", h2:"persisting", why:"most early ideas don't work; the next one might" },
+  "Marketing & brand strategy": { h1:"listening with understanding and empathy", h2:"thinking flexibly", why:"seeing the product through the audience's eyes" },
+  "Social enterprise & impact": { h1:"thinking interdependently", h2:"persisting", why:"fixing systems is slower than fixing problems" },
+  "Supply chains & logistics": { h1:"thinking interdependently", h2:"striving for accuracy", why:"one small delay can ripple across continents" }
+};
+
+function renderGlossaryHTML(name) {
+  var base = GLOSSARY[name] || '';
+  var h = GLOSSARY_HOM[name];
+  var out = escHtml(base);
+  if (h) {
+    out += ' <span class="ghom">This work grows the habits of <em>' + escHtml(h.h1) +
+           '</em> and <em>' + escHtml(h.h2) + '</em> — ' + escHtml(h.why) + '.</span>';
+  }
+  return out;
+}
+
+// ── HABITS OF MIND (Feature #4 — Phase 4 action habit popups) ──
+var HOM_ACTIONS = {
+  "Watch": { hom:"Gathering data through all senses", explain:"Noticing what's around you — what you see, hear, even smell — and treating it all as information you can think with." },
+  "Ask":   { hom:"Questioning and posing problems",   explain:"Asking better questions, including the awkward ones. A good question opens doors that a hundred answers can't." },
+  "Make":  { hom:"Creating, imagining, innovating",   explain:"Making something that didn't exist before. Even a rough first attempt counts." },
+  "Read":  { hom:"Remaining open to continuous learning", explain:"Treating \"I don't know yet\" as the start of something, not the end. There's always more to find out." }
+};
+
+function showHomPopup(actionKey, ev) {
+  if (ev && ev.stopPropagation) ev.stopPropagation();
+  var data = HOM_ACTIONS[actionKey];
+  if (!data) return;
+  var popup = document.getElementById('hompopup');
+  if (!popup) return;
+  document.getElementById('hompopup-name').textContent = data.hom;
+  document.getElementById('hompopup-text').textContent = data.explain;
+  // Position near the click
+  var target = ev && ev.target ? ev.target : null;
+  if (target) {
+    var rect = target.getBoundingClientRect();
+    var top = rect.bottom + 8;
+    var maxLeft = window.innerWidth - 310;
+    var left = Math.max(10, Math.min(maxLeft, rect.left - 30));
+    popup.style.left = left + 'px';
+    popup.style.top  = top + 'px';
+  }
+  popup.classList.add('open');
+}
+
+function hideHomPopup() {
+  var popup = document.getElementById('hompopup');
+  if (popup) popup.classList.remove('open');
+}
+
 function buildGlossaryButtons() {
   for (var i = 0; i < D.length; i++) {
     var row = document.getElementById('drow' + i);
@@ -2815,7 +3288,7 @@ function buildGlossaryButtons() {
     var panel = document.createElement('div');
     panel.className = 'gpanel';
     panel.id = 'gpanel' + i;
-    panel.textContent = GLOSSARY[D[i].n] || '';
+    panel.innerHTML = renderGlossaryHTML(D[i].n);
     dinfo.appendChild(panel);
   }
 }
@@ -3071,10 +3544,28 @@ document.addEventListener('DOMContentLoaded', function(){
       saveTimer = setTimeout(saveState, 400);
     });
   }
+  // Save check-in text as student types (debounced)
+  var cita2 = document.getElementById('check-in-ta');
+  if (cita2) {
+    var checkTimer = null;
+    cita2.addEventListener('input', function(){
+      checkInText = cita2.value;
+      if (checkTimer) clearTimeout(checkTimer);
+      checkTimer = setTimeout(saveState, 400);
+    });
+  }
   // Restore from localStorage
   loadState();
   // Build glossary buttons on every survey row
   buildGlossaryButtons();
+  // Close HoM popup when clicking anywhere outside it
+  document.addEventListener('click', function(e){
+    var popup = document.getElementById('hompopup');
+    if (!popup || !popup.classList.contains('open')) return;
+    if (popup.contains(e.target)) return;
+    if (e.target && e.target.classList && e.target.classList.contains('p4hom')) return;
+    popup.classList.remove('open');
+  });
 });
 </script>
 </body>
