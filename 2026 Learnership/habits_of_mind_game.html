@@ -6,39 +6,146 @@
 <title>Habits of Mind — Challenge Game</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; color: #1a1a1a; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; }
-  #app { width: 100%; max-width: 680px; }
-  .card { background: #fff; border: 1px solid #e0ddd5; border-radius: 14px; padding: 1.5rem; margin-bottom: 1rem; }
-  h1 { font-size: 22px; font-weight: 500; margin-bottom: 0.4rem; }
-  .sub { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 1.25rem; }
+
+  /* Palette from image:
+     bg:        #F5EDDA  (pale sand/cream)
+     dark-green:#5A6B2A  (olive green - fonts)
+     brown:     #8B3A10  (deep rust brown)
+     tan:       #C8874A  (warm tan)
+     blue:      #7B9BB5  (dusty blue - answer boxes)
+     blue-light:#D6E4EF  (light blue bg for answer boxes)
+  */
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #F5EDDA;
+    color: #3B4A18;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+  #app { width: 100%; max-width: 680px; margin: 0 auto; }
+
+  .card {
+    background: #FDFAF3;
+    border: 1.5px solid #C8874A;
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  h1 { font-size: 22px; font-weight: 600; color: #3B4A18; margin-bottom: 0.4rem; }
+
+  .score-pill {
+    background: #C8874A;
+    color: #FDFAF3;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
   .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
-  .score-pill { background: #f0efe8; border: 1px solid #ddd; border-radius: 20px; padding: 4px 14px; font-size: 13px; font-weight: 500; }
+
+  .prog-track { flex: 1; height: 5px; background: #E8DBBE; border-radius: 4px; overflow: hidden; }
+  .prog-fill { height: 100%; background: #8B3A10; border-radius: 4px; transition: width 0.4s; }
   .progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; }
-  .prog-track { flex: 1; height: 4px; background: #eee; border-radius: 4px; overflow: hidden; }
-  .prog-fill { height: 100%; background: #534AB7; border-radius: 4px; transition: width 0.4s; }
-  .prog-lbl { font-size: 12px; color: #999; white-space: nowrap; }
-  .badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; background: #EEEDFE; color: #3C3489; margin-bottom: 10px; }
-  .scenario { font-size: 15px; line-height: 1.65; color: #1a1a1a; }
-  .question { font-size: 14px; font-weight: 500; margin: 1.25rem 0 0.75rem; }
+  .prog-lbl { font-size: 12px; color: #7A6540; white-space: nowrap; }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 20px;
+    background: #C8874A;
+    color: #FDFAF3;
+    margin-bottom: 10px;
+    letter-spacing: 0.03em;
+  }
+
+  .scenario {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #3B4A18;
+    background: #EEE4C8;
+    border-radius: 10px;
+    padding: 14px 16px;
+    border-left: 4px solid #C8874A;
+  }
+
+  .question { font-size: 14px; font-weight: 600; margin: 1.25rem 0 0.75rem; color: #5A6B2A; }
+
   .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem; }
-  .opt { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 11px 14px; text-align: left; cursor: pointer; font-size: 13px; color: #1a1a1a; line-height: 1.4; transition: background 0.15s, border-color 0.15s; font-family: inherit; }
-  .opt:hover { background: #f5f5f3; border-color: #bbb; }
-  .opt.correct { background: #E1F5EE; border-color: #0F6E56; color: #04342C; }
-  .opt.wrong { background: #FCEBEB; border-color: #A32D2D; color: #501313; }
-  .opt.reveal { background: #EEEDFE; border-color: #534AB7; color: #26215C; }
+
+  .opt {
+    background: #D6E4EF;
+    border: 1.5px solid #7B9BB5;
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    color: #2A3D52;
+    line-height: 1.45;
+    font-family: inherit;
+    font-weight: 500;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .opt:hover { background: #BDD3E6; border-color: #5A7D9A; }
+  .opt.correct { background: #D4E8C2; border-color: #5A7A2A; color: #2A4A10; }
+  .opt.wrong   { background: #F5D0C0; border-color: #8B3A10; color: #5A1A00; }
+  .opt.reveal  { background: #EEE4C8; border-color: #C8874A; color: #5A3A10; }
   .opt:disabled { cursor: default; }
-  .feedback { background: #f5f5f3; border-left: 3px solid #534AB7; border-radius: 0 8px 8px 0; padding: 14px 16px; font-size: 13px; line-height: 1.6; color: #555; margin-bottom: 1rem; display: none; }
-  .feedback strong { color: #1a1a1a; font-weight: 500; }
-  .streak { font-size: 12px; color: #0F6E56; font-weight: 500; min-height: 18px; margin-bottom: 0.75rem; }
-  .next-btn { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 10px 20px; cursor: pointer; font-size: 14px; color: #1a1a1a; font-family: inherit; display: none; }
-  .next-btn:hover { background: #f5f5f3; }
+
+  .feedback {
+    background: #D6E4EF;
+    border-left: 4px solid #7B9BB5;
+    border-radius: 0 10px 10px 0;
+    padding: 14px 16px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #2A3D52;
+    margin-bottom: 1rem;
+    display: none;
+  }
+  .feedback strong { color: #3B4A18; font-weight: 600; }
+
+  .streak { font-size: 12px; color: #5A6B2A; font-weight: 600; min-height: 18px; margin-bottom: 0.75rem; }
+
+  .next-btn {
+    background: #8B3A10;
+    color: #FDFAF3;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 22px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: 500;
+    display: none;
+  }
+  .next-btn:hover { background: #6B2A08; }
+
   .end { text-align: center; padding: 2rem 1rem; }
-  .end-score { font-size: 52px; font-weight: 500; color: #534AB7; margin: 0.5rem 0; }
-  .end-pct { font-size: 14px; color: #888; margin-bottom: 0.75rem; }
-  .end-msg { font-size: 15px; line-height: 1.6; color: #333; margin-bottom: 1.5rem; max-width: 480px; margin-left: auto; margin-right: auto; }
-  .restart-btn { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 10px 24px; cursor: pointer; font-size: 14px; color: #1a1a1a; font-family: inherit; }
-  .restart-btn:hover { background: #f5f5f3; }
-  footer { text-align: center; font-size: 12px; color: #aaa; margin-top: 1.5rem; }
+  .end-score { font-size: 52px; font-weight: 600; color: #8B3A10; margin: 0.5rem 0; }
+  .end-pct { font-size: 14px; color: #7A6540; margin-bottom: 0.75rem; }
+  .end-msg { font-size: 15px; line-height: 1.6; color: #3B4A18; margin-bottom: 1.5rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+  .restart-btn {
+    background: #5A6B2A;
+    color: #FDFAF3;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 26px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: 500;
+  }
+  .restart-btn:hover { background: #3B4A18; }
+
+  footer { text-align: center; font-size: 12px; color: #A08050; margin-top: 1.5rem; padding-bottom: 2rem; }
+
   @media (max-width: 480px) { .options { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -61,7 +168,7 @@ const ALL_QUESTIONS = [
   {habit:"Taking responsible risks",scenario:"In drama class, students are asked to improvise. Zoe is nervous but chooses a character very different from herself, knowing she might make mistakes. She tells herself: 'Mistakes in drama are how you improve.'",question:"What mindset is Zoe showing?",options:["Persisting","Thinking flexibly","Taking responsible risks","Managing impulsivity"],answer:"Taking responsible risks",explanation:"Taking responsible risks means being willing to step into uncertainty, try something new, and make mistakes — because that's where real learning happens. Zoe reframes risk as a tool for growth."},
   {habit:"Thinking and communicating with clarity",scenario:"When asked to explain photosynthesis, Dan says: 'Plants basically do food stuff with light.' His teacher asks him to try again. This time he says: 'Plants convert light energy, water, and carbon dioxide into glucose using chlorophyll.'",question:"What habit is Dan developing between his first and second answer?",options:["Thinking flexibly","Striving for accuracy","Thinking and communicating with clarity","Applying past knowledge"],answer:"Thinking and communicating with clarity",explanation:"Thinking and communicating with clarity means being precise and specific — avoiding vague language and choosing words that accurately capture what you mean. Dan's second answer is far more precise."},
   {habit:"Wondering, imagining, and innovating",scenario:"The class is given a design brief: build a bridge from paper. While most students copy the example, Freya starts asking: 'What if we tried a suspension design? What if the deck was curved? What if we used pleating for strength?'",question:"Which habit is driving Freya's approach?",options:["Questioning and posing problems","Taking responsible risks","Wondering, imagining, and innovating","Thinking flexibly"],answer:"Wondering, imagining, and innovating",explanation:"Wondering, imagining, and innovating is about generating new possibilities — thinking beyond the obvious and exploring creative 'what if' ideas. Freya isn't copying; she's creating."},
-  {habit:"Gathering data through all senses",scenario:"A food technology class is taste-testing recipes. While most students just mark 'good' or 'bad', Rosa writes detailed notes: the texture, the aftertaste, the colour, the smell when it was warm.",question:"What habit makes Rosa's feedback so much richer than her classmates'?",options:["Striving for accuracy","Gathering data through all senses","Thinking and communicating with clarity","Remaining open to learning"],answer:"Gathering data through all senses",explanation:"Gathering data through all senses means using all available channels of perception — not just one — to collect richer, more complete information. Rosa's observations go well beyond a simple judgement."}
+  {habit:"Gathering data through all senses",scenario:"A food technology class is taste-testing recipes. While most students just mark 'good' or 'bad', Rosa writes detailed notes: the texture, the aftertaste, the colour, the smell when it was warm.",question:"What habit makes Rosa's feedback so much richer than her classmates'?",options:["Striving for accuracy","Gathering data through all senses","Thinking and communicating with clarity","Remaining open to learning"],answer:"Gathering data through all senses",explanation:"Gathering data through all senses means using all available channels of perception to collect richer, more complete information. Rosa's observations go well beyond a simple judgement."}
 ];
 
 function shuffle(arr){return arr.map(v=>({v,r:Math.random()})).sort((a,b)=>a.r-b.r).map(x=>x.v);}
@@ -69,17 +176,17 @@ function shuffle(arr){return arr.map(v=>({v,r:Math.random()})).sort((a,b)=>a.r-b
 let questions, current, score, streak, answered;
 
 function init(){
-  questions = shuffle(ALL_QUESTIONS).slice(0,10);
+  questions=shuffle(ALL_QUESTIONS).slice(0,10);
   current=0; score=0; streak=0; answered=false;
   render();
 }
 
 function render(){
-  const el = document.getElementById('app');
-  if(current >= questions.length){renderEnd(el);return;}
-  const q = questions[current];
-  const opts = shuffle(q.options);
-  el.innerHTML = `
+  const el=document.getElementById('app');
+  if(current>=questions.length){renderEnd(el);return;}
+  const q=questions[current];
+  const opts=shuffle(q.options);
+  el.innerHTML=`
     <div class="card">
       <div class="header-row">
         <h1>Habits of Mind challenge</h1>
@@ -98,18 +205,18 @@ function render(){
       <div class="feedback" id="fb"></div>
       <div class="streak" id="streak"></div>
       <button class="next-btn" id="nxt" onclick="next()">
-        ${current+1 < questions.length ? 'Next scenario &rarr;' : 'See my results &rarr;'}
+        ${current+1<questions.length?'Next scenario &rarr;':'See my results &rarr;'}
       </button>
     </div>
     <footer>Based on the 16 Habits of Mind by Art Costa &amp; Bena Kallick &mdash; as used in James Anderson&rsquo;s Learnership framework</footer>`;
 }
 
-function choose(btn, chosen, answer, idx){
-  if(answered || idx!==current) return;
+function choose(btn,chosen,answer,idx){
+  if(answered||idx!==current)return;
   answered=true;
   document.querySelectorAll('.opt').forEach(b=>{
     b.disabled=true;
-    if(b.textContent.trim()===answer && chosen!==answer) b.classList.add('reveal');
+    if(b.textContent.trim()===answer&&chosen!==answer)b.classList.add('reveal');
   });
   btn.classList.add(chosen===answer?'correct':'wrong');
   if(chosen===answer){score++;streak++;}else{streak=0;}
@@ -117,7 +224,7 @@ function choose(btn, chosen, answer, idx){
   const fb=document.getElementById('fb');
   fb.style.display='block';
   fb.innerHTML=`<strong>${chosen===answer?'Correct!':'Not quite.'}</strong> The habit shown here is <strong>${q.habit}</strong>. ${q.explanation}`;
-  if(streak>=3) document.getElementById('streak').textContent=`${streak} in a row!`;
+  if(streak>=3)document.getElementById('streak').textContent=`${streak} in a row!`;
   document.getElementById('nxt').style.display='inline-block';
   document.getElementById('pf').style.width=Math.round(((current+1)/questions.length)*100)+'%';
 }
@@ -127,14 +234,14 @@ function next(){current++;answered=false;render();}
 function renderEnd(el){
   const pct=Math.round((score/questions.length)*100);
   let msg='';
-  if(pct===100) msg="Perfect score! You have a strong grip on all 16 habits. You're thinking like an agile learner.";
-  else if(pct>=80) msg="Excellent work. You clearly understand most of the habits. Review the ones you missed and notice them in your daily learning.";
-  else if(pct>=60) msg="Good start. You're building familiarity with the habits — revisit the ones that tripped you up and look for them in real life.";
+  if(pct===100)msg="Perfect score! You have a strong grip on all 16 habits. You're thinking like an agile learner.";
+  else if(pct>=80)msg="Excellent work. You clearly understand most of the habits. Review the ones you missed and notice them in your daily learning.";
+  else if(pct>=60)msg="Good start. You're building familiarity with the habits — revisit the ones that tripped you up and look for them in real life.";
   else msg="Keep going! The habits take time to recognise. Try again — each round draws a different mix of scenarios.";
   el.innerHTML=`
     <div class="card">
       <div class="end">
-        <p style="font-size:14px;color:#888;margin-bottom:0.25rem">Your result</p>
+        <p style="font-size:14px;color:#7A6540;margin-bottom:0.25rem">Your result</p>
         <p class="end-score">${score}/${questions.length}</p>
         <p class="end-pct">${pct}% correct</p>
         <p class="end-msg">${msg}</p>

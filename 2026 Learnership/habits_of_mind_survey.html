@@ -6,61 +6,140 @@
 <title>Habits of Mind — My Learner Profile</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; color: #1a1a1a; min-height: 100vh; padding: 2rem 1rem; }
+
+  /* Palette:
+     bg:          #F5EDDA  pale sand/cream
+     card:        #FDFAF3  off-white
+     dark-green:  #3B4A18  body text
+     mid-green:   #5A6B2A  headings / accents
+     brown:       #8B3A10  primary action
+     tan:         #C8874A  borders / badges
+     sand:        #EEE4C8  secondary bg
+     blue:        #7B9BB5  answer/input accent
+     blue-light:  #D6E4EF  answer box bg
+  */
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #F5EDDA;
+    color: #3B4A18;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
   #app { width: 100%; max-width: 680px; margin: 0 auto; }
   .page { display: none; }
   .page.active { display: block; }
-  .card { background: #fff; border: 1px solid #e0ddd5; border-radius: 14px; padding: 1.5rem; margin-bottom: 1rem; }
-  h1 { font-size: 22px; font-weight: 500; margin-bottom: 0.4rem; }
-  .sub { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 1.25rem; }
+
+  .card {
+    background: #FDFAF3;
+    border: 1.5px solid #C8874A;
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  h1 { font-size: 22px; font-weight: 600; color: #3B4A18; margin-bottom: 0.4rem; }
+  .sub { font-size: 14px; color: #5A4520; line-height: 1.65; margin-bottom: 1.25rem; }
+
   .name-row { display: flex; gap: 10px; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; }
-  .name-row label { font-size: 13px; color: #666; white-space: nowrap; }
-  .name-row input { flex: 1; max-width: 280px; font-size: 14px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; outline: none; }
-  .name-row input:focus { border-color: #534AB7; box-shadow: 0 0 0 3px rgba(83,74,183,0.1); }
-  .scale-legend { display: flex; justify-content: space-between; font-size: 11px; color: #999; margin-bottom: 1.25rem; padding: 0 2px; flex-wrap: wrap; gap: 4px; }
-  .start-btn { background: #534AB7; color: #EEEDFE; border: none; border-radius: 10px; padding: 11px 26px; font-size: 14px; cursor: pointer; font-family: inherit; }
-  .start-btn:hover { background: #3C3489; }
+  .name-row label { font-size: 13px; color: #5A4520; white-space: nowrap; font-weight: 500; }
+  .name-row input {
+    flex: 1; max-width: 280px;
+    font-size: 14px; padding: 8px 12px;
+    border: 1.5px solid #7B9BB5;
+    border-radius: 8px; font-family: inherit;
+    background: #D6E4EF; color: #2A3D52; outline: none;
+  }
+  .name-row input:focus { border-color: #5A7D9A; box-shadow: 0 0 0 3px rgba(123,155,181,0.2); }
+
+  .scale-legend {
+    display: flex; justify-content: space-between;
+    font-size: 11px; color: #7A6540;
+    margin-bottom: 1.25rem; padding: 0 2px; flex-wrap: wrap; gap: 4px;
+  }
+
+  .start-btn {
+    background: #8B3A10; color: #FDFAF3;
+    border: none; border-radius: 10px;
+    padding: 11px 26px; font-size: 14px;
+    cursor: pointer; font-family: inherit; font-weight: 500;
+  }
+  .start-btn:hover { background: #6B2A08; }
+
   .progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; }
-  .prog-track { flex: 1; height: 4px; background: #eee; border-radius: 4px; overflow: hidden; }
-  .prog-fill { height: 100%; background: #534AB7; border-radius: 4px; transition: width 0.3s; }
-  .prog-lbl { font-size: 12px; color: #999; white-space: nowrap; }
-  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: #999; margin: 1.25rem 0 0.75rem; padding-bottom: 6px; border-bottom: 1px solid #eee; }
+  .prog-track { flex: 1; height: 5px; background: #E8DBBE; border-radius: 4px; overflow: hidden; }
+  .prog-fill { height: 100%; background: #8B3A10; border-radius: 4px; transition: width 0.3s; }
+  .prog-lbl { font-size: 12px; color: #7A6540; white-space: nowrap; }
+
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: #C8874A;
+    margin: 1.25rem 0 0.75rem; padding-bottom: 6px;
+    border-bottom: 1.5px solid #E8DBBE;
+  }
   .section-label:first-of-type { margin-top: 0; }
-  .q-row { background: #fff; border: 1px solid #e8e5de; border-radius: 12px; padding: 14px 16px; margin-bottom: 8px; }
+
+  .q-row {
+    background: #FDFAF3;
+    border: 1.5px solid #E8DBBE;
+    border-radius: 12px; padding: 14px 16px; margin-bottom: 8px;
+  }
   .q-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
-  .q-name { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 3px; }
-  .q-stmt { font-size: 12px; color: #666; line-height: 1.45; }
-  .q-score { font-size: 14px; font-weight: 500; color: #534AB7; min-width: 18px; text-align: right; flex-shrink: 0; padding-top: 2px; }
-  input[type=range] { width: 100%; cursor: pointer; accent-color: #534AB7; }
-  .rating-labels { display: flex; justify-content: space-between; font-size: 10px; color: #aaa; margin-top: 4px; padding: 0 2px; }
+  .q-name { font-size: 14px; font-weight: 600; color: #5A6B2A; margin-bottom: 3px; }
+  .q-stmt { font-size: 12px; color: #5A4520; line-height: 1.5; }
+  .q-score { font-size: 14px; font-weight: 700; color: #8B3A10; min-width: 18px; text-align: right; flex-shrink: 0; padding-top: 2px; }
+
+  input[type=range] { width: 100%; cursor: pointer; accent-color: #7B9BB5; }
+  .rating-labels { display: flex; justify-content: space-between; font-size: 10px; color: #9A8060; margin-top: 4px; padding: 0 2px; }
+
   .nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 1.25rem; gap: 10px; }
-  .btn { padding: 9px 20px; font-size: 13px; cursor: pointer; border-radius: 10px; border: 1px solid #ddd; background: #fff; color: #1a1a1a; font-family: inherit; }
-  .btn:hover { background: #f5f5f3; }
-  .btn.primary { background: #534AB7; color: #EEEDFE; border-color: #534AB7; }
-  .btn.primary:hover { background: #3C3489; }
-  .results-head { font-size: 22px; font-weight: 500; margin-bottom: 0.3rem; }
-  .results-sub { font-size: 13px; color: #888; margin-bottom: 1.5rem; }
-  .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.5rem; }
-  .sum-card { background: #f5f5f3; border-radius: 10px; padding: 12px 14px; }
-  .sum-val { font-size: 20px; font-weight: 500; color: #1a1a1a; }
-  .sum-lbl { font-size: 11px; color: #888; margin-top: 2px; }
+  .btn {
+    padding: 9px 20px; font-size: 13px; cursor: pointer;
+    border-radius: 10px; border: 1.5px solid #C8874A;
+    background: #FDFAF3; color: #5A3A10; font-family: inherit; font-weight: 500;
+  }
+  .btn:hover { background: #EEE4C8; }
+  .btn.primary { background: #8B3A10; color: #FDFAF3; border-color: #8B3A10; }
+  .btn.primary:hover { background: #6B2A08; }
+
+  .results-head { font-size: 22px; font-weight: 600; color: #3B4A18; margin-bottom: 0.3rem; }
+  .results-sub { font-size: 13px; color: #7A6540; margin-bottom: 1.5rem; }
+
+  .summary-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 1.5rem; }
+  .sum-card { background: #EEE4C8; border-radius: 10px; padding: 12px 14px; border: 1px solid #D4BF98; }
+  .sum-val { font-size: 18px; font-weight: 600; color: #3B4A18; line-height: 1.3; }
+  .sum-lbl { font-size: 11px; color: #7A6540; margin-top: 3px; }
+
   .chart-wrap { position: relative; width: 100%; height: 380px; margin-bottom: 1.5rem; }
-  .breakdown-head { font-size: 16px; font-weight: 500; margin: 1.5rem 0 0.75rem; }
+
+  .breakdown-head { font-size: 16px; font-weight: 600; color: #5A6B2A; margin: 1.5rem 0 0.75rem; }
+
   .bk-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-  .bk-name { font-size: 13px; color: #1a1a1a; width: 195px; flex-shrink: 0; line-height: 1.3; }
-  .bk-bar-wrap { flex: 1; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; }
+  .bk-name { font-size: 13px; color: #3B4A18; width: 195px; flex-shrink: 0; line-height: 1.3; }
+  .bk-bar-wrap { flex: 1; height: 8px; background: #E8DBBE; border-radius: 4px; overflow: hidden; }
   .bk-bar { height: 100%; border-radius: 4px; transition: width 0.5s; }
-  .bk-val { font-size: 12px; font-weight: 500; min-width: 28px; text-align: right; }
-  .strength-head { font-size: 14px; font-weight: 500; margin: 1.25rem 0 0.5rem; }
+  .bk-val { font-size: 12px; font-weight: 600; min-width: 28px; text-align: right; }
+
+  .strength-head { font-size: 14px; font-weight: 600; color: #5A6B2A; margin: 1.25rem 0 0.5rem; }
   .tag-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
-  .tag { font-size: 12px; padding: 4px 12px; border-radius: 20px; font-weight: 500; }
-  .tag.strong { background: #E1F5EE; color: #085041; }
-  .tag.grow { background: #FAEEDA; color: #633806; }
-  .reflection { background: #f5f5f3; border-left: 3px solid #534AB7; border-radius: 0 10px 10px 0; padding: 14px 16px; font-size: 13px; line-height: 1.6; color: #555; margin-top: 1.25rem; }
-  .reflection strong { color: #1a1a1a; }
-  .print-note { font-size: 12px; color: #aaa; margin-top: 0.5rem; }
+  .tag { font-size: 12px; padding: 5px 12px; border-radius: 20px; font-weight: 600; }
+  .tag.strong { background: #D4E8C2; color: #2A4A10; border: 1px solid #8AAA50; }
+  .tag.grow   { background: #F5DDB8; color: #5A3010; border: 1px solid #C8874A; }
+
+  .reflection {
+    background: #D6E4EF;
+    border-left: 4px solid #7B9BB5;
+    border-radius: 0 10px 10px 0;
+    padding: 14px 16px; font-size: 13px;
+    line-height: 1.6; color: #2A3D52; margin-top: 1.25rem;
+  }
+  .reflection strong { color: #1A2A3A; font-weight: 600; }
+
   .bottom-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.25rem; }
-  footer { text-align: center; font-size: 12px; color: #bbb; margin-top: 1.5rem; padding-bottom: 2rem; }
+  .print-note { font-size: 12px; color: #9A8060; margin-top: 0.5rem; }
+
+  footer { text-align: center; font-size: 12px; color: #A08050; margin-top: 1.5rem; padding-bottom: 2rem; }
+
   @media print {
     body { background: #fff; padding: 0; }
     .nav-row, .bottom-btns, footer { display: none; }
@@ -81,7 +160,7 @@
   <div class="page active" id="page-intro">
     <div class="card">
       <h1>Habits of Mind — my learner profile</h1>
-      <p class="sub" style="margin-top:0.4rem">Rate yourself honestly on each of the 16 Habits of Mind. There are no right or wrong answers — this is about understanding yourself as a learner, not getting a perfect score.</p>
+      <p class="sub">Rate yourself honestly on each of the 16 Habits of Mind. There are no right or wrong answers — this is about understanding yourself as a learner, not getting a perfect score.</p>
       <div class="name-row">
         <label for="sname">Your name (optional)</label>
         <input type="text" id="sname" placeholder="e.g. Alex">
@@ -123,180 +202,173 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 const HABITS = [
-  {id:'persist',   name:'Persisting',                              stmt:"When I get stuck on something hard, I keep trying different ways to solve it instead of giving up.",                                          cat:'Perseverance'},
-  {id:'impulse',   name:'Managing impulsivity',                    stmt:"I think before I act or speak, especially when I feel like reacting quickly.",                                                               cat:'Perseverance'},
-  {id:'accuracy',  name:'Striving for accuracy',                   stmt:"I check my work carefully and set high standards for myself, even when it takes extra time.",                                                cat:'Perseverance'},
-  {id:'risk',      name:'Taking responsible risks',                stmt:"I'm willing to try things I might fail at, because I see mistakes as part of learning.",                                                     cat:'Perseverance'},
-  {id:'flex',      name:'Thinking flexibly',                       stmt:"When my first approach to a problem isn't working, I'm willing to try a completely different strategy.",                                     cat:'Thinking'},
-  {id:'meta',      name:'Thinking about thinking',                 stmt:"I think about how I learn best and plan my approach before starting a tricky task.",                                                         cat:'Thinking'},
-  {id:'past',      name:'Applying past knowledge',                 stmt:"I connect what I'm learning now to things I already know from other subjects or experiences.",                                               cat:'Thinking'},
-  {id:'precise',   name:'Thinking and communicating with clarity', stmt:"I try to be specific and precise when I explain my ideas, avoiding vague or fuzzy language.",                                               cat:'Thinking'},
-  {id:'question',  name:'Questioning and posing problems',         stmt:"I ask 'why' and 'what if' questions — I look for gaps and puzzles rather than just accepting answers.",                                     cat:'Curiosity'},
-  {id:'senses',    name:'Gathering data through all senses',       stmt:"I use careful observation — noticing details others might miss — to gather information.",                                                   cat:'Curiosity'},
-  {id:'create',    name:'Wondering, imagining, and innovating',    stmt:"I like coming up with new ideas and exploring creative or unusual possibilities.",                                                           cat:'Curiosity'},
-  {id:'awe',       name:'Responding with wonderment and awe',      stmt:"I genuinely find learning exciting — some ideas, discoveries, or facts fill me with curiosity and wonder.",                                 cat:'Curiosity'},
-  {id:'listen',    name:'Listening with understanding and empathy',stmt:"When someone is talking, I really try to understand their point of view before I share my own.",                                            cat:'Social'},
-  {id:'humor',     name:'Finding humour',                          stmt:"I can laugh at myself and at the playful or absurd side of ideas — humour helps me stay engaged.",                                         cat:'Social'},
-  {id:'together',  name:'Thinking interdependently',               stmt:"I value working with others and believe a team often produces better thinking than I could alone.",                                          cat:'Social'},
-  {id:'openlearn', name:'Remaining open to continuous learning',   stmt:"I'm humble about what I don't know, and I'm genuinely eager to learn from anyone — including from mistakes.",                              cat:'Social'},
+  {id:'persist',   name:'Persisting',                              stmt:"When I get stuck on something hard, I keep trying different ways to solve it instead of giving up.",                          cat:'Perseverance'},
+  {id:'impulse',   name:'Managing impulsivity',                    stmt:"I think before I act or speak, especially when I feel like reacting quickly.",                                               cat:'Perseverance'},
+  {id:'accuracy',  name:'Striving for accuracy',                   stmt:"I check my work carefully and set high standards for myself, even when it takes extra time.",                                cat:'Perseverance'},
+  {id:'risk',      name:'Taking responsible risks',                stmt:"I'm willing to try things I might fail at, because I see mistakes as part of learning.",                                     cat:'Perseverance'},
+  {id:'flex',      name:'Thinking flexibly',                       stmt:"When my first approach to a problem isn't working, I'm willing to try a completely different strategy.",                     cat:'Thinking'},
+  {id:'meta',      name:'Thinking about thinking',                 stmt:"I think about how I learn best and plan my approach before starting a tricky task.",                                         cat:'Thinking'},
+  {id:'past',      name:'Applying past knowledge',                 stmt:"I connect what I'm learning now to things I already know from other subjects or experiences.",                               cat:'Thinking'},
+  {id:'precise',   name:'Thinking and communicating with clarity', stmt:"I try to be specific and precise when I explain my ideas, avoiding vague or fuzzy language.",                               cat:'Thinking'},
+  {id:'question',  name:'Questioning and posing problems',         stmt:"I ask 'why' and 'what if' questions — I look for gaps and puzzles rather than just accepting answers.",                     cat:'Curiosity'},
+  {id:'senses',    name:'Gathering data through all senses',       stmt:"I use careful observation — noticing details others might miss — to gather information.",                                   cat:'Curiosity'},
+  {id:'create',    name:'Wondering, imagining, and innovating',    stmt:"I like coming up with new ideas and exploring creative or unusual possibilities.",                                           cat:'Curiosity'},
+  {id:'awe',       name:'Responding with wonderment and awe',      stmt:"I genuinely find learning exciting — some ideas, discoveries, or facts fill me with curiosity and wonder.",                 cat:'Curiosity'},
+  {id:'listen',    name:'Listening with understanding and empathy',stmt:"When someone is talking, I really try to understand their point of view before I share my own.",                            cat:'Social'},
+  {id:'humor',     name:'Finding humour',                          stmt:"I can laugh at myself and at the playful or absurd side of ideas — humour helps me stay engaged.",                         cat:'Social'},
+  {id:'together',  name:'Thinking interdependently',               stmt:"I value working with others and believe a team often produces better thinking than I could alone.",                          cat:'Social'},
+  {id:'openlearn', name:'Remaining open to continuous learning',   stmt:"I'm humble about what I don't know, and genuinely eager to learn from anyone — including from mistakes.",                  cat:'Social'},
 ];
 
 const PAGES = [[0,1,2,3],[4,5,6,7],[8,9,10,11],[12,13,14,15]];
 
 const CAT = {
-  Perseverance: { bar:'#534AB7', text:'#3C3489' },
-  Thinking:     { bar:'#0F6E56', text:'#085041' },
-  Curiosity:    { bar:'#854F0B', text:'#633806' },
-  Social:       { bar:'#993C1D', text:'#712B13' },
+  Perseverance: { bar:'#8B3A10', text:'#6B2A08' },
+  Thinking:     { bar:'#5A6B2A', text:'#3B4A18' },
+  Curiosity:    { bar:'#C8874A', text:'#8B5A20' },
+  Social:       { bar:'#7B9BB5', text:'#4A6A85' },
 };
 
-let scores = {}, currentPage = 0, chartInst = null;
-HABITS.forEach(h => scores[h.id] = 3);
+let scores={}, currentPage=0, chartInst=null;
+HABITS.forEach(h=>scores[h.id]=3);
 
 function startSurvey(){
   document.getElementById('page-intro').classList.remove('active');
   document.getElementById('page-survey').classList.add('active');
-  currentPage = 0;
+  currentPage=0;
   renderSurveyPage();
 }
 
 function renderSurveyPage(){
-  const total = PAGES.length;
-  const pct = Math.round((currentPage / total) * 100);
-  document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-txt').textContent = 'Page ' + (currentPage + 1) + ' of ' + total;
-  document.getElementById('btn-back').style.visibility = currentPage === 0 ? 'hidden' : 'visible';
-  document.getElementById('btn-next').innerHTML = currentPage === total - 1
-    ? 'See my results &#8594;' : 'Next &#8594;';
+  const total=PAGES.length;
+  document.getElementById('prog-fill').style.width=Math.round((currentPage/total)*100)+'%';
+  document.getElementById('prog-txt').textContent='Page '+(currentPage+1)+' of '+total;
+  document.getElementById('btn-back').style.visibility=currentPage===0?'hidden':'visible';
+  document.getElementById('btn-next').innerHTML=currentPage===total-1?'See my results &#8594;':'Next &#8594;';
 
-  const indices = PAGES[currentPage];
-  const catMap = {};
-  indices.forEach(i => {
-    const h = HABITS[i];
-    if (!catMap[h.cat]) catMap[h.cat] = [];
-    catMap[h.cat].push(h);
-  });
+  const indices=PAGES[currentPage];
+  const catMap={};
+  indices.forEach(i=>{const h=HABITS[i];if(!catMap[h.cat])catMap[h.cat]=[];catMap[h.cat].push(h);});
 
-  let html = '';
-  Object.entries(catMap).forEach(([cat, habits]) => {
-    html += '<div class="section-label">' + cat + '</div>';
-    habits.forEach(h => {
-      html += '<div class="q-row">' +
-        '<div class="q-top">' +
-          '<div><div class="q-name">' + h.name + '</div><div class="q-stmt">' + h.stmt + '</div></div>' +
-          '<span class="q-score" id="disp-' + h.id + '">' + scores[h.id] + '</span>' +
-        '</div>' +
-        '<input type="range" min="1" max="5" step="1" value="' + scores[h.id] + '" ' +
-          'oninput="setScore(\'' + h.id + '\',this.value)" aria-label="Rate ' + h.name + ' from 1 to 5">' +
-        '<div class="rating-labels"><span>Rarely</span><span>Sometimes</span><span>Often</span><span>Usually</span><span>Almost always</span></div>' +
+  let html='';
+  Object.entries(catMap).forEach(([cat,habits])=>{
+    html+='<div class="section-label">'+cat+'</div>';
+    habits.forEach(h=>{
+      html+='<div class="q-row">'+
+        '<div class="q-top">'+
+          '<div><div class="q-name">'+h.name+'</div><div class="q-stmt">'+h.stmt+'</div></div>'+
+          '<span class="q-score" id="disp-'+h.id+'">'+scores[h.id]+'</span>'+
+        '</div>'+
+        '<input type="range" min="1" max="5" step="1" value="'+scores[h.id]+'" '+
+          'oninput="setScore(\''+h.id+'\',this.value)" aria-label="Rate '+h.name+' from 1 to 5">'+
+        '<div class="rating-labels"><span>Rarely</span><span>Sometimes</span><span>Often</span><span>Usually</span><span>Almost always</span></div>'+
       '</div>';
     });
   });
-  document.getElementById('survey-body').innerHTML = html;
+  document.getElementById('survey-body').innerHTML=html;
 }
 
-function setScore(id, val){
-  scores[id] = parseInt(val);
-  document.getElementById('disp-' + id).textContent = val;
+function setScore(id,val){
+  scores[id]=parseInt(val);
+  document.getElementById('disp-'+id).textContent=val;
 }
 
 function navPage(dir){
-  currentPage += dir;
-  if(currentPage < 0){ currentPage = 0; return; }
-  if(currentPage >= PAGES.length){ showResults(); return; }
+  currentPage+=dir;
+  if(currentPage<0){currentPage=0;return;}
+  if(currentPage>=PAGES.length){showResults();return;}
   renderSurveyPage();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function showResults(){
   document.getElementById('page-survey').classList.remove('active');
   document.getElementById('page-results').classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({top:0,behavior:'smooth'});
 
-  const name = document.getElementById('sname').value.trim();
-  const total = Object.values(scores).reduce((a, b) => a + b, 0);
-  const avg = (total / 16).toFixed(1);
-  const sorted = [...HABITS].sort((a, b) => scores[b.id] - scores[a.id]);
-  const strengths = sorted.slice(0, 3);
-  const grows = sorted.slice(-3).reverse();
+  const name=document.getElementById('sname').value.trim();
+  const total=Object.values(scores).reduce((a,b)=>a+b,0);
+  const avg=(total/16).toFixed(1);
+  const sorted=[...HABITS].sort((a,b)=>scores[b.id]-scores[a.id]);
+  const strengths=sorted.slice(0,3);
+  const grows=sorted.slice(-3).reverse();
 
-  const shortLabels = HABITS.map(h => {
-    const w = h.name.split(' ');
-    return w.length <= 2 ? h.name : w.slice(0, 2).join(' ') + '\u2026';
+  const shortLabels=HABITS.map(h=>{
+    const w=h.name.split(' ');
+    return w.length<=2?h.name:w.slice(0,2).join(' ')+'\u2026';
   });
 
-  let html = '<h1 class="results-head">' + (name ? name + "'s" : "Your") + ' learner profile</h1>' +
-    '<p class="results-sub">Based on your self-rating across all 16 Habits of Mind</p>' +
-    '<div class="summary-grid">' +
-      '<div class="sum-card"><div class="sum-val">' + avg + '<span style="font-size:13px;color:#888">/5</span></div><div class="sum-lbl">Overall average</div></div>' +
-      '<div class="sum-card"><div class="sum-val" style="font-size:14px;line-height:1.3">' + strengths[0].name + '</div><div class="sum-lbl">Top strength</div></div>' +
-      '<div class="sum-card"><div class="sum-val" style="font-size:14px;line-height:1.3">' + grows[0].name + '</div><div class="sum-lbl">Top growth area</div></div>' +
-    '</div>' +
-    '<div class="chart-wrap"><canvas id="radar-chart" role="img" aria-label="Radar chart of Habits of Mind self-ratings">Self-ratings across 16 Habits of Mind, ranging from 1 to 5.</canvas></div>' +
+  let html='<h1 class="results-head">'+(name?name+"'s":"Your")+' learner profile</h1>'+
+    '<p class="results-sub">Based on your self-rating across all 16 Habits of Mind</p>'+
+    '<div class="summary-grid">'+
+      '<div class="sum-card"><div class="sum-val">'+avg+'<span style="font-size:13px;color:#7A6540">/5</span></div><div class="sum-lbl">Overall average</div></div>'+
+      '<div class="sum-card"><div class="sum-val" style="font-size:14px">'+strengths[0].name+'</div><div class="sum-lbl">Top strength</div></div>'+
+      '<div class="sum-card"><div class="sum-val" style="font-size:14px">'+grows[0].name+'</div><div class="sum-lbl">Top growth area</div></div>'+
+    '</div>'+
+    '<div class="chart-wrap"><canvas id="radar-chart" role="img" aria-label="Radar chart of Habits of Mind self-ratings">Self-ratings across 16 Habits of Mind, ranging from 1 to 5.</canvas></div>'+
     '<div class="breakdown-head">All 16 habits</div>';
 
-  HABITS.forEach(h => {
-    const v = scores[h.id];
-    const pct = Math.round((v / 5) * 100);
-    const c = CAT[h.cat];
-    html += '<div class="bk-row">' +
-      '<span class="bk-name">' + h.name + '</span>' +
-      '<div class="bk-bar-wrap"><div class="bk-bar" style="width:' + pct + '%;background:' + c.bar + '"></div></div>' +
-      '<span class="bk-val" style="color:' + c.bar + '">' + v + '/5</span>' +
+  HABITS.forEach(h=>{
+    const v=scores[h.id];
+    const pct=Math.round((v/5)*100);
+    const c=CAT[h.cat];
+    html+='<div class="bk-row">'+
+      '<span class="bk-name">'+h.name+'</span>'+
+      '<div class="bk-bar-wrap"><div class="bk-bar" style="width:'+pct+'%;background:'+c.bar+'"></div></div>'+
+      '<span class="bk-val" style="color:'+c.bar+'">'+v+'/5</span>'+
     '</div>';
   });
 
-  html += '<div class="strength-head">Your strengths</div>' +
-    '<div class="tag-wrap">' + strengths.map(h => '<span class="tag strong">' + h.name + ' &mdash; ' + scores[h.id] + '/5</span>').join('') + '</div>' +
-    '<div class="strength-head">Growth opportunities</div>' +
-    '<div class="tag-wrap">' + grows.map(h => '<span class="tag grow">' + h.name + ' &mdash; ' + scores[h.id] + '/5</span>').join('') + '</div>' +
-    '<div class="reflection"><strong>Reflect on this:</strong> Which of your growth areas would make the biggest difference to your learning right now? Pick one and think of a situation this week where you could practise it deliberately.</div>' +
-    '<div class="bottom-btns">' +
-      '<button class="btn" onclick="restart()">&#8592; Start over</button>' +
-      '<button class="btn" onclick="window.print()">Print / save as PDF</button>' +
-    '</div>' +
+  html+='<div class="strength-head">Your strengths</div>'+
+    '<div class="tag-wrap">'+strengths.map(h=>'<span class="tag strong">'+h.name+' &mdash; '+scores[h.id]+'/5</span>').join('')+'</div>'+
+    '<div class="strength-head">Growth opportunities</div>'+
+    '<div class="tag-wrap">'+grows.map(h=>'<span class="tag grow">'+h.name+' &mdash; '+scores[h.id]+'/5</span>').join('')+'</div>'+
+    '<div class="reflection"><strong>Reflect on this:</strong> Which of your growth areas would make the biggest difference to your learning right now? Pick one and think of a situation this week where you could practise it deliberately.</div>'+
+    '<div class="bottom-btns">'+
+      '<button class="btn" onclick="restart()">&#8592; Start over</button>'+
+      '<button class="btn primary" onclick="window.print()">Print / save as PDF</button>'+
+    '</div>'+
     '<p class="print-note">Tip: use your browser\'s Print &rarr; Save as PDF to keep a copy of your results.</p>';
 
-  document.getElementById('results-body').innerHTML = html;
+  document.getElementById('results-body').innerHTML=html;
 
-  if(chartInst){ chartInst.destroy(); chartInst = null; }
-  chartInst = new Chart(document.getElementById('radar-chart'), {
-    type: 'radar',
-    data: {
-      labels: shortLabels,
-      datasets: [{
-        label: 'My rating',
-        data: HABITS.map(h => scores[h.id]),
-        backgroundColor: 'rgba(83,74,183,0.12)',
-        borderColor: '#534AB7',
-        borderWidth: 2,
-        pointBackgroundColor: '#534AB7',
-        pointRadius: 4,
-        pointHoverRadius: 6
+  if(chartInst){chartInst.destroy();chartInst=null;}
+  chartInst=new Chart(document.getElementById('radar-chart'),{
+    type:'radar',
+    data:{
+      labels:shortLabels,
+      datasets:[{
+        label:'My rating',
+        data:HABITS.map(h=>scores[h.id]),
+        backgroundColor:'rgba(139,58,16,0.1)',
+        borderColor:'#8B3A10',
+        borderWidth:2,
+        pointBackgroundColor:'#C8874A',
+        pointRadius:4,
+        pointHoverRadius:6
       }]
     },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: { r: {
-        min: 0, max: 5,
-        ticks: { stepSize: 1, color: '#aaa', font: { size: 10 }, backdropColor: 'transparent' },
-        grid: { color: 'rgba(0,0,0,0.07)' },
-        angleLines: { color: 'rgba(0,0,0,0.07)' },
-        pointLabels: { color: '#666', font: { size: 10 } }
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{r:{
+        min:0,max:5,
+        ticks:{stepSize:1,color:'#9A8060',font:{size:10},backdropColor:'transparent'},
+        grid:{color:'rgba(139,58,16,0.12)'},
+        angleLines:{color:'rgba(139,58,16,0.12)'},
+        pointLabels:{color:'#5A4520',font:{size:10}}
       }}
     }
   });
 }
 
 function restart(){
-  HABITS.forEach(h => scores[h.id] = 3);
-  currentPage = 0;
-  if(chartInst){ chartInst.destroy(); chartInst = null; }
+  HABITS.forEach(h=>scores[h.id]=3);
+  currentPage=0;
+  if(chartInst){chartInst.destroy();chartInst=null;}
   document.getElementById('page-results').classList.remove('active');
   document.getElementById('page-intro').classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
 </body>
