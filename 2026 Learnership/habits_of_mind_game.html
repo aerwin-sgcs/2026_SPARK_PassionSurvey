@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Habits of Mind — Challenge Game</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; color: #1a1a1a; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; }
+  #app { width: 100%; max-width: 680px; }
+  .card { background: #fff; border: 1px solid #e0ddd5; border-radius: 14px; padding: 1.5rem; margin-bottom: 1rem; }
+  h1 { font-size: 22px; font-weight: 500; margin-bottom: 0.4rem; }
+  .sub { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 1.25rem; }
+  .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+  .score-pill { background: #f0efe8; border: 1px solid #ddd; border-radius: 20px; padding: 4px 14px; font-size: 13px; font-weight: 500; }
+  .progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; }
+  .prog-track { flex: 1; height: 4px; background: #eee; border-radius: 4px; overflow: hidden; }
+  .prog-fill { height: 100%; background: #534AB7; border-radius: 4px; transition: width 0.4s; }
+  .prog-lbl { font-size: 12px; color: #999; white-space: nowrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; background: #EEEDFE; color: #3C3489; margin-bottom: 10px; }
+  .scenario { font-size: 15px; line-height: 1.65; color: #1a1a1a; }
+  .question { font-size: 14px; font-weight: 500; margin: 1.25rem 0 0.75rem; }
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem; }
+  .opt { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 11px 14px; text-align: left; cursor: pointer; font-size: 13px; color: #1a1a1a; line-height: 1.4; transition: background 0.15s, border-color 0.15s; font-family: inherit; }
+  .opt:hover { background: #f5f5f3; border-color: #bbb; }
+  .opt.correct { background: #E1F5EE; border-color: #0F6E56; color: #04342C; }
+  .opt.wrong { background: #FCEBEB; border-color: #A32D2D; color: #501313; }
+  .opt.reveal { background: #EEEDFE; border-color: #534AB7; color: #26215C; }
+  .opt:disabled { cursor: default; }
+  .feedback { background: #f5f5f3; border-left: 3px solid #534AB7; border-radius: 0 8px 8px 0; padding: 14px 16px; font-size: 13px; line-height: 1.6; color: #555; margin-bottom: 1rem; display: none; }
+  .feedback strong { color: #1a1a1a; font-weight: 500; }
+  .streak { font-size: 12px; color: #0F6E56; font-weight: 500; min-height: 18px; margin-bottom: 0.75rem; }
+  .next-btn { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 10px 20px; cursor: pointer; font-size: 14px; color: #1a1a1a; font-family: inherit; display: none; }
+  .next-btn:hover { background: #f5f5f3; }
+  .end { text-align: center; padding: 2rem 1rem; }
+  .end-score { font-size: 52px; font-weight: 500; color: #534AB7; margin: 0.5rem 0; }
+  .end-pct { font-size: 14px; color: #888; margin-bottom: 0.75rem; }
+  .end-msg { font-size: 15px; line-height: 1.6; color: #333; margin-bottom: 1.5rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+  .restart-btn { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 10px 24px; cursor: pointer; font-size: 14px; color: #1a1a1a; font-family: inherit; }
+  .restart-btn:hover { background: #f5f5f3; }
+  footer { text-align: center; font-size: 12px; color: #aaa; margin-top: 1.5rem; }
+  @media (max-width: 480px) { .options { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const ALL_QUESTIONS = [
+  {habit:"Persisting",scenario:"Maya is working on a maths problem that she's been stuck on for 20 minutes. She's tried two different methods and both failed. Instead of giving up, she grabs her pencil and tries a completely different approach.",question:"Which Habit of Mind is Maya showing?",options:["Managing impulsivity","Persisting","Taking responsible risks","Thinking flexibly"],answer:"Persisting",explanation:"Persisting means sticking with a task even when it's hard or takes a long time. Maya doesn't give up — she keeps trying new approaches. This is the habit at the heart of Learnership."},
+  {habit:"Thinking flexibly",scenario:"Tom is building a model bridge but his original design keeps falling over. A friend suggests a triangle shape for support. Tom puts his original idea aside and tries the new design.",question:"Tom is doing something skilled learners do. What is it?",options:["Persisting","Striving for accuracy","Thinking flexibly","Managing impulsivity"],answer:"Thinking flexibly",explanation:"Thinking flexibly means being willing to change your approach, consider other perspectives, and try new strategies. Tom doesn't cling to his first idea — he adapts."},
+  {habit:"Thinking about thinking (metacognition)",scenario:"Before starting an essay, Priya spends five minutes thinking: 'Last time I ran out of time because I didn't plan. This time I'll outline first and check the word count as I go.'",question:"What is Priya doing before she even begins writing?",options:["Striving for accuracy","Responding with wonderment","Thinking about thinking (metacognition)","Gathering data through all senses"],answer:"Thinking about thinking (metacognition)",explanation:"Metacognition is thinking about your own thinking — planning how you'll learn, being aware of your past patterns, and monitoring your process. Priya is doing exactly this."},
+  {habit:"Questioning and posing problems",scenario:"During a science lesson, everyone else is copying the diagram from the board. Jonah raises his hand: 'But why does the water cycle work differently near the coast? Could we test that?'",question:"Which habit is Jonah demonstrating?",options:["Responding with wonderment and awe","Questioning and posing problems","Thinking interdependently","Applying past knowledge"],answer:"Questioning and posing problems",explanation:"Skilled learners don't just accept what's given — they identify puzzles, gaps, and possibilities. Jonah goes beyond the task to ask a deeper question and propose an investigation."},
+  {habit:"Listening with understanding and empathy",scenario:"During group work, Aisha notices she wants to jump in with her idea. She stops herself and focuses entirely on what her classmate is saying, nodding and asking 'can you say more about that?'",question:"What habit is Aisha practising?",options:["Managing impulsivity","Thinking interdependently","Listening with understanding and empathy","Remaining open to continuous learning"],answer:"Listening with understanding and empathy",explanation:"Listening with understanding and empathy means genuinely trying to understand another person's perspective — not just waiting for your turn to talk. Aisha is holding back to really hear her classmate."},
+  {habit:"Managing impulsivity",scenario:"The teacher asks a hard question. Every instinct tells Sam to shout out the first answer that pops into his head. Instead, he takes a breath, thinks it through for 10 seconds, and then raises his hand.",question:"What is Sam practising by waiting before answering?",options:["Persisting","Managing impulsivity","Striving for accuracy","Thinking flexibly"],answer:"Managing impulsivity",explanation:"Managing impulsivity means pausing before acting — taking time to think rather than reacting immediately. Sam resists the urge to blurt out an answer and thinks it through first."},
+  {habit:"Striving for accuracy",scenario:"After finishing her science report, Lily reads it three times, checks every measurement against her lab notes, and rewrites two sentences she feels aren't quite right — even though the deadline is tomorrow.",question:"Which habit is driving Lily to keep checking her work?",options:["Persisting","Thinking about thinking","Striving for accuracy","Taking responsible risks"],answer:"Striving for accuracy",explanation:"Striving for accuracy means taking pride in the quality of your work and holding yourself to high standards — not just doing enough, but checking and refining until it's right."},
+  {habit:"Applying past knowledge to new situations",scenario:"In cooking class, the teacher introduces a new dish. Omar has never made it before, but he recognises the technique from when he made pasta sauce: 'This is basically the same idea — reduce the liquid slowly.'",question:"What skill is Omar using to tackle the unfamiliar dish?",options:["Wondering and innovating","Applying past knowledge to new situations","Gathering data through all senses","Thinking flexibly"],answer:"Applying past knowledge to new situations",explanation:"Applying past knowledge means seeing connections between what you already know and something new. Omar draws on a previous experience to make sense of an unfamiliar situation."},
+  {habit:"Gathering data through all senses",scenario:"In science, the class is studying rocks. While other students just look at their sample, Jade picks it up to feel its weight and texture, taps it to hear if it's hollow, and even smells it.",question:"What is Jade doing that the others aren't?",options:["Striving for accuracy","Responding with wonderment","Gathering data through all senses","Questioning and posing problems"],answer:"Gathering data through all senses",explanation:"Gathering data through all senses means using observation fully — not just sight, but touch, sound, smell, and taste where appropriate. Jade is collecting richer information than anyone else."},
+  {habit:"Remaining open to continuous learning",scenario:"Mr Chen has taught Year 7 maths for 15 years. A new student shows him a faster way to solve a type of problem. Instead of dismissing it, he says: 'I've never seen that method. Show me how it works.'",question:"What habit is Mr Chen modelling for his students?",options:["Thinking interdependently","Persisting","Remaining open to continuous learning","Wondering and innovating"],answer:"Remaining open to continuous learning",explanation:"Remaining open to continuous learning means having humility — knowing that no matter how experienced you are, there's always more to learn. Mr Chen models this for his students."},
+  {habit:"Thinking interdependently",scenario:"The team can't agree on their project approach. Instead of going with the loudest voice, Mei says: 'Let's hear everyone's idea and write them all on the board before we decide anything.'",question:"What habit is Mei using to help the group?",options:["Listening with empathy","Thinking interdependently","Managing impulsivity","Striving for accuracy"],answer:"Thinking interdependently",explanation:"Thinking interdependently means valuing collaboration — believing the group can produce better thinking than any individual alone. Mei actively draws in all voices before deciding."},
+  {habit:"Responding with wonderment and awe",scenario:"During a maths lesson on fractals, Callum is suddenly struck by the idea that the same pattern repeats forever, at every scale. He stares at the diagram and whispers: 'How is that even possible?'",question:"Which habit is Callum experiencing?",options:["Questioning and posing problems","Wondering and imagining","Responding with wonderment and awe","Thinking about thinking"],answer:"Responding with wonderment and awe",explanation:"Responding with wonderment and awe is about being genuinely moved by learning — finding ideas beautiful, surprising, or mysterious. It fuels curiosity and intrinsic motivation."},
+  {habit:"Taking responsible risks",scenario:"In drama class, students are asked to improvise. Zoe is nervous but chooses a character very different from herself, knowing she might make mistakes. She tells herself: 'Mistakes in drama are how you improve.'",question:"What mindset is Zoe showing?",options:["Persisting","Thinking flexibly","Taking responsible risks","Managing impulsivity"],answer:"Taking responsible risks",explanation:"Taking responsible risks means being willing to step into uncertainty, try something new, and make mistakes — because that's where real learning happens. Zoe reframes risk as a tool for growth."},
+  {habit:"Thinking and communicating with clarity",scenario:"When asked to explain photosynthesis, Dan says: 'Plants basically do food stuff with light.' His teacher asks him to try again. This time he says: 'Plants convert light energy, water, and carbon dioxide into glucose using chlorophyll.'",question:"What habit is Dan developing between his first and second answer?",options:["Thinking flexibly","Striving for accuracy","Thinking and communicating with clarity","Applying past knowledge"],answer:"Thinking and communicating with clarity",explanation:"Thinking and communicating with clarity means being precise and specific — avoiding vague language and choosing words that accurately capture what you mean. Dan's second answer is far more precise."},
+  {habit:"Wondering, imagining, and innovating",scenario:"The class is given a design brief: build a bridge from paper. While most students copy the example, Freya starts asking: 'What if we tried a suspension design? What if the deck was curved? What if we used pleating for strength?'",question:"Which habit is driving Freya's approach?",options:["Questioning and posing problems","Taking responsible risks","Wondering, imagining, and innovating","Thinking flexibly"],answer:"Wondering, imagining, and innovating",explanation:"Wondering, imagining, and innovating is about generating new possibilities — thinking beyond the obvious and exploring creative 'what if' ideas. Freya isn't copying; she's creating."},
+  {habit:"Gathering data through all senses",scenario:"A food technology class is taste-testing recipes. While most students just mark 'good' or 'bad', Rosa writes detailed notes: the texture, the aftertaste, the colour, the smell when it was warm.",question:"What habit makes Rosa's feedback so much richer than her classmates'?",options:["Striving for accuracy","Gathering data through all senses","Thinking and communicating with clarity","Remaining open to learning"],answer:"Gathering data through all senses",explanation:"Gathering data through all senses means using all available channels of perception — not just one — to collect richer, more complete information. Rosa's observations go well beyond a simple judgement."}
+];
+
+function shuffle(arr){return arr.map(v=>({v,r:Math.random()})).sort((a,b)=>a.r-b.r).map(x=>x.v);}
+
+let questions, current, score, streak, answered;
+
+function init(){
+  questions = shuffle(ALL_QUESTIONS).slice(0,10);
+  current=0; score=0; streak=0; answered=false;
+  render();
+}
+
+function render(){
+  const el = document.getElementById('app');
+  if(current >= questions.length){renderEnd(el);return;}
+  const q = questions[current];
+  const opts = shuffle(q.options);
+  el.innerHTML = `
+    <div class="card">
+      <div class="header-row">
+        <h1>Habits of Mind challenge</h1>
+        <span class="score-pill">Score: ${score}/${current}</span>
+      </div>
+      <div class="progress-row">
+        <div class="prog-track"><div class="prog-fill" id="pf" style="width:${Math.round((current/questions.length)*100)}%"></div></div>
+        <span class="prog-lbl">${current+1} of ${questions.length}</span>
+      </div>
+      <span class="badge">Scenario ${current+1}</span>
+      <p class="scenario">${q.scenario}</p>
+      <p class="question">${q.question}</p>
+      <div class="options" id="opts">
+        ${opts.map(o=>`<button class="opt" onclick="choose(this,'${o.replace(/'/g,"\\'")}','${q.answer.replace(/'/g,"\\'")}',${current})">${o}</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb"></div>
+      <div class="streak" id="streak"></div>
+      <button class="next-btn" id="nxt" onclick="next()">
+        ${current+1 < questions.length ? 'Next scenario &rarr;' : 'See my results &rarr;'}
+      </button>
+    </div>
+    <footer>Based on the 16 Habits of Mind by Art Costa &amp; Bena Kallick &mdash; as used in James Anderson&rsquo;s Learnership framework</footer>`;
+}
+
+function choose(btn, chosen, answer, idx){
+  if(answered || idx!==current) return;
+  answered=true;
+  document.querySelectorAll('.opt').forEach(b=>{
+    b.disabled=true;
+    if(b.textContent.trim()===answer && chosen!==answer) b.classList.add('reveal');
+  });
+  btn.classList.add(chosen===answer?'correct':'wrong');
+  if(chosen===answer){score++;streak++;}else{streak=0;}
+  const q=questions[current];
+  const fb=document.getElementById('fb');
+  fb.style.display='block';
+  fb.innerHTML=`<strong>${chosen===answer?'Correct!':'Not quite.'}</strong> The habit shown here is <strong>${q.habit}</strong>. ${q.explanation}`;
+  if(streak>=3) document.getElementById('streak').textContent=`${streak} in a row!`;
+  document.getElementById('nxt').style.display='inline-block';
+  document.getElementById('pf').style.width=Math.round(((current+1)/questions.length)*100)+'%';
+}
+
+function next(){current++;answered=false;render();}
+
+function renderEnd(el){
+  const pct=Math.round((score/questions.length)*100);
+  let msg='';
+  if(pct===100) msg="Perfect score! You have a strong grip on all 16 habits. You're thinking like an agile learner.";
+  else if(pct>=80) msg="Excellent work. You clearly understand most of the habits. Review the ones you missed and notice them in your daily learning.";
+  else if(pct>=60) msg="Good start. You're building familiarity with the habits — revisit the ones that tripped you up and look for them in real life.";
+  else msg="Keep going! The habits take time to recognise. Try again — each round draws a different mix of scenarios.";
+  el.innerHTML=`
+    <div class="card">
+      <div class="end">
+        <p style="font-size:14px;color:#888;margin-bottom:0.25rem">Your result</p>
+        <p class="end-score">${score}/${questions.length}</p>
+        <p class="end-pct">${pct}% correct</p>
+        <p class="end-msg">${msg}</p>
+        <button class="restart-btn" onclick="init()">Play again with new scenarios &rarr;</button>
+      </div>
+    </div>
+    <footer>Based on the 16 Habits of Mind by Art Costa &amp; Bena Kallick &mdash; as used in James Anderson&rsquo;s Learnership framework</footer>`;
+}
+
+init();
+</script>
+</body>
+</html>
