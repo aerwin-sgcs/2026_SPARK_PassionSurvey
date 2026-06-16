@@ -79,6 +79,7 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 .phase-bd ul{margin:8px 0 12px 22px;}
 .phase-bd li{margin-bottom:6px;}
 .phase-bd strong{color:var(--purple-d);}
+.phase-bd em{font-style:italic;}
 
 .tip{background:var(--teal-l);border-left:3px solid var(--teal-m);border-radius:0 8px 8px 0;
   padding:10px 14px;margin:10px 0;font-size:13px;color:var(--teal);}
@@ -94,6 +95,13 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 .sub{background:var(--faint);border-left:3px solid var(--purple-m);border-radius:0 8px 8px 0;
   padding:10px 14px;margin:10px 0;font-size:13.5px;color:var(--ink);line-height:1.6;}
 .sub strong{color:var(--purple-d);}
+
+.stretch{background:var(--amber-l);border-left:3px solid #EF9F27;border-radius:0 8px 8px 0;
+  padding:10px 14px;margin:10px 0;font-size:13px;color:#7A4D0E;line-height:1.55;font-style:italic;}
+
+.zonebox{background:var(--gold-l);border-radius:10px;padding:12px 14px;margin:10px 0;
+  font-size:13px;color:#7A5A00;line-height:1.55;border:1px solid rgba(184,134,11,.25);}
+.zonebox strong{color:#7A5A00;}
 
 .kbd{background:var(--faint);border:1px solid rgba(0,0,0,.1);border-radius:5px;
   padding:1px 6px;font-family:ui-monospace,SFMono-Regular,monospace;font-size:12.5px;color:var(--ink);}
@@ -123,7 +131,7 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   body{background:#fff;}
   .hero{background:var(--ink) !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:24px 22px;}
   .phase, .intro, .finale{box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-  .tip, .warn, .callout, .sub, .btn-x, .btn-m, .btn-s, .btn-ss, .phase-num{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .tip, .warn, .callout, .sub, .stretch, .zonebox, .btn-x, .btn-m, .btn-s, .btn-ss, .phase-num{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   @page{margin:14mm;}
 }
 </style>
@@ -197,10 +205,53 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
       <div class="sub">
         <strong>Two helpers built into the survey:</strong>
         <ul style="margin-top:6px;">
-          <li>The <strong>?</strong> button next to each area's name tells you what that area actually is — what people who do this spend their time on. Tap to read, tap again to close.</li>
+          <li>The <strong>?</strong> button next to each area's name tells you what that area actually is — what people who do this spend their time on. It also tells you which two <em>Habits of Mind</em> this work grows. Tap to read, tap again to close.</li>
           <li><strong>"Not sure where to start? Tap an interest →"</strong> at the very top opens a list of things you might already love — drawing, video games, animals, music, helping people, and many more. Tap one and the matching areas of the survey light up in orange. Tap a name to jump straight there. Pick a new interest any time, or tap <em>Clear</em>.</li>
         </ul>
       </div>
+    </div>
+  </div>
+
+  <!-- REFLECTION -->
+  <div class="phase">
+    <div class="phase-hd">
+      <div class="phase-num" style="background:var(--purple);">…</div>
+      <div>
+        <div class="phase-name">Before you see your results</div>
+        <div class="phase-time">A quick reflection (optional)</div>
+      </div>
+    </div>
+    <div class="phase-bd">
+      <p>When you tap <strong>"See my passion profile"</strong>, the app pauses on a single screen first. It asks three things before showing your sparks:</p>
+      <ul>
+        <li>Which areas were easy to rate?</li>
+        <li>Which were hard?</li>
+        <li>What surprised you?</li>
+      </ul>
+      <p>One textarea — write a sentence covering all three, or skip it entirely. Whatever you write is saved and travels into your copied results and PDF, under a <em>"Before I knew my profile…"</em> section.</p>
+      <div class="callout">The point is to notice yourself as a learner <em>before</em> the result lands. <em>"Whatever you found — or didn't find yet — is information."</em></div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="phase">
+    <div class="phase-hd">
+      <div class="phase-num" style="background:#B8860B;">✦</div>
+      <div>
+        <div class="phase-name">Your results screen</div>
+        <div class="phase-time">After the reflection</div>
+      </div>
+    </div>
+    <div class="phase-bd">
+      <p><strong>Three zones — how does each top spark feel right now?</strong> Under each ★★ you'll see three pills:</p>
+      <ul>
+        <li><strong>Comfort</strong> — <em>"I could do this with my eyes closed."</em></li>
+        <li><strong>Learning</strong> — <em>"Stretchy — possible if I try."</em></li>
+        <li><strong>Panic</strong> — <em>"Too much right now."</em></li>
+      </ul>
+      <p>Tap whichever fits. Tap again to clear.</p>
+      <div class="zonebox">As soon as you tag a spark as <strong>Learning</strong>, a small gold callout appears: <em>"Learning zone = where your brain grows the fastest. Consider starting your Phase 4 action here."</em></div>
+      <p><strong>Also explore:</strong> each ★★ also shows two related areas plus one <em>"Another possibility:"</em> suggestion — hints for what to look at next.</p>
     </div>
   </div>
 
@@ -217,11 +268,17 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
       <p>This is the most important 5 minutes. Don't skip.</p>
       <ol>
         <li><strong>Name your spark.</strong> Write one sentence: <em>"I think I'm curious about ____ because ____."</em> Be specific. Not "science" — say <em>what</em> about science.</li>
-        <li><strong>Choose one tiny action.</strong> Watch / Ask / Make / Read. Just one. Fifteen minutes max. You'll do it in the next 48 hours.</li>
+        <li><strong>Choose one tiny action.</strong> Watch / Ask / Make / Read. Just one. Fifteen minutes max. You'll do it in the next 48 hours. Each action card shows a <em>"Builds the habit of: …"</em> line — tap the habit name to read a short pop-up explaining it.</li>
         <li><strong>Say it out loud.</strong> Even just to yourself, or to someone you trust. Hearing yourself say it makes you far more likely to follow through.</li>
-        <li><strong>Come back later.</strong> Once you've done your action, notice what happened — did the feeling hold up, get bigger, or change completely? All three answers are useful.</li>
+        <li><strong>Come back later.</strong> Once you've done your action, open Phase 4 again. Step 4 has a purple <strong>check-in panel</strong> where you write:
+          <ul>
+            <li><em>What did you do to learn more about your passion area? (the action you took, which may not be the one you had planned)</em></li>
+            <li><em>What happened to your interest? (still there / got bigger / changed completely)</em></li>
+            <li><em>What did you find out about your strengths, the parts you struggled with, and how you like to learn?</em></li>
+          </ul>
+        </li>
       </ol>
-      <p>Then tap <strong>"Generate my commitment card"</strong> — copy it or save as a PDF.</p>
+      <p>Then tap <strong>"Generate my commitment card"</strong>. Your spark sentence, action, Habit of Mind, and check-in (if you wrote one) all appear together — copy it or save as a PDF.</p>
       <div class="callout">A feeling that doesn't become an action fades within days. This step is where you turn the feeling into something you'll actually do.</div>
     </div>
   </div>
@@ -270,7 +327,7 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
       <ol>
         <li><strong>Pick a spark</strong> — your sparks are at the top, colour-coded by category. Tap the spark name (shown with a small <em>(?)</em>) to see what it actually means.</li>
         <li><strong>Pick the subject you're in</strong> — English, Maths, Science, etc.</li>
-        <li>You'll see two columns:
+        <li>You'll see an amber line first: <em>"Notice if this feels stretchy. Stretchy = your brain growing."</em> Then two columns:
           <ul>
             <li><strong>Left</strong> — five "moves" your spark teaches you to make</li>
             <li><strong>Right</strong> — four "hooks" where each subject lets you plug your spark in</li>
@@ -295,21 +352,7 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
       </div>
     </div>
     <div class="phase-bd">
-      <p>At the top of <strong>Phase 4, 5, and 6</strong> there are now small jump pills — gold for Phase 4, teal for Phase 5, purple for Phase 6. Tap one to switch phases directly, without going back through the survey.</p>
-    </div>
-  </div>
-
-  <!-- ALSO EXPLORE -->
-  <div class="phase">
-    <div class="phase-hd">
-      <div class="phase-num" style="background:var(--teal);">✦</div>
-      <div>
-        <div class="phase-name">Also explore</div>
-        <div class="phase-time">At the bottom of your results</div>
-      </div>
-    </div>
-    <div class="phase-bd">
-      <p>On the results screen, each ★★ spark has a small <strong>"Also explore"</strong> row showing two related areas and one <em>"Another possibility:"</em> suggestion. They're hints for what to look at next once you've started on your top spark.</p>
+      <p>At the top of <strong>Phase 4, 5, and 6</strong> there are small jump pills — gold for Phase 4, teal for Phase 5, purple for Phase 6. Tap one to switch phases directly, without going back through the survey.</p>
     </div>
   </div>
 
@@ -323,8 +366,8 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
       </div>
     </div>
     <div class="phase-bd">
-      <p>The app <strong>remembers your answers automatically</strong> on the iPad you used. Close the tab and come back later — your ratings will be there. You'll see a small message at the bottom: <em>"Restored your previous answers."</em></p>
-      <div class="warn"><span class="warn-lbl">Important</span>It only works on the <strong>same iPad</strong>, in the <strong>same browser</strong> (usually Safari). A different iPad won't see your answers. If you clear Safari history, your answers are gone. <strong>Save a PDF of your results</strong> — it's the safest way to keep them.</div>
+      <p>The app <strong>remembers your answers automatically</strong> on the iPad you used — your ratings, spark sentence, action choice, reflection, zone picks, and check-in. Close the tab and come back later — your work will be there. You'll see a small message at the bottom: <em>"Restored your previous answers."</em></p>
+      <div class="warn"><span class="warn-lbl">Important</span>It only works on the <strong>same iPad</strong>, in the <strong>same browser</strong> (usually Safari). A different iPad won't see your answers. If you clear Safari history, your answers are gone. <strong>Save a PDF of your results and commitment card</strong> — it's the safest way to keep them.</div>
       <p>Tap <strong>"Start over"</strong> at the bottom of the survey to wipe everything and start fresh.</p>
     </div>
   </div>
@@ -342,14 +385,14 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
       <ul>
         <li><strong>Buttons not working?</strong> Make sure you opened the link in <strong>Safari</strong>, not inside a Schoology or Classroom file viewer. The URL should look like <span class="kbd">username.github.io/…</span>.</li>
         <li><strong>Page looks weird?</strong> Pull down to refresh.</li>
-        <li><strong>Lost your work?</strong> If auto-save didn't catch it, you'll need to rate again. Saving as PDF after the survey is your insurance.</li>
+        <li><strong>Lost your work?</strong> If auto-save didn't catch it, you'll need to rate again. Saving as PDF is your insurance.</li>
       </ul>
     </div>
   </div>
 
   <div class="finale">
     <div class="finale-lbl">One more thing</div>
-    <div class="finale-text">Finding out you <em>don't</em> care about something is just as valuable as finding out you do. The point isn't to lock you into a passion — it's to help you notice what you're actually drawn to right now. Have fun.</div>
+    <div class="finale-text">Finding out you <em>don't</em> care about something is just as valuable as finding out you do. The point isn't to lock you into a passion — it's to help you notice what you're actually drawn to right now, and to grow as a learner along the way. Have fun.</div>
   </div>
 
   <div class="footer">Spark — Passion Discovery Survey · Student tutorial</div>
