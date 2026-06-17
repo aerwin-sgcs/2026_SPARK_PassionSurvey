@@ -606,6 +606,10 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 .zhint.on{display:block;}
 .zhint strong{color:#FFE680;}
 
+.zpanic-msg{margin-top:9px;padding:9px 13px;border-radius:9px;
+  background:rgba(153,60,29,.22);border:1px solid rgba(240,153,123,.35);
+  color:#FFB59A;font-size:12.5px;line-height:1.55;font-style:italic;}
+
 /* ── CHECK-IN PANEL (Feature #5, inside Phase 4 Step 4) ── */
 .p4check{margin-top:14px;background:var(--purple-l);
   border:1px solid rgba(83,74,183,.2);border-radius:10px;
@@ -1886,16 +1890,20 @@ var ZONE_LABELS = {
 function zonePillsHtml(sparkName) {
   var current = zonePicks[sparkName] || '';
   var keys = ['comfort','learning','panic'];
-  var html = '<div class="rzones"><span class="zlbl">How does this feel?</span>';
+  var html = '<div class="zone-block">';
+  html += '<div class="rzones"><span class="zlbl">How does this feel?</span>';
   keys.forEach(function(k){
     var on = (current === k) ? ' on' : '';
     var lbl = ZONE_LABELS[k];
-    html += '<button type="button" class="zpill z' + k + on + '"' +
-      ' onclick="pickZone(' + JSON.stringify(sparkName) + ',' + JSON.stringify(k) + ')">' +
+    html += '<button type="button" class="zpill z' + k + on + '" data-zone="' + k + '">' +
       '<span class="zpill-name">' + escHtml(lbl.name) + '</span>' +
       '<span class="zpill-sub">' + escHtml(lbl.sub) + '</span>' +
       '</button>';
   });
+  html += '</div>';
+  if (current === 'panic') {
+    html += '<div class="zpanic-msg">Perhaps return to the first page and change your 3 star choice to something else.</div>';
+  }
   html += '</div>';
   return html;
 }
@@ -1918,7 +1926,7 @@ function refreshZonePills() {
   blks.forEach(function(blk){
     var name = blk.getAttribute('data-spark');
     if (!name) return;
-    var oldZ = blk.querySelector('.rzones');
+    var oldZ = blk.querySelector('.zone-block');
     if (!oldZ) return;
     var temp = document.createElement('div');
     temp.innerHTML = zonePillsHtml(name);
@@ -3565,6 +3573,17 @@ document.addEventListener('DOMContentLoaded', function(){
     if (popup.contains(e.target)) return;
     if (e.target && e.target.classList && e.target.classList.contains('p4hom')) return;
     popup.classList.remove('open');
+  });
+
+  // Delegate zone-pill clicks (more robust than inline onclick)
+  document.addEventListener('click', function(e){
+    var pill = e.target && e.target.closest ? e.target.closest('.zpill') : null;
+    if (!pill) return;
+    var blk = pill.closest('.rblk-ss');
+    if (!blk) return;
+    var name = blk.getAttribute('data-spark');
+    var zone = pill.getAttribute('data-zone');
+    if (name && zone) pickZone(name, zone);
   });
 });
 </script>
