@@ -788,6 +788,28 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 .pjump-6{background:rgba(83,74,183,.12);color:var(--purple);border-color:rgba(83,74,183,.3);}
 .pjump-6:hover{background:rgba(83,74,183,.22);}
 
+/* ── Side navigation ── */
+.sidenav{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:300;
+  display:flex;flex-direction:column;gap:10px;padding:8px 6px 8px 0;}
+.snav-item{display:flex;align-items:center;gap:8px;cursor:pointer;border:0;
+  background:none;padding:0;font-family:var(--sans);width:100%;justify-content:flex-end;}
+.snav-lbl{font-size:11px;font-weight:600;color:var(--ink);white-space:nowrap;
+  background:rgba(255,255,255,.93);padding:3px 9px;border-radius:10px;
+  box-shadow:0 1px 5px rgba(0,0,0,.13);}
+.snav-circle{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:21px;border:2.5px solid transparent;
+  box-shadow:0 2px 10px rgba(0,0,0,.2);flex-shrink:0;transition:transform .15s;}
+.snav-item:active .snav-circle{transform:scale(.92);}
+.snav-profile .snav-circle{background:#fff;border-color:#E8890C;font-size:28px;color:#FFB300;border-radius:12px;}
+.snav-p4 .snav-circle{background:var(--gold-bg);border-color:var(--gold);}
+.snav-p5 .snav-circle{background:var(--teal);border-color:var(--teal);}
+.snav-p6 .snav-circle{background:var(--purple);border-color:var(--purple);}
+/* Start over quiet link */
+.startover-link{display:inline-block;font-size:12px;color:var(--muted);
+  background:none;border:0;cursor:pointer;font-family:var(--sans);
+  padding:4px 0;text-decoration:underline;text-underline-offset:2px;}
+.startover-link:hover{color:var(--ink);}
+
 </style>
 </head>
 <body>
@@ -842,6 +864,10 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 </div>
 
 <main class="main">
+
+  <div style="text-align:right;padding:4px 16px 2px;">
+    <button type="button" class="startover-link" onclick="doReset()">Start over</button>
+  </div>
 
   <!-- INTEREST FINDER STRIP (Feature 7) -->
   <div class="ifstrip" id="ifstrip">
@@ -1412,14 +1438,27 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 </div></div></div>
   </div>
 
-  <div class="ctarow">
-    <button type="button" class="btnghost" onclick="doReset()">Start over</button>
-    <button type="button" class="btnprimary" onclick="showResults()">See my passion profile →</button>
-    <button type="button" class="btnignite" onclick="showPhase4()">Phase 4 — Ignite ★</button>
-    <button type="button" class="btnwhats-next" onclick="showPhase5()">Phase 5 — What's next? →</button>
-    <button type="button" class="btnsubject" onclick="showPhase6()">Phase 6 — Use your spark →</button>
-  </div>
 </main>
+
+<!-- SIDE NAVIGATION -->
+<nav class="sidenav" aria-label="App navigation">
+  <button type="button" class="snav-item snav-profile" onclick="navTo('results')">
+    <span class="snav-lbl">See my profile</span>
+    <span class="snav-circle">⭐</span>
+  </button>
+  <button type="button" class="snav-item snav-p4" onclick="navTo(4)">
+    <span class="snav-lbl">Ignite</span>
+    <span class="snav-circle">🔥</span>
+  </button>
+  <button type="button" class="snav-item snav-p5" onclick="navTo(5)">
+    <span class="snav-lbl">What's next?</span>
+    <span class="snav-circle">🧭</span>
+  </button>
+  <button type="button" class="snav-item snav-p6" onclick="navTo(6)">
+    <span class="snav-lbl">Use your spark</span>
+    <span class="snav-circle">⭐</span>
+  </button>
+</nav>
 
 <!-- PHASE 4 OVERLAY -->
 <div id="p4overlay">
@@ -1428,10 +1467,6 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 
       <div class="phasenav">
         <button type="button" class="p4close" onclick="hidePhase4()">← Back to survey</button>
-        <div class="pjumps">
-          <button type="button" class="pjump pjump-5" onclick="hidePhase4(); showPhase5();">Phase 5 · What's next? →</button>
-          <button type="button" class="pjump pjump-6" onclick="hidePhase4(); showPhase6();">Phase 6 · Use your spark →</button>
-        </div>
       </div>
 
       <div class="p4hero">
@@ -1567,10 +1602,6 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   <div class="p5wrap">
     <div class="phasenav">
       <button type="button" class="p4close" onclick="hidePhase5()">← Back to survey</button>
-      <div class="pjumps">
-        <button type="button" class="pjump pjump-4" onclick="hidePhase5(); showPhase4();">Phase 4 · Ignite ★</button>
-        <button type="button" class="pjump pjump-6" onclick="hidePhase5(); showPhase6();">Phase 6 · Use your spark →</button>
-      </div>
     </div>
     <div class="p5hero">
       <div class="p4badge" style="background:rgba(15,110,86,.2);border-color:rgba(93,202,165,.3);color:#5DCAA5">Phase 5 · What's next?</div>
@@ -1595,10 +1626,6 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
   <div class="p6wrap">
     <div class="phasenav">
       <button type="button" class="p4close" onclick="hidePhase6()">← Back to survey</button>
-      <div class="pjumps">
-        <button type="button" class="pjump pjump-4" onclick="hidePhase6(); showPhase4();">Phase 4 · Ignite ★</button>
-        <button type="button" class="pjump pjump-5" onclick="hidePhase6(); showPhase5();">Phase 5 · What's next? →</button>
-      </div>
     </div>
     <div class="p6hero">
       <div class="p6badge">Phase 6 · Use your spark in class</div>
@@ -2153,6 +2180,16 @@ function doPDF() {
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   }
   setTimeout(function(){URL.revokeObjectURL(url);},8000);
+}
+
+function navTo(target) {
+  document.getElementById('p4overlay').classList.remove('p4open');
+  document.getElementById('p5overlay').classList.remove('p5open');
+  document.getElementById('p6overlay').classList.remove('p6open');
+  if (target === 'results') showResults();
+  else if (target === 4) showPhase4();
+  else if (target === 5) showPhase5();
+  else if (target === 6) showPhase6();
 }
 
 function doReset() {
