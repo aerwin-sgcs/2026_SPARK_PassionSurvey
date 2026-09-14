@@ -673,25 +673,19 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 /* ── INTEREST FINDER STRIP (Feature 7) ── */
 .ifstrip{background:var(--card);border-radius:14px;border:1px solid rgba(0,0,0,.07);
   margin-bottom:16px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.04);}
-.ifstrip-toggle{width:100%;text-align:left;padding:12px 16px;
-  background:transparent;border:0;cursor:pointer;font-family:var(--sans);
-  font-size:13.5px;font-weight:600;color:var(--purple);
-  display:flex;align-items:center;justify-content:space-between;gap:8px;
-  -webkit-tap-highlight-color:transparent;}
-.ifstrip-toggle:hover{background:var(--faint);}
-.ifstrip-toggle-arrow{font-size:14px;transition:transform .2s;}
-.ifstrip.open .ifstrip-toggle-arrow{transform:rotate(90deg);}
-.ifstrip-body{display:none;padding:0 16px 14px;}
-.ifstrip.open .ifstrip-body{display:block;}
+.ifstrip-head{padding:12px 16px 4px;}
+.ifstrip-title{font-size:13.5px;font-weight:700;color:var(--purple);margin-bottom:3px;}
+.ifstrip-subtitle{font-size:12px;color:var(--muted);line-height:1.5;}
+.ifstrip-body{display:block;padding:8px 16px 14px;}
 .ifstrip-prompt{font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5;}
-.iftag{padding:6px 12px;border-radius:18px;border:1.5px solid rgba(0,0,0,.1);
+.iftag{padding:5px 10px;border-radius:8px;border:1.5px solid rgba(0,0,0,.08);
   background:var(--faint);font-size:12px;font-weight:500;color:var(--ink);
-  cursor:pointer;font-family:var(--sans);margin:0;
+  cursor:pointer;font-family:var(--sans);margin:0;text-align:left;width:100%;
   -webkit-tap-highlight-color:transparent;transition:all .12s;}
 .iftag:active{transform:scale(.97);}
 .iftag.on{background:#BA7517;color:#fff;border-color:#BA7517;
   box-shadow:0 2px 8px rgba(186,117,23,.3);}
-.iftags{display:flex;flex-wrap:wrap;gap:6px;}
+.iftags{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;}
 .ifresult{margin-top:12px;padding:10px 12px;border-radius:10px;
   background:var(--amber-l);border:1px solid rgba(186,117,23,.18);}
 .ifresult-lbl{font-size:11.5px;color:#7A4D0E;margin-bottom:6px;line-height:1.45;}
@@ -871,12 +865,12 @@ body{font-family:var(--sans);background:var(--surf);color:var(--ink);min-height:
 
   <!-- INTEREST FINDER STRIP (Feature 7) -->
   <div class="ifstrip" id="ifstrip">
-    <button type="button" class="ifstrip-toggle" onclick="toggleIfStrip()">
-      <span>Not sure where to start? Tap an interest →</span>
-      <span class="ifstrip-toggle-arrow">›</span>
-    </button>
+    <div class="ifstrip-head">
+      <div class="ifstrip-title">Not sure where to start?</div>
+      <div class="ifstrip-subtitle">Either choose an interest from this list, or scroll down to the more specific areas.</div>
+    </div>
     <div class="ifstrip-body">
-      <div class="ifstrip-prompt">Pick a thing you love. The matching areas of the survey will glow orange — tap a name to jump there, then rate it like normal.</div>
+      <div class="ifstrip-prompt">Tap an interest. The matching areas of the survey will glow orange — tap a name to jump there, then rate it like normal.</div>
       <div class="iftags" id="iftags"></div>
       <div class="ifresult" id="ifresult" style="display:none">
         <div class="ifresult-lbl">Areas matching <strong id="ifresult-tag"></strong>:</div>
@@ -3348,14 +3342,26 @@ function toggleGlossary(i, btn) {
 
 // ── INTEREST FINDER (Feature 7) ──────────────────────────
 var TAGS = [
-  "drawing & art","photography","video & film","animation","design & style","music",
-  "writing stories","poetry & words","performing & acting","dance & movement",
-  "building things","fixing things","machines","electronics","cooking & food","sport & fitness",
-  "numbers & patterns","solving puzzles","coding","video games","AI & robots","secrets & codes","inventing",
-  "animals","plants & nature","how bodies work","how the brain works","mental health",
-  "space","weather","how the planet works","history","ancient things","places & travel","other cultures","languages",
-  "helping people","connecting with people","teaching","being a leader","persuading & selling",
-  "justice & fairness","ethics & big questions","money & business","news & current events","debating & arguing"
+  "AI & robots","ancient things","animals","animation",
+  "being a leader","building things",
+  "caring for others","chemistry","climate & environment","coding","connecting with people","cooking & food","crafts & DIY",
+  "dance & movement","debating & arguing","design & style","drawing & art",
+  "economics","electronics","ethics & big questions","extreme sports",
+  "fashion & clothing","film making","fixing things",
+  "gardening",
+  "helping people","history","how bodies work","how the brain works","how the planet works","human rights",
+  "inventing",
+  "justice & fairness",
+  "languages",
+  "machines","medicine","mental health","mindfulness","money & business","music",
+  "news & current events","numbers & patterns",
+  "other cultures","outdoor adventures",
+  "performing & acting","persuading & selling","philosophy","photography","physics","places & travel","plants & nature","poetry & words","politics","psychology",
+  "reading & books","religion & beliefs",
+  "secrets & codes","solving puzzles","space","sport & fitness",
+  "teaching",
+  "video & film","video games","volunteering",
+  "weather","writing stories"
 ];
 
 var DOMAIN_TAGS = {
@@ -3580,6 +3586,7 @@ function adjacencyHtml(sparkName) {
 
 // ── INIT ────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function(){
+  buildIfTags();
   // Save spark sentence as student types (debounced)
   var ta = document.getElementById('spark-sentence');
   if (ta) {
